@@ -1,13 +1,17 @@
 package k_spot.jnm.k_spot.activity
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.RelativeLayout
-import k_spot.jnm.k_spot.adapter.MainBottomTabAdapter
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.adapter.MainBottomTabAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureMainTabMenu()
+        setStatusBarColor()
+
 
     }
 
@@ -35,5 +41,18 @@ class MainActivity : AppCompatActivity() {
         main_bottom_tab_layout.getTabAt(4)!!.customView = bottomTabView.findViewById(R.id.mypage_page_btn) as RelativeLayout
 
 
+    }
+
+    private fun setStatusBarColor() {
+        val view: View? = window.decorView
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val w = window // in Activity's onCreate() for instance
+
+//            // 아이콘 회색으로 바꾸는 코드 (이거 없애면 흰색나옴)
+//            view!!.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+
+            // 상태바 투명으로 바꾸는 코드
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        }
     }
 }
