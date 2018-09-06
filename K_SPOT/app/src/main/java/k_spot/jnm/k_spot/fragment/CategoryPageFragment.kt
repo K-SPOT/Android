@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.DetailedEntertainerPageActivity
+import kotlinx.android.synthetic.main.fragment_category_page.*
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 class CategoryPageFragment : Fragment(){
@@ -15,7 +18,9 @@ class CategoryPageFragment : Fragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        category_text_btn.setOnClickListener {
+            startActivity<DetailedEntertainerPageActivity>()
+        }
         toast("카테고리 페이지")
 
     }
