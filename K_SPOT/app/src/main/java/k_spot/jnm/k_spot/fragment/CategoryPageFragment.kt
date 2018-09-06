@@ -18,9 +18,7 @@ class CategoryPageFragment : Fragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        category_text_btn.setOnClickListener {
-            startActivity<DetailedEntertainerPageActivity>()
-        }
+
         toast("카테고리 페이지")
 
     }
