@@ -38,7 +38,7 @@
                 android:textColor="#5E5E5E"
                 android:textSize="13dp"
                 android:layout_below="@+id/main_frag_rv_item_card_view_title_tv"
-                android:fontFamily="@font/nanumsquareotf_reqular_normal"
+                android:fontFamily="@font/nanumsquareotf_regular_normal"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="8dp"/>
 

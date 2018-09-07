@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="안녕! \n오늘은"
-            android:fontFamily="@font/nanumsquareotf_reqular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular_normal"
             android:textColor="#5E5E5E"
             android:textSize="22dp"
             />
