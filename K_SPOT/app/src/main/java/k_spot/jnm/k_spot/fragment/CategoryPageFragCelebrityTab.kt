@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.CategoryPageFragRecyclerAdapter
 import k_spot.jnm.k_spot.adapter.CategoryPageFragRecyclerAdpaterData
-import kotlinx.android.synthetic.main.fragment_category_page_celebrity_tab_.view.*
+import kotlinx.android.synthetic.main.fragment_category_list_celebrity_tab_.view.*
 
 class CategoryPageFragCelebrityTab : Fragment() {
 
@@ -17,7 +17,7 @@ class CategoryPageFragCelebrityTab : Fragment() {
     lateinit var categoryPageFragRecyclerAdapter: CategoryPageFragRecyclerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_category_page_celebrity_tab_, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_category_list_celebrity_tab_, container, false)
         makeRecyclerView(view)
 
         return view
@@ -44,7 +44,7 @@ class CategoryPageFragCelebrityTab : Fragment() {
             i++
         }
         categoryPageFragRecyclerAdapter = CategoryPageFragRecyclerAdapter(categoryPageItems, this!!.context!!)
-        view.category_page_celebrity_fragment_tab_rv.layoutManager = LinearLayoutManager(context)
-        view.category_page_celebrity_fragment_tab_rv.adapter = categoryPageFragRecyclerAdapter
+        view.category_list_celebrity_fragment_tab_rv.layoutManager = LinearLayoutManager(context)
+        view.category_list_celebrity_fragment_tab_rv.adapter = categoryPageFragRecyclerAdapter
     }
 }

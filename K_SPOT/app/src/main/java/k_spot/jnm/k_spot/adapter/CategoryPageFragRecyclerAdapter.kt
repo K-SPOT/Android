@@ -11,7 +11,7 @@ import k_spot.jnm.k_spot.R
 
 class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList<CategoryPageFragRecyclerAdpaterData>, private var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.rv_item_category_frag, parent, false)
+        val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.rv_item_category_list_frag, parent, false)
         return CategoryPageFragRecyclerAdapter.Holder(mainView)
     }
 
@@ -45,12 +45,12 @@ class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList
     }
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var category_list_index : TextView = itemView!!.findViewById(R.id.category_fragment_rv_item_num_tv)
-        var category_list_image : ImageView = itemView!!.findViewById(R.id.category_fragment_rv_item_image_iv)
-        var category_list_name : TextView = itemView!!.findViewById(R.id.category_fragment_rv_item_name_tv)
-        var category_list_sub_num : TextView = itemView!!.findViewById(R.id.category_fragment_rv_item_subscriber_num_tv)
-        var category_list_post_num : TextView = itemView!!.findViewById(R.id.category_fragment_rv_item_post_num_tv)
-        var category_list_sub_btn_image : ImageView = itemView!!.findViewById(R.id.category_fragment_rv_item_subscribe_iv)
+        var category_list_index : TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_num_tv)
+        var category_list_image : ImageView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_image_iv)
+        var category_list_name : TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_name_tv)
+        var category_list_sub_num : TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscriber_num_tv)
+        var category_list_post_num : TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_post_num_tv)
+        var category_list_sub_btn_image : ImageView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscribe_iv)
     }
 }
 

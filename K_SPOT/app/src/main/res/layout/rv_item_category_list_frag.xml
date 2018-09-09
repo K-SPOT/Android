@@ -5,7 +5,7 @@
     android:layout_height="89dp">
 
     <TextView
-        android:id="@+id/category_fragment_rv_item_num_tv"
+        android:id="@+id/category_list_fragment_rv_item_num_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1"
@@ -17,79 +17,79 @@
         />
 
     <ImageView
-        android:id="@+id/category_fragment_rv_item_image_iv"
+        android:id="@+id/category_list_fragment_rv_item_image_iv"
         android:layout_width="100dp"
         android:layout_height="65dp"
-        android:layout_toRightOf="@+id/category_fragment_rv_item_num_tv"
+        android:layout_toRightOf="@+id/category_list_fragment_rv_item_num_tv"
         android:layout_centerVertical="true"
         android:src="@color/colorAccent"
         android:layout_marginLeft="12dp"/>
 
     <TextView
-        android:id="@+id/category_fragment_rv_item_name_tv"
+        android:id="@+id/category_list_fragment_rv_item_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="방탄소년단"
         android:fontFamily="@font/nanumsquareotf_bold_normal"
         android:textSize="15dp"
-        android:layout_toRightOf="@+id/category_fragment_rv_item_image_iv"
+        android:layout_toRightOf="@+id/category_list_fragment_rv_item_image_iv"
         android:layout_marginLeft="19dp"
         android:layout_marginTop="19dp"
         android:textColor="#5E5E5E"/>
 
     <TextView
-        android:id="@+id/category_fragment_rv_item_subscriber_tv"
+        android:id="@+id/category_list_fragment_rv_item_subscriber_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="구독자 "
         android:fontFamily="@font/nanumsquareotf_regular_normal"
         android:textSize="10dp"
-        android:layout_toRightOf="@+id/category_fragment_rv_item_image_iv"
-        android:layout_below="@+id/category_fragment_rv_item_name_tv"
+        android:layout_toRightOf="@+id/category_list_fragment_rv_item_image_iv"
+        android:layout_below="@+id/category_list_fragment_rv_item_name_tv"
         android:layout_marginLeft="19dp"
         android:layout_marginTop="13dp"
         android:textColor="#C5C5C5"/>
 
     <TextView
-        android:id="@+id/category_fragment_rv_item_subscriber_num_tv"
+        android:id="@+id/category_list_fragment_rv_item_subscriber_num_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="25만"
         android:fontFamily="@font/nanumsquareotf_regular_normal"
         android:textSize="10dp"
-        android:layout_toRightOf="@+id/category_fragment_rv_item_subscriber_tv"
-        android:layout_below="@+id/category_fragment_rv_item_name_tv"
+        android:layout_toRightOf="@+id/category_list_fragment_rv_item_subscriber_tv"
+        android:layout_below="@+id/category_list_fragment_rv_item_name_tv"
         android:layout_marginTop="13dp"
         android:textColor="#C5C5C5"/>
 
     <TextView
-        android:id="@+id/category_fragment_rv_item_post_tv"
+        android:id="@+id/category_list_fragment_rv_item_post_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="게시물 "
         android:fontFamily="@font/nanumsquareotf_regular_normal"
         android:textSize="10dp"
-        android:layout_toRightOf="@+id/category_fragment_rv_item_subscriber_num_tv"
-        android:layout_below="@+id/category_fragment_rv_item_name_tv"
+        android:layout_toRightOf="@+id/category_list_fragment_rv_item_subscriber_num_tv"
+        android:layout_below="@+id/category_list_fragment_rv_item_name_tv"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="13dp"
         android:textColor="#C5C5C5"/>
 
     <TextView
-        android:id="@+id/category_fragment_rv_item_post_num_tv"
+        android:id="@+id/category_list_fragment_rv_item_post_num_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="20개"
         android:fontFamily="@font/nanumsquareotf_regular_normal"
         android:textSize="10dp"
-        android:layout_toRightOf="@+id/category_fragment_rv_item_post_tv"
-        android:layout_below="@+id/category_fragment_rv_item_name_tv"
+        android:layout_toRightOf="@+id/category_list_fragment_rv_item_post_tv"
+        android:layout_below="@+id/category_list_fragment_rv_item_name_tv"
         android:layout_marginTop="13dp"
         android:textColor="#C5C5C5"/>
 
 
     <RelativeLayout
-        android:id="@+id/category_fragment_rv_item_subscribe_btn"
+        android:id="@+id/category_list_fragment_rv_item_subscribe_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -97,7 +97,7 @@
         android:layout_marginRight="10dp">
 
         <ImageView
-            android:id="@+id/category_fragment_rv_item_subscribe_iv"
+            android:id="@+id/category_list_fragment_rv_item_subscribe_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/category_list_sub_btn"
