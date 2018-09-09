@@ -8,12 +8,12 @@
 
     <!--Top Bar-->
     <RelativeLayout
-        android:id="@+id/category_page_fragment_top_bar_rl"
+        android:id="@+id/category_list_fragment_top_bar_rl"
         android:layout_width="match_parent"
         android:layout_height="56dp">
 
         <RelativeLayout
-            android:id="@+id/category_page_fragment_translation_btn"
+            android:id="@+id/category_list_fragment_translation_btn"
             android:layout_width="46dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -44,7 +44,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/category_page_fragment_search_btn"
+            android:id="@+id/category_list_fragment_search_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -59,16 +59,16 @@
     </RelativeLayout>
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/category_page_fragment_tablayout"
+        android:id="@+id/category_list_fragment_tablayout"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:layout_below="@+id/category_page_fragment_top_bar_rl"
+        android:layout_below="@+id/category_list_fragment_top_bar_rl"
         app:tabIndicatorColor="#40D39F"
         app:tabIndicatorHeight="3dp">
     </android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager
-        android:id="@+id/category_page_fragment_viewpager"
-        android:layout_below="@+id/category_page_fragment_tablayout"
+        android:id="@+id/category_list_fragment_viewpager"
+        android:layout_below="@+id/category_list_fragment_tablayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v4.view.ViewPager>
@@ -77,21 +77,21 @@
 
     <!--연예인, 방송 탭바-->
     <LinearLayout
-        android:id="@+id/category_page_fragment_tap_bar_rl"
+        android:id="@+id/category_list_fragment_tap_bar_rl"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:layout_below="@id/category_page_fragment_top_bar_rl"
+        android:layout_below="@id/category_list_fragment_top_bar_rl"
         android:orientation="horizontal">
 
         <!--연예인 단-->
         <RelativeLayout
-            android:id="@+id/category_page_fragment_celebrity_tab_btn"
+            android:id="@+id/category_list_fragment_celebrity_tab_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="50">
             <TextView
-                android:id="@+id/category_page_fragment_celebrity_tab_tv"
+                android:id="@+id/category_list_fragment_celebrity_tab_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -101,7 +101,7 @@
                 android:textColor="#40D39F"/>
 
             <View
-                android:id="@+id/category_page_fragment_celebrity_tab_under_bar"
+                android:id="@+id/category_list_fragment_celebrity_tab_under_bar"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:layout_alignParentBottom="true"
@@ -111,12 +111,12 @@
 
         <!--방송단-->
         <RelativeLayout
-            android:id="@+id/category_page_fragment_broadcast_tab_btn"
+            android:id="@+id/category_list_fragment_broadcast_tab_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="50">
             <TextView
-                android:id="@+id/category_page_fragment_broadcast_tab_tv"
+                android:id="@+id/category_list_fragment_broadcast_tab_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -127,7 +127,7 @@
 
             <View
                 android:visibility="gone"
-                android:id="@+id/category_page_fragment_broadcast_tab_under_bar"
+                android:id="@+id/category_list_fragment_broadcast_tab_under_bar"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:layout_alignParentBottom="true"
@@ -141,10 +141,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:visibility="gone"
-        android:id="@+id/category_page_fragment_tap_bar_rv"
+        android:id="@+id/category_list_fragment_tap_bar_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/category_page_fragment_tap_bar_rl"></android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/category_list_fragment_tap_bar_rl"></android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

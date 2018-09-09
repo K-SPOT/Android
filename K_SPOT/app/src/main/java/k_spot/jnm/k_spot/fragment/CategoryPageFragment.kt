@@ -14,8 +14,8 @@ import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.CategoryPageFragRecyclerAdapter
 import k_spot.jnm.k_spot.adapter.CategoryPageFragRecyclerAdpaterData
 import k_spot.jnm.k_spot.adapter.CategoryPageTabPagerAdapter
-import kotlinx.android.synthetic.main.fragment_category_page.*
-import kotlinx.android.synthetic.main.fragment_category_page.view.*
+import kotlinx.android.synthetic.main.fragment_category_list.*
+import kotlinx.android.synthetic.main.fragment_category_list.view.*
 import kotlinx.android.synthetic.main.tablayout_category_page_fragment.*
 import org.jetbrains.anko.support.v4.toast
 
@@ -27,7 +27,7 @@ class CategoryPageFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_category_page, container, false)
+        return inflater.inflate(R.layout.fragment_category_list, container, false)
 
 //        makeRecyclerView(view)
 
@@ -58,8 +58,8 @@ class CategoryPageFragment : Fragment(){
             i++
         }
         categoryPageFragRecyclerAdapter = CategoryPageFragRecyclerAdapter(categoryPageItems, this!!.context!!)
-        view.category_page_fragment_tap_bar_rv.layoutManager = LinearLayoutManager(context)
-        view.category_page_fragment_tap_bar_rv.adapter = categoryPageFragRecyclerAdapter
+        view.category_list_fragment_tap_bar_rv.layoutManager = LinearLayoutManager(context)
+        view.category_list_fragment_tap_bar_rv.adapter = categoryPageFragRecyclerAdapter
     }
 
     private fun whereIsTab(position: Int) {
@@ -73,18 +73,18 @@ class CategoryPageFragment : Fragment(){
     }
 
     fun configureRankTabMenu() {
-        category_page_fragment_viewpager.adapter = CategoryPageTabPagerAdapter(2, childFragmentManager)
-        category_page_fragment_tablayout.setupWithViewPager(category_page_fragment_viewpager)
+        category_list_fragment_viewpager.adapter = CategoryPageTabPagerAdapter(2, childFragmentManager)
+        category_list_fragment_tablayout.setupWithViewPager(category_list_fragment_viewpager)
 
         val headerView: View = (activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
                 .inflate(R.layout.tablayout_category_page_fragment, null, false)
         val likeable = headerView.findViewById(R.id.celebrity_tab_btn) as RelativeLayout
         val unlikeable = headerView.findViewById(R.id.broadcast_tab_btn) as RelativeLayout
 
-        category_page_fragment_tablayout.getTabAt(0)!!.customView = likeable
-        category_page_fragment_tablayout.getTabAt(1)!!.customView = unlikeable
+        category_list_fragment_tablayout.getTabAt(0)!!.customView = likeable
+        category_list_fragment_tablayout.getTabAt(1)!!.customView = unlikeable
 
-        category_page_fragment_tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        category_list_fragment_tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 whereIsTab(tab!!.position)
             }

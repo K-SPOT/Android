@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import k_spot.jnm.k_spot.R
-import kotlinx.android.synthetic.main.fragment_category_page_broadcast_tab.view.*
+import kotlinx.android.synthetic.main.fragment_category_list_broadcast_tab.view.*
 
 class CategoryPageFragBraodcastTab: Fragment() {
 
@@ -15,7 +15,7 @@ class CategoryPageFragBraodcastTab: Fragment() {
     lateinit var categoryPageFragRecyclerAdapter: CategoryPageFragRecyclerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_category_page_broadcast_tab, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_category_list_broadcast_tab, container, false)
         makeRecyclerView(view)
 
         return view
@@ -42,7 +42,7 @@ class CategoryPageFragBraodcastTab: Fragment() {
             i++
         }
         categoryPageFragRecyclerAdapter = CategoryPageFragRecyclerAdapter(categoryPageItems, this!!.context!!)
-        view.category_page_brodcast_fragment_tab_rv.layoutManager = LinearLayoutManager(context)
-        view.category_page_brodcast_fragment_tab_rv.adapter = categoryPageFragRecyclerAdapter
+        view.category_list_brodcast_fragment_tab_rv.layoutManager = LinearLayoutManager(context)
+        view.category_list_brodcast_fragment_tab_rv.adapter = categoryPageFragRecyclerAdapter
     }
 }
