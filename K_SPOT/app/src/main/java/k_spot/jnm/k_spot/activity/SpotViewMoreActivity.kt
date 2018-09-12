@@ -118,18 +118,18 @@ class SpotViewMoreActivity : AppCompatActivity() {
             if(i < starCount){
                 if (0.5 <= (starCount-i) && (starCount-i) <= 0.99){
                     // 별 반개 그리는거
-                    stars[i-1] = ImageView(applicationContext)
-                    stars[i-1]!!.setImageDrawable(resources.getDrawable(R.drawable.category_reveiw_big_halfstar))
+                    stars[i] = ImageView(applicationContext)
+                    stars[i]!!.setImageDrawable(resources.getDrawable(R.drawable.category_reveiw_big_halfstar))
                 }else {
                     // 곽찬 별 그리는거
-                    stars[i-1] = ImageView(applicationContext)
-                    stars[i-1]!!.setImageDrawable(resources.getDrawable(R.drawable.category_reveiw_big_star))
+                    stars[i] = ImageView(applicationContext)
+                    stars[i]!!.setImageDrawable(resources.getDrawable(R.drawable.category_reveiw_big_star))
                 }
 
             }else {
                 // 꽉찬 별 그리는 거 라고 생각
-                stars[i-1] = ImageView(applicationContext)
-                stars[i-1]!!.setImageDrawable(resources.getDrawable(R.drawable.category_list_unsub_btn))
+                stars[i] = ImageView(applicationContext)
+                stars[i]!!.setImageDrawable(resources.getDrawable(R.drawable.category_list_unsub_btn))
             }
             val params = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -139,7 +139,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
             // 인디케이터 점 마진 설정
             params.setMargins(3, 0, 3, 0)
             //LinearView에 뷰 생성
-            spot_view_more_act_review_star_ll!!.addView(stars[i-1], params)
+            spot_view_more_act_review_star_ll!!.addView(stars[i], params)
         }
     }
 
