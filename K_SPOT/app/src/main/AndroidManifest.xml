@@ -11,18 +11,20 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:fitsSystemWindows="true"></activity>
+            android:fitsSystemWindows="true" />
         <activity
             android:name=".activity.DetailedEntertainerPageActivity"
             android:fitsSystemWindows="true"
             android:label="@string/title_activity_detailed_entertainer_page"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".activity.SpotViewMoreActivity">
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.SpotViewMoreActivity"></activity>
+        <activity android:name=".activity.RecommendViewMoreActivity">
 
         </activity>
-        <activity android:name=".activity.RecommendViewMoreActivity">
+        <activity android:name=".SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
