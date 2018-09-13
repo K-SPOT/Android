@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
@@ -284,14 +283,13 @@ class SpotViewMoreActivity : AppCompatActivity() {
             spot_view_more_act_scroll_view.post(Runnable { spot_view_more_act_scroll_view.scrollTo(0, 0) })
         }
 
-        spot_view_more_act_scroll_view.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                val y = spot_view_more_act_scroll_view.scrollY
-                Log.v("ssd",y.toString())
 
+        spot_view_more_act_scroll_view.setOnScrollChangeListener(object : View.OnScrollChangeListener {
+            override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
+                Log.v("ssd",scrollY.toString())
 
                 // 맨 위 스크롤이 아닐 때
-                if (!(y == 0)) {
+                if (!(scrollY <= 0)) {
                     window.statusBarColor = Color.WHITE
                     spot_view_more_act_top_bar_rl.setBackgroundColor(Color.parseColor("#FFFFFF"))
                     spot_view_more_act_back_iv.setColorFilter(Color.parseColor("#5E5E5E"))
@@ -306,10 +304,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
                     spot_view_more_act_scrap_num_tv.setTextColor(Color.parseColor("#FFFFFF"))
                     spot_view_more_act_top_bar_bottom_line.visibility = View.GONE
                 }
-
-                return false
             }
-
         })
     }
 }
