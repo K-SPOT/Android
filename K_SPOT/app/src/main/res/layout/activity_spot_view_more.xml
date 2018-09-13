@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.SpotViewMoreActivity"
-    android:fitsSystemWindows="true"
     android:background="#FFFFFF"
+    android:id="@+id/ddfld"
     >
     <ScrollView
+        android:id="@+id/spot_view_more_act_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -28,13 +29,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
-
                     <!--뷰페이저-->
                     <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
                         android:id="@+id/spot_view_more_act_viewpager"
                         android:layout_width="match_parent"
                         android:layout_height="224dp"
-                        android:layout_marginTop="19dp"
+                        android:background="@color/colorAccent"
                         />
                     
                     <!--ViewPager 페이지 표시-->
@@ -474,8 +474,7 @@
                             android:orientation="horizontal"
                             android:layout_below="@+id/spot_view_more_act_review_box_explain_tv"
                             android:layout_marginLeft="23dp"
-                            android:layout_marginTop="23dp"
-                            android:background="@color/colorAccent">
+                            android:layout_marginTop="23dp">
                         </LinearLayout>
 
                         <TextView
@@ -493,14 +492,42 @@
                     </RelativeLayout>
 
                     <!--리뷰쓰기 btn-->
-                    <ImageView
-                        android:id="@+id/spot_view_more_act_review_write_btn"
+
+                    <RelativeLayout
                         android:layout_below="@+id/spot_view_more_act_review_box_btn"
                         android:layout_marginTop="38dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/category_reveiw_write_btn"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/spot_view_more_acr_write_review_box_shape"
+                        android:layout_centerHorizontal="true">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+                            <ImageView
+                                android:id="@+id/spot_view_more_act_review_write_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/category_review_write_icon"
+                                />
+
+                            <TextView
+                                android:layout_toRightOf="@+id/spot_view_more_act_review_write_btn"
+                                android:layout_marginLeft="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="리뷰쓰기"
+                                android:textColor="#40D39F"
+                                android:textSize="15dp"
+                                android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
 
 
 
@@ -633,7 +660,7 @@
                             android:id="@+id/spot_view_more_act_phone_num_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/category_top_star_icon_green"
+                            android:src="@drawable/category_email_icon"
                             android:layout_centerVertical="true"/>
 "/>
 
@@ -652,6 +679,7 @@
                     </RelativeLayout>
                 </RelativeLayout>
 
+                <!--이메일 버튼-->
                 <RelativeLayout
                     android:id="@+id/spot_view_more_act_email_btn"
                     android:layout_width="match_parent"
@@ -671,10 +699,9 @@
                             android:id="@+id/spot_view_more_act_email_iv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/category_top_star_icon_green"
+                            android:src="@drawable/category_email_icon"
                             android:layout_centerVertical="true"
                             />
-"/>
 
                         <TextView
                             android:id="@+id/spot_view_more_act_email_tv"
@@ -690,6 +717,39 @@
 
                     </RelativeLayout>
                 </RelativeLayout>
+
+                <!--최상단 이동 버튼-->
+                <RelativeLayout
+                    android:id="@+id/spot_view_more_act_move_top_btn"
+                    android:layout_marginTop="98dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/spot_view_more_act_email_btn"
+                    android:layout_marginBottom="49dp">
+
+                    <ImageView
+                        android:id="@+id/spot_view_more_act_move_top_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/category_top_btn"
+                        android:layout_margin="8dp"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/spot_view_more_act_move_top_iv"
+                        android:layout_marginTop="8dp"
+                        android:layout_centerHorizontal="true"
+                        android:text="TOP"
+                        android:textSize="12dp"
+                        android:textColor="#C0C0C0"
+                        android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+
+
+                </RelativeLayout>
+
             </RelativeLayout>
 
         </LinearLayout>
@@ -703,8 +763,10 @@
     <RelativeLayout
         android:id="@+id/spot_view_more_act_top_bar_rl"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent">
+        android:layout_height="48dp"
+        android:layout_marginTop="21dp"
+        android:background="#00000000"
+        >
 
         <!--백버튼-->
         <RelativeLayout
@@ -712,14 +774,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="13dp">
+            android:layout_centerVertical="true">
             <!--수정필요-->
             <ImageView
                 android:id="@+id/spot_view_more_act_back_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:src="@drawable/search_icon" />
+                android:src="@drawable/category_back_arrow"
+                android:tint="#FFFFFF"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -727,8 +790,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="17dp">
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            >
 
             <!--수정 필요-->
             <ImageView
@@ -736,7 +800,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:src="@drawable/board_scrap_icon" />
+                android:src="@drawable/category_scrap_btn" />
         </RelativeLayout>
 
         <TextView
@@ -744,13 +808,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="2dp"
-            android:layout_marginTop="22dp"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/spot_view_more_act_scrap_btn"
             android:fontFamily="@font/nanumsquareotf_regular_normal"
             android:textColor="#FFFFFF"
             android:text="23,341"
             android:textSize="14dp" />
+
+        <View
+            android:id="@+id/spot_view_more_act_top_bar_bottom_line"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#FFFFFF"
+            android:layout_alignParentBottom="true"
+            android:elevation="3dp"></View>
+
     </RelativeLayout>
+
+
 
 
 
