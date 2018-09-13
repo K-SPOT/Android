@@ -23,6 +23,8 @@ class RecommendViewMoreActivity : AppCompatActivity() {
         setStatusBarTransparent()
 
         makeRecyclerView()
+
+        setListener()
     }
 
     private fun makeRecyclerView() {
@@ -117,5 +119,28 @@ class RecommendViewMoreActivity : AppCompatActivity() {
                 window.statusBarColor = Color.parseColor("#fffafafa")
             }
         }
+    }
+
+    fun setListener() {
+        recommend_view_more_act_scroll_view.setOnScrollChangeListener(object : View.OnScrollChangeListener {
+            override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
+                // 맨 위 스크롤이 아닐 때
+                if (!(scrollY <= 0)) {
+                    window.statusBarColor = Color.WHITE
+                    recommend_view_more_act_top_bar_rl.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                    recommend_view_more_act_back_iv.setColorFilter(Color.parseColor("#5E5E5E"))
+                    recommend_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrab_btn_gray)
+                    recommend_view_more_act_scrap_num_tv.setTextColor(Color.parseColor("#5E5E5E"))
+                    recommend_view_more_act_top_bar_bottom_line.visibility = View.VISIBLE
+                }else{
+                    window.statusBarColor = Color.TRANSPARENT
+                    recommend_view_more_act_top_bar_rl.setBackgroundColor(Color.parseColor("#00000000"))
+                    recommend_view_more_act_back_iv.setColorFilter(Color.parseColor("#FFFFFF"))
+                    recommend_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
+                    recommend_view_more_act_scrap_num_tv.setTextColor(Color.parseColor("#FFFFFF"))
+                    recommend_view_more_act_top_bar_bottom_line.visibility = View.GONE
+                }
+            }
+        })
     }
 }
