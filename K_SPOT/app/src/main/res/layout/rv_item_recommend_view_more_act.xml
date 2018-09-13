@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--초록색 원 + 인덱스-->
+    <RelativeLayout
+        android:id="@+id/recommend_view_more_rv_item_index_rl"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/rv_item_recommend_view_more_act_num_circle_shape"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:id="@+id/recommend_view_more_rv_item_index_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="01"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
+            android:fontFamily="@font/nanumsquareotf_bold_normal"
+            />
+    </RelativeLayout>
+
+    <!--제목-->
+    <TextView
+        android:id="@+id/recommend_view_more_rv_item_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="방탄소년단의 힘의 원천\n'유정식당'"
+        android:textSize="18dp"
+        android:textColor="#414141"
+        android:fontFamily="@font/nanumsquareotf_bold_normal"
+        android:layout_below="@+id/recommend_view_more_rv_item_index_rl"
+        android:layout_marginTop="30dp"/>
+
+    <!--이미지 뷰-->
+    <LinearLayout
+        android:id="@+id/recommend_view_more_rv_item_contents_ll"
+        android:layout_width="match_parent"
+        android:layout_height="219dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/recommend_view_more_rv_item_title_tv"
+        android:layout_marginTop="14.5dp"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:id="@+id/recommend_view_more_rv_item_contents_iv1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@color/colorPrimary"
+            android:layout_weight="2"
+            android:layout_marginRight="2dp"
+            android:scaleType="fitXY"
+            />
+
+        <!--이미지가 3장 이하면 이거 gone처-->
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/recommend_view_more_rv_item_contents_three_ll2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:id="@+id/recommend_view_more_rv_item_contents_iv2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@color/colorAccent"
+                android:layout_marginBottom="2dp"
+                android:scaleType="fitXY"/>
+
+            <ImageView
+                android:id="@+id/recommend_view_more_rv_item_contents_iv3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@color/colorPrimaryDark"
+                android:scaleType="fitXY"/>
+        </LinearLayout>
+    </LinearLayout>
+    
+    <!--첫 번쨰 설명 줄-->
+    <RelativeLayout
+        android:id="@+id/recommend_view_more_rv_item_explain_first_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/recommend_view_more_rv_item_contents_ll"
+        android:layout_marginTop="29dp"
+        >
+        <View
+            android:id="@+id/recommend_view_more_rv_item_explain_first_circle"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:background="@drawable/rv_item_recommend_view_more_act_num_circle_shape"
+            android:layout_marginTop="7dp"
+            ></View>
+
+        <TextView
+            android:id="@+id/recommend_view_more_rv_item_first_explain_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/recommend_view_more_rv_item_explain_first_circle"
+            android:layout_marginLeft="6dp"
+            android:text="유정식당은 방탄 신인 시절 방송에서 추천한 맛집"
+            android:textColor="#414141"
+            android:textSize="14dp"
+            android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+    </RelativeLayout>
+
+    <!--두 번쨰 설명 줄-->
+    <RelativeLayout
+        android:id="@+id/recommend_view_more_rv_item_explain_second_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/recommend_view_more_rv_item_explain_first_rl"
+        android:layout_marginTop="18dp"
+        >
+        <View
+            android:id="@+id/recommend_view_more_rv_item_explain_second_circle"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:background="@drawable/rv_item_recommend_view_more_act_num_circle_shape"
+            android:layout_marginTop="7dp"
+            ></View>
+
+        <TextView
+            android:id="@+id/recommend_view_more_rv_item_explain_second_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/recommend_view_more_rv_item_explain_second_circle"
+            android:layout_marginLeft="6dp"
+            android:text="토종 흑돼지 전문식당! 방탄소년단 멤버들이 주로 먹었던 흑돼지고추장 오겹살과 돌솥비빔밥이 인기메뉴"
+            android:textColor="#414141"
+            android:textSize="14dp"
+            android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+    </RelativeLayout>
+
+    <!--세 번쨰 설명 줄-->
+    <RelativeLayout
+        android:id="@+id/recommend_view_more_rv_item_explain_third_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/recommend_view_more_rv_item_explain_second_rl"
+        android:layout_marginTop="18dp"
+        >
+        <View
+            android:id="@+id/recommend_view_more_rv_item_explain_third_circle"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:background="@drawable/rv_item_recommend_view_more_act_num_circle_shape"
+            android:layout_marginTop="7dp"
+            ></View>
+
+        <TextView
+            android:id="@+id/recommend_view_more_rv_item_explain_third_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/recommend_view_more_rv_item_explain_third_circle"
+            android:layout_marginLeft="6dp"
+            android:text="1인은 흑돼지돌솥비빔밥 2인은 쌈밥 추천!"
+            android:textColor="#414141"
+            android:textSize="14dp"
+            android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/recommend_view_more_rv_item_detail_view_btn"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/spot_view_more_acr_write_review_box_shape"
+        android:layout_below="@+id/recommend_view_more_rv_item_explain_third_rl"
+        android:layout_marginTop="19dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장소 상세 보기"
+            android:layout_centerInParent="true"
+            android:textColor="#40D39F"
+            android:textSize="16dp"
+            android:fontFamily="@font/nanumsquareotf_bold_normal"/>
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_below="@+id/recommend_view_more_rv_item_detail_view_btn"
+        android:background="#F5F5F5"
+        android:layout_marginTop="20dp"
+        ></View>
+
+
+</RelativeLayout>

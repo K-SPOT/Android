@@ -759,7 +759,6 @@
 
 
     <!--상단(백버튼, 스크랩버튼)-->
-    <!--네비게이션 바로 변경해야한다.-->
     <RelativeLayout
         android:id="@+id/spot_view_more_act_top_bar_rl"
         android:layout_width="wrap_content"

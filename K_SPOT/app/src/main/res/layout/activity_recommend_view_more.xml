@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RecommendViewMoreActivity"
+    >
+
+
+    <ScrollView
+        android:id="@+id/recommend_view_more_act_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--맨 위 가수 사진 위 글씨포함 RL-->
+            <RelativeLayout
+                android:id="@+id/recommend_view_more_act_celeb_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="272dp">
+                <ImageView
+                    android:id="@+id/recommend_view_more_act_celeb_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@color/colorPrimary"
+                    android:scaleType="fitXY"/>
+
+                <!--글씨 가운데 정렬 하기위해 넓이 fix-->
+                <TextView
+                    android:id="@+id/recommend_view_more_act_title_tv2"
+                    android:layout_width="178dp"
+                    android:layout_height="wrap_content"
+                    android:text="방탄소년단'S PICK HOT PLACE 5!"
+                    android:layout_centerInParent="true"
+                    android:textSize="22dp"
+                    android:fontFamily="@font/nanumsquareotf_bold_normal"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/recommend_view_more_act_hash_tag_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#논현동 #압구정동 #신사동 #가락시장"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="21dp"
+                    android:layout_below="@+id/recommend_view_more_act_title_tv2"
+                    android:textSize="15dp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/nanumsquareotf_regular_normal"
+                    />
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recommend_view_more_act_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/recommend_view_more_act_celeb_rl"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </ScrollView>
+
+    <!--상단(백버튼, 스크랩버튼)-->
+    <RelativeLayout
+        android:id="@+id/recommend_view_more_act_top_bar_rl"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="21dp"
+        android:background="#00000000"
+        >
+
+        <!--백버튼-->
+        <RelativeLayout
+            android:id="@+id/recommend_view_more_act_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true">
+            <!--수정필요-->
+            <ImageView
+                android:id="@+id/recommend_view_more_act_back_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:src="@drawable/category_back_arrow"
+                android:tint="#FFFFFF"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/recommend_view_more_act_scrap_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            >
+
+            <!--수정 필요-->
+            <ImageView
+                android:id="@+id/recommend_view_more_act_scrap_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:src="@drawable/category_scrap_btn" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/recommend_view_more_act_scrap_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/recommend_view_more_act_scrap_btn"
+            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:textColor="#FFFFFF"
+            android:text="23,341"
+            android:textSize="14dp" />
+
+        <View
+            android:id="@+id/recommend_view_more_act_top_bar_bottom_line"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#FFFFFF"
+            android:layout_alignParentBottom="true"
+            android:elevation="3dp"></View>
+
+    </RelativeLayout>
+
+</RelativeLayout>
