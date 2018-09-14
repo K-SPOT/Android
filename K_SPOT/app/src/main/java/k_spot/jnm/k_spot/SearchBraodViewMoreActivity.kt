@@ -10,31 +10,21 @@ import android.view.View
 import android.view.WindowManager
 import k_spot.jnm.k_spot.adapter.SearchResultActBroadRecyclerAdapter
 import k_spot.jnm.k_spot.adapter.SearchResultActBroadRecyclerAdapterData
-import k_spot.jnm.k_spot.adapter.SearchResultActSpotRecyclerAdapter
-import k_spot.jnm.k_spot.adapter.SearchResultActSpotRecyclerAdapterData
-import kotlinx.android.synthetic.main.activity_search_result.*
+import kotlinx.android.synthetic.main.activity_search_braod_view_more.*
 
-class SearchResultActivity : AppCompatActivity() {
+class SearchBraodViewMoreActivity : AppCompatActivity() {
 
     lateinit var searchBroadItems: ArrayList<SearchResultActBroadRecyclerAdapterData>
-    lateinit var searchSpotItems: ArrayList<SearchResultActSpotRecyclerAdapterData>
-    lateinit var searchEventItems: ArrayList<SearchResultActSpotRecyclerAdapterData>
     lateinit var searchResultActBroadRecyclerAdapter: SearchResultActBroadRecyclerAdapter
-    lateinit var searchResultActSpotRecyclerAdapter: SearchResultActSpotRecyclerAdapter
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_result)
-
+        setContentView(R.layout.activity_search_braod_view_more)
         makeRecyclerView()
 
-        makeRecyclerView1()
-
-        makeRecyclerView2()
-
         setStatusBarTransparent()
+
+
     }
 
     private fun makeRecyclerView() {
@@ -43,36 +33,23 @@ class SearchResultActivity : AppCompatActivity() {
         searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "3300만", true))
         searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_bts_img, "방탄소년단", "10만", "30만", false))
         searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_exo_img, "엑소", "30만", "30만", true))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "3300만", true))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_bts_img, "방탄소년단", "10만", "30만", false))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_exo_img, "엑소", "30만", "30만", true))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "3300만", true))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_bts_img, "방탄소년단", "10만", "30만", false))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_exo_img, "엑소", "30만", "30만", true))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "3300만", true))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_bts_img, "방탄소년단", "10만", "30만", false))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_exo_img, "엑소", "30만", "30만", true))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "3300만", true))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_bts_img, "방탄소년단", "10만", "30만", false))
+        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_exo_img, "엑소", "30만", "30만", true))
+
 
         searchResultActBroadRecyclerAdapter = SearchResultActBroadRecyclerAdapter(searchBroadItems, applicationContext)
-        search_result_act_celeb_borad_rv.layoutManager = LinearLayoutManager(applicationContext)
-        search_result_act_celeb_borad_rv.adapter = searchResultActBroadRecyclerAdapter
-    }
-
-    private fun makeRecyclerView1() {
-        searchSpotItems = ArrayList()
-
-        searchSpotItems.add(SearchResultActSpotRecyclerAdapterData("방탄삼겹살", "용산구 · 숙대입구역",0))
-        searchSpotItems.add(SearchResultActSpotRecyclerAdapterData("방탄삼겹살", "용산구 · 숙대입구역",0))
-        searchSpotItems.add(SearchResultActSpotRecyclerAdapterData("방탄삼겹살", "용산구 · 숙대입구역",0))
-        searchSpotItems.add(SearchResultActSpotRecyclerAdapterData("방탄삼겹살", "용산구 · 숙대입구역",0))
-
-
-        searchResultActSpotRecyclerAdapter = SearchResultActSpotRecyclerAdapter(searchSpotItems, applicationContext)
-        search_result_act_spot_rv.layoutManager = LinearLayoutManager(applicationContext)
-        search_result_act_spot_rv.adapter = searchResultActSpotRecyclerAdapter
-    }
-
-    private fun makeRecyclerView2() {
-        searchEventItems = ArrayList()
-
-        searchEventItems.add(SearchResultActSpotRecyclerAdapterData("방탄생일", "용산구 · 숙대입구역",4))
-        searchEventItems.add(SearchResultActSpotRecyclerAdapterData("방탄생일", "용산구 · 숙대입구역",4))
-        searchEventItems.add(SearchResultActSpotRecyclerAdapterData("방탄생일", "용산구 · 숙대입구역",4))
-        searchEventItems.add(SearchResultActSpotRecyclerAdapterData("방탄생일", "용산구 · 숙대입구역",4))
-        searchResultActSpotRecyclerAdapter = SearchResultActSpotRecyclerAdapter(searchEventItems, applicationContext)
-        search_result_act_event_rv.layoutManager = LinearLayoutManager(applicationContext)
-        search_result_act_event_rv.adapter = searchResultActSpotRecyclerAdapter
+        search_broad_view_more_act_rv.layoutManager = LinearLayoutManager(applicationContext)
+        search_broad_view_more_act_rv.adapter = searchResultActBroadRecyclerAdapter
     }
 
     // 상태바 투명하게 하는 함수
