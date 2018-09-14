@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".SearchResultActivity"
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_result_act_top_bar">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <!--연예인 방송 단-->
+                <RelativeLayout
+                    android:id="@+id/search_result_act_celeb_borad_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="연예인 / 방송"
+                        android:textColor="#5E5E5E"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/nanumsquareotf_bold_normal"
+                        android:layout_marginLeft="16dp"
+                        android:layout_centerVertical="true"/>
+
+                    <!--더보기 버튼-->
+                    <RelativeLayout
+                        android:id="@+id/search_result_act_celeb_borad_see_more_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="12dp"
+                        android:layout_alignParentRight="true"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="더보기"
+                            android:textColor="#40D39F"
+                            android:textSize="13dp"
+                            android:fontFamily="@font/nanumsquareotf_bold_normal"
+                            android:layout_margin="4dp"/>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <!--연예인 방송 단 리사이클러뷰-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/search_result_act_celeb_borad_rv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/search_result_act_celeb_borad_rl"></android.support.v7.widget.RecyclerView>
+
+                <View
+                    android:id="@+id/search_result_act_celeb_borad_under_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#F5F5F5"
+                    android:layout_below="@+id/search_result_act_celeb_borad_rv"
+                    ></View>
+
+                <!--장소단-->
+                <RelativeLayout
+                    android:id="@+id/search_result_act_spot_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@+id/search_result_act_celeb_borad_under_bar"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="장소"
+                        android:textColor="#5E5E5E"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/nanumsquareotf_bold_normal"
+                        android:layout_marginLeft="16dp"
+                        android:layout_centerVertical="true"/>
+
+                    <!--더보기 버튼-->
+                    <RelativeLayout
+                        android:id="@+id/search_result_act_spot_see_more_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="12dp"
+                        android:layout_alignParentRight="true"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="더보기"
+                            android:textColor="#40D39F"
+                            android:textSize="13dp"
+                            android:fontFamily="@font/nanumsquareotf_bold_normal"
+                            android:layout_margin="4dp"/>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <!--장소단 리사이클러뷰-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/search_result_act_spot_rv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/search_result_act_spot_rl"></android.support.v7.widget.RecyclerView>
+
+                <View
+                    android:id="@+id/search_result_act_spot_under_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#F5F5F5"
+                    android:layout_below="@+id/search_result_act_spot_rv"
+                    ></View>
+
+                <!--이벤트단-->
+                <RelativeLayout
+                    android:id="@+id/search_result_act_event_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@+id/search_result_act_spot_under_bar"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="이벤트"
+                        android:textColor="#5E5E5E"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/nanumsquareotf_bold_normal"
+                        android:layout_marginLeft="16dp"
+                        android:layout_centerVertical="true"/>
+
+                    <!--더보기 버튼-->
+                    <RelativeLayout
+                        android:id="@+id/search_result_act_event_see_more_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="12dp"
+                        android:layout_alignParentRight="true"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="더보기"
+                            android:textColor="#40D39F"
+                            android:textSize="13dp"
+                            android:fontFamily="@font/nanumsquareotf_bold_normal"
+                            android:layout_margin="4dp"/>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <!--이벤트단 리사이클러뷰-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/search_result_act_event_rv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/search_result_act_event_rl"></android.support.v7.widget.RecyclerView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#F5F5F5"
+                    android:layout_below="@+id/search_result_act_event_rv"
+                    ></View>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!--상단탭-->
+    <RelativeLayout
+        android:id="@+id/search_result_act_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        >
+        <!--백버튼-->
+        <RelativeLayout
+            android:id="@+id/search_result_act_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/main_back_arrow"
+                android:layout_margin="8dp"/>
+        </RelativeLayout>
+
+        <!--검색결과와 아이콘-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            >
+
+            <!--이미지 버튼-->
+            <ImageView
+                android:id="@+id/search_result_act_result_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/search_icon"
+                />
+            <!--검색 결과 text-->
+            <TextView
+                android:layout_toRightOf="@+id/search_result_act_result_iv"
+                android:id="@+id/search_result_act_result_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="방탄"
+                android:textSize="15dp"
+                android:textColor="#5E5E5E"
+                android:fontFamily="@font/nanumsquareotf_bold_normal"
+                />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#FFFFFF"
+            android:elevation="3dp"
+            android:layout_alignParentBottom="true"></View>
+
+    </RelativeLayout>
+</RelativeLayout>
