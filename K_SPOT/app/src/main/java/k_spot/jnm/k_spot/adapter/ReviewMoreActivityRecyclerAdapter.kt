@@ -85,7 +85,14 @@ class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterDa
             holder.review_more_third_report_btn.setBackgroundColor(Color.parseColor("#FFFFFF"))
             holder.review_more_fourth_report_btn.setBackgroundColor(Color.parseColor("#FFFFFF"))
             holder.review_more_fifth_report_btn.setBackgroundColor(Color.parseColor("#FFFFFF"))
+            holder.review_more_report_receipt_btn.visibility = View.VISIBLE
         }
+
+        // 신고가 접수되었습니다 뷰에서 확인 버튼
+        holder.review_more_report_receipt_confirm_btn.setOnClickListener {
+            holder.review_more_report_receipt_btn.visibility = View.GONE
+        }
+
 
 
         // starCount 통신으로 받아와야함.
@@ -156,6 +163,10 @@ class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterDa
         var review_more_fourth_report_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_fourth_btn)
         var review_more_fifth_report_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_fifth_btn)
         var review_more_report_confirm_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_confirm_btn)
+        var review_more_report_receipt_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_Receipt_rl)
+        var review_more_report_receipt_confirm_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_Receipt_corfirm_btn)
+
+
     }
 }
 
