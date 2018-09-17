@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ReviewWriteActivity"
     android:background="#FFFFFF"
+    android:fitsSystemWindows="true"
     >
 
     <!--탑바-->
@@ -49,11 +50,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="완료"
-                android:textSize="18dp"
-                android:textColor="#40D39F"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/nanumsquareotf_bold_normal"
-                android:layout_margin="8dp"/>
+                android:text="완료"
+                android:textColor="#40D39F"
+                android:textSize="18dp" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -100,7 +106,7 @@
         <LinearLayout
             android:id="@+id/review_write_act_star_ll"
             android:layout_width="132dp"
-            android:layout_height="22dp"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="horizontal">
         </LinearLayout>
@@ -204,7 +210,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp">
 
             <TextView
                 android:id="@+id/review_write_act_display_editText_num_tv"
