@@ -126,7 +126,6 @@
     <!--이제부터 중요함-->
     <!--기능 더보기 버튼 눌렀을 때 나오는-->
     <!--신고 사유 박스-->
-
     <RelativeLayout
         android:id="@+id/review_more_act_rv_item_report_rl"
         android:layout_width="match_parent"
@@ -136,18 +135,16 @@
         android:layout_marginRight="32dp"
         android:background="@drawable/rv_item_review_more_act_box_shape"
         android:elevation="10dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="290dp"
             android:orientation="vertical">
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -157,6 +154,7 @@
                     android:text="신고 사유를 선택해주세요"
                     android:textColor="#414141"
                     android:textSize="14dp" />
+
             </RelativeLayout>
 
             <View
@@ -164,6 +162,7 @@
                 android:layout_height="0.5dp"
                 android:background="#E0E0E0" />
 
+            <!--음란물btn-->
             <RelativeLayout
                 android:id="@+id/review_more_act_rv_item_report_first_btn"
                 android:layout_width="match_parent"
@@ -186,6 +185,7 @@
                 android:layout_height="0.5dp"
                 android:background="#E0E0E0" />
 
+            <!--사칭 및 사기 btn-->
             <RelativeLayout
                 android:id="@+id/review_more_act_rv_item_report_second_btn"
                 android:layout_width="match_parent"
@@ -207,7 +207,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#E0E0E0" />
-
+            <!--허위 사실 유포 btn-->
             <RelativeLayout
                 android:id="@+id/review_more_act_rv_item_report_third_btn"
                 android:layout_width="match_parent"
@@ -230,6 +230,7 @@
                 android:layout_height="0.5dp"
                 android:background="#E0E0E0" />
 
+            <!--상업적 광고 및 판매 btn-->
             <RelativeLayout
                 android:id="@+id/review_more_act_rv_item_report_fourth_btn"
                 android:layout_width="match_parent"
@@ -252,6 +253,7 @@
                 android:layout_height="0.5dp"
                 android:background="#E0E0E0" />
 
+            <!--욕설 및 불쾌감을 주는 표현-->
             <RelativeLayout
                 android:id="@+id/review_more_act_rv_item_report_fifth_btn"
                 android:layout_width="match_parent"
@@ -274,6 +276,7 @@
                 android:layout_height="0.5dp"
                 android:background="#E0E0E0" />
 
+            <!--확인 btn-->
             <RelativeLayout
                 android:id="@+id/review_more_act_rv_item_report_confirm_btn"
                 android:layout_width="match_parent"
@@ -296,6 +299,7 @@
 
     </RelativeLayout>
 
+    <!--신고 접수 View-->
     <RelativeLayout
         android:id="@+id/review_more_act_rv_item_report_Receipt_rl"
         android:layout_width="match_parent"
@@ -313,6 +317,7 @@
             android:orientation="vertical"
             >
 
+            <!--신고가 완료되었습니다-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -332,6 +337,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#E0E0E0" />
+            <!--확인-->
             <RelativeLayout
                 android:id="@+id/review_more_act_rv_item_report_Receipt_corfirm_btn"
                 android:layout_width="match_parent"
@@ -350,11 +356,7 @@
                     android:textSize="14dp"
                     />
             </RelativeLayout>
-
         </LinearLayout>
-
-
-
     </RelativeLayout>
 
 </RelativeLayout>
