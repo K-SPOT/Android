@@ -1,19 +1,27 @@
 package k_spot.jnm.k_spot.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import k_spot.jnm.k_spot.R
 
 class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterData : ArrayList<ReviewMoreRecyclerAdpaterData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+//    //클릭 리스너
+//    lateinit var onItemClick : View.OnClickListener
+//    fun setOnItemClickListener(l : View.OnClickListener){
+//        onItemClick = l
+//    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val mainView : View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_review_more_act, parent, false)
+//        mainView.setOnClickListener(onItemClick)
         return ReviewMoreActivityRecyclerAdapter.Holder(mainView)
+
     }
 
     override fun getItemCount(): Int {
@@ -33,6 +41,51 @@ class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterDa
         holder.review_more_writer.text = reviewMoreRecyclerAdpaterData[position].writer
 
         holder.review_more_date.text = reviewMoreRecyclerAdpaterData[position].date
+
+        // 신고하기 버튼 클릭 시
+        holder.review_more_btn.setOnClickListener {
+            holder.review_more_report_rl.visibility = View.VISIBLE
+        }
+        // 음란물 신고 논리 처리
+        holder.review_more_first_report_btn.setOnClickListener {
+            Toast.makeText(ctx,"음란물 신고 논리처리", Toast.LENGTH_SHORT).show()
+            holder.review_more_first_report_btn.setBackgroundColor(Color.parseColor("#F5F5F5"))
+        }
+
+        // 사칭 및 사기 논리 처리
+        holder.review_more_second_report_btn.setOnClickListener {
+            Toast.makeText(ctx,"사칭 및 사기 논리처리", Toast.LENGTH_SHORT).show()
+            holder.review_more_second_report_btn.setBackgroundColor(Color.parseColor("#F5F5F5"))
+        }
+
+        // 허위 사실 유포 논리 처리
+        holder.review_more_third_report_btn.setOnClickListener {
+            Toast.makeText(ctx,"허위 사실 유포 논리 처리", Toast.LENGTH_SHORT).show()
+            holder.review_more_third_report_btn.setBackgroundColor(Color.parseColor("#F5F5F5"))
+        }
+
+        // 상업적 광고 및 판매
+        holder.review_more_fourth_report_btn.setOnClickListener {
+            Toast.makeText(ctx,"상업적 광고 및 판매", Toast.LENGTH_SHORT).show()
+            holder.review_more_fourth_report_btn.setBackgroundColor(Color.parseColor("#F5F5F5"))
+        }
+
+        // 욕설 및 불쾌감을 주는 행위
+        holder.review_more_fifth_report_btn.setOnClickListener {
+            Toast.makeText(ctx,"욕설 및 불쾌감을 주는 행위", Toast.LENGTH_SHORT).show()
+            holder.review_more_fifth_report_btn.setBackgroundColor(Color.parseColor("#F5F5F5"))
+        }
+
+        // 확인 버튼
+        holder.review_more_report_confirm_btn.setOnClickListener {
+            Toast.makeText(ctx,"확인", Toast.LENGTH_SHORT).show()
+            holder.review_more_report_rl.visibility = View.GONE
+            holder.review_more_first_report_btn.setBackgroundColor(Color.parseColor("#FFFFFF"))
+            holder.review_more_second_report_btn.setBackgroundColor(Color.parseColor("#FFFFFF"))
+            holder.review_more_third_report_btn.setBackgroundColor(Color.parseColor("#FFFFFF"))
+            holder.review_more_fourth_report_btn.setBackgroundColor(Color.parseColor("#FFFFFF"))
+            holder.review_more_fifth_report_btn.setBackgroundColor(Color.parseColor("#FFFFFF"))
+        }
 
 
         // starCount 통신으로 받아와야함.
@@ -95,6 +148,14 @@ class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterDa
         var review_more_star : LinearLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_star_ll)
         var review_more_writer : TextView = itemView!!.findViewById(R.id.review_more_act_rv_item_writer_tv)
         var review_more_date : TextView = itemView!!.findViewById(R.id.review_more_act_rv_item_date_tv)
+        var review_more_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_threedot_btn)
+        var review_more_report_rl : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_rl)
+        var review_more_first_report_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_first_btn)
+        var review_more_second_report_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_second_btn)
+        var review_more_third_report_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_third_btn)
+        var review_more_fourth_report_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_fourth_btn)
+        var review_more_fifth_report_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_fifth_btn)
+        var review_more_report_confirm_btn : RelativeLayout = itemView!!.findViewById(R.id.review_more_act_rv_item_report_confirm_btn)
     }
 }
 
