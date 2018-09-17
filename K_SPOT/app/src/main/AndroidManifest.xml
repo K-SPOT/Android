@@ -17,15 +17,16 @@
             android:fitsSystemWindows="true"
             android:label="@string/title_activity_detailed_entertainer_page"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.SpotViewMoreActivity">
-
-        </activity>
+        <activity android:name=".activity.SpotViewMoreActivity"></activity>
         <activity android:name=".activity.RecommendViewMoreActivity" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".SearchResultActivity"></activity>
+        <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchBraodViewMoreActivity" />
-        <activity android:name=".SearchSpotViewMoreActivity"></activity>
+        <activity android:name=".SearchSpotViewMoreActivity" />
         <activity android:name=".ReviewMoreActivity">
+
+        </activity>
+        <activity android:name=".ReviewWriteActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
