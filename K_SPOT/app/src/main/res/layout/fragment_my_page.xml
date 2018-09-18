@@ -4,14 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <Button
-        android:text="상세보기 페이지"
-        android:layout_marginTop="36dp"
-        android:id="@+id/test_btn_mypage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <!--탑바-->
     <RelativeLayout
         android:id="@+id/my_page_frag_top_bar"
@@ -125,7 +117,7 @@
         android:layout_height="241dp"
         android:layout_below="@+id/my_page_frag_my_info_rl"
         android:layout_marginTop="20dp"
-        android:background="#FBFBFB">
+        android:background="#F5F5F5">
 
         <!--내 구독 + 더보기 btn-->
         <RelativeLayout
