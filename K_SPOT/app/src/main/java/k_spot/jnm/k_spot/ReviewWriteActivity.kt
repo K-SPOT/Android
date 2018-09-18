@@ -16,6 +16,8 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_review_write.*
@@ -184,6 +186,52 @@ class ReviewWriteActivity : AppCompatActivity() {
         }
     }
 
+    // 큰 별 리뷰 만들기
+    fun makeReviewMoreStar(starCount : Double) {
+
+        // size 5의 이미지 뷰 배열 생성
+        var stars: Array<ImageView?> = arrayOfNulls<ImageView>(5)
+        // star 생성
+        for (i in 0 until 5) {
+
+            if (i < starCount) {
+
+                // 별 반개를 표현 해야 할 때
+                if (0.5 <= (starCount - i) && (starCount - i) <= 0.99) {
+                    // 별 반개 그리는거
+                    stars[i] = ImageView(applicationContext)
+                    stars[i]!!.setImageDrawable(resources.getDrawable(R.drawable.category_reveiw_big_star_empty))
+                } else if (0 <= (starCount - i) && (starCount - i) < 0.5) {
+                    // 마지막 별이 0~0.5일 때 꽉찬 별 그리는 거
+                    stars[i] = ImageView(applicationContext)
+                    stars[i]!!.setImageDrawable(resources.getDrawable(R.drawable.category_reveiw_big_star_empty))
+                } else {
+                    // 꽉찬 별을 표현 해야 할 때
+                    stars[i] = ImageView(applicationContext)
+                    stars[i]!!.setImageDrawable(resources.getDrawable(R.drawable.category_reveiw_big_star))
+                }
+
+            } else {
+                // 빈 별
+                stars[i] = ImageView(applicationContext)
+                stars[i]!!.setImageDrawable(resources.getDrawable(R.drawable.category_reveiw_big_star_empty))
+            }
+            val params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+
+            val dp = applicationContext.resources.displayMetrics.density
+
+            // 인디케이터 점 마진 설정
+            params.setMargins(3*dp.toInt(), 0, 3*dp.toInt(), 0)
+            //LinearView에 뷰 생성
+            review_write_act_star_ll!!.
+                    (stars[i], params)
+        }
+
+    }
+
     fun setOnClickListener() {
 
         // 이미지 바꾸기
@@ -206,6 +254,54 @@ class ReviewWriteActivity : AppCompatActivity() {
         review_write_act_back_btn.setOnClickListener {
             finish()
         }
+
+        review_write_act_star_0btn.setOnClickListener {
+            review_write_act_star_tv.text = "0"
+//            makeReviewMoreStar(0.0)
+        }
+        review_write_act_star_0_5btn.setOnClickListener {
+            review_write_act_star_tv.text = "0.5"
+//            makeReviewMoreStar(0.5)
+        }
+        review_write_act_star_1btn.setOnClickListener {
+            review_write_act_star_tv.text = "1"
+//            makeReviewMoreStar(1.0)
+        }
+        review_write_act_star_1_5btn.setOnClickListener {
+            review_write_act_star_tv.text = "1.5"
+//            makeReviewMoreStar(1.5)
+        }
+        review_write_act_star_2btn.setOnClickListener {
+            review_write_act_star_tv.text = "2"
+//            makeReviewMoreStar(2.0)
+        }
+        review_write_act_star_2_5btn.setOnClickListener {
+            review_write_act_star_tv.text = "2.5"
+//            makeReviewMoreStar(2.5)
+        }
+        review_write_act_star_3btn.setOnClickListener {
+            review_write_act_star_tv.text = "3"
+//            makeReviewMoreStar(3.0)
+        }
+        review_write_act_star_3_5btn.setOnClickListener {
+            review_write_act_star_tv.text = "3.5"
+//            makeReviewMoreStar(3.5)
+        }
+        review_write_act_star_4btn.setOnClickListener {
+            review_write_act_star_tv.text = "4"
+//            makeReviewMoreStar(4.0)
+        }
+        review_write_act_star_4_5btn.setOnClickListener {
+            review_write_act_star_tv.text = "4.5"
+//            makeReviewMoreStar(4.5)
+        }
+        review_write_act_star_5btn.setOnClickListener {
+            review_write_act_star_tv.text = "5"
+//            makeReviewMoreStar(5.0)
+        }
+
+
+
 
 
     }
