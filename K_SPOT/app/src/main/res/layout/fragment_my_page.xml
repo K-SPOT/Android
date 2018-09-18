@@ -2,7 +2,14 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:text="상세보기 페이지"
+        android:layout_marginTop="36dp"
+        android:id="@+id/test_btn_mypage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.CategoryDetailActivity
+import kotlinx.android.synthetic.main.fragment_my_page.*
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 class MyPageFragment : Fragment(){
@@ -17,6 +20,11 @@ class MyPageFragment : Fragment(){
         super.onActivityCreated(savedInstanceState)
 
         toast("마이 페이지")
+
+        test_btn_mypage.setOnClickListener {
+            startActivity<CategoryDetailActivity>()
+        }
+
 
     }
 }
