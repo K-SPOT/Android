@@ -226,8 +226,7 @@ class ReviewWriteActivity : AppCompatActivity() {
             // 인디케이터 점 마진 설정
             params.setMargins(3*dp.toInt(), 0, 3*dp.toInt(), 0)
             //LinearView에 뷰 생성
-            review_write_act_star_ll!!.
-                    (stars[i], params)
+            review_write_act_star_ll!!.addView(stars[i], params)
         }
 
     }
