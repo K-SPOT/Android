@@ -9,12 +9,21 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
+import k_spot.jnm.k_spot.Network.ApplicationController
+import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.adapter.SubscribeActRecyclerViewAdapter
-import k_spot.jnm.k_spot.adapter.SubscribeActRecyclerViewAdapterData
+import k_spot.jnm.k_spot.data.BroadcastData
+import k_spot.jnm.k_spot.data.GetUserSubscribeResponse
+import k_spot.jnm.k_spot.data.UserSubscribeData
 import kotlinx.android.synthetic.main.activity_subscribe.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class SubscribeActivity : AppCompatActivity() {
+
+    lateinit var networkService: NetworkService
 
     // tabFlag가 true일 땐 연예인 탭 활성화
     // tabFlag가 false일 땐 방송 탭 활성화
@@ -26,15 +35,16 @@ class SubscribeActivity : AppCompatActivity() {
     // 검정색
     var tabUnActiveColor = Color.parseColor("#000000")
 
-
-    lateinit var subscribeActBroadCastTabItems: ArrayList<SubscribeActRecyclerViewAdapterData>
-    lateinit var subscribeActCelebTabItems: ArrayList<SubscribeActRecyclerViewAdapterData>
+    lateinit var userSubscribeData : UserSubscribeData
+    lateinit var subscribeActBroadCastTabItems: ArrayList<BroadcastData>
+    lateinit var subscribeActCelebTabItems: ArrayList<BroadcastData>
     lateinit var subscribeActRecyclerViewAdapter: SubscribeActRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subscribe)
 
+        getSubscribeCeleb()
         setOnClickListener()
     }
 
@@ -58,18 +68,6 @@ class SubscribeActivity : AppCompatActivity() {
 
                 tabFlag = false
 
-
-
-                // 통신하면 당연히 삭제.
-                subscribeActBroadCastTabItems = ArrayList()
-                subscribeActBroadCastTabItems.add(SubscribeActRecyclerViewAdapterData(R.drawable.category_list_blackpink_img,"블랙핑크",false))
-                subscribeActBroadCastTabItems.add(SubscribeActRecyclerViewAdapterData(R.drawable.category_list_bts_img,"BTS",true))
-                subscribeActBroadCastTabItems.add(SubscribeActRecyclerViewAdapterData(R.drawable.category_list_exo_img,"엑소",true))
-                var i = 0
-                while (i < 20) {
-                    subscribeActBroadCastTabItems.add(SubscribeActRecyclerViewAdapterData(R.drawable.category_list_blackpink_img,"블랙핑크",true))
-                    i++
-                }
                 makeSubscribeActRecyclerView(subscribeActBroadCastTabItems)
 
             }
@@ -93,16 +91,6 @@ class SubscribeActivity : AppCompatActivity() {
 
                 tabFlag = true
 
-                // 통신하면 당연히 삭제.
-                subscribeActCelebTabItems = ArrayList()
-                subscribeActCelebTabItems.add(SubscribeActRecyclerViewAdapterData(R.drawable.category_list_bts_img,"BTS",true))
-                subscribeActCelebTabItems.add(SubscribeActRecyclerViewAdapterData(R.drawable.category_list_exo_img,"엑소",true))
-                subscribeActCelebTabItems.add(SubscribeActRecyclerViewAdapterData(R.drawable.category_list_blackpink_img,"블랙핑크",false))
-                var j = 0
-                while (j < 20) {
-                    subscribeActCelebTabItems.add(SubscribeActRecyclerViewAdapterData(R.drawable.category_list_blackpink_img,"블랙핑크",true))
-                    j++
-                }
                 makeSubscribeActRecyclerView(subscribeActCelebTabItems)
 
             }
@@ -117,6 +105,25 @@ class SubscribeActivity : AppCompatActivity() {
 
 
     }
+
+    private fun getSubscribeCeleb() {
+        networkService = ApplicationController.instance.networkService
+        val getUserSubscribeResponse = networkService.getUserSubscribe()
+        getUserSubscribeResponse.enqueue(object : Callback<GetUserSubscribeResponse> {
+            override fun onFailure(call: Call<GetUserSubscribeResponse>?, t: Throwable?) {
+            }
+            override fun onResponse(call: Call<GetUserSubscribeResponse>?, response: Response<GetUserSubscribeResponse>?) {
+                if(response!!.isSuccessful){
+                    subscribeActBroadCastTabItems = ArrayList()
+                    subscribeActCelebTabItems = ArrayList()
+                    subscribeActCelebTabItems = response!!.body()!!.data!!.celebrity
+                    subscribeActBroadCastTabItems = response!!.body()!!.data!!.broadcast
+                }
+            }
+
+        })
+    }
+
 
     // 탭바를 오른쪽 방송 탭 밑으로 이동!
     private fun clickBoradcastTabAnimation(){
@@ -151,7 +158,7 @@ class SubscribeActivity : AppCompatActivity() {
         convertBlackAnimation.start()
     }
 
-    private fun makeSubscribeActRecyclerView(subscribeActItems : ArrayList<SubscribeActRecyclerViewAdapterData>) {
+    private fun makeSubscribeActRecyclerView(subscribeActItems : ArrayList<BroadcastData>) {
         subscribeActRecyclerViewAdapter = SubscribeActRecyclerViewAdapter(subscribeActItems, applicationContext)
         subscribe_act_rv.layoutManager = LinearLayoutManager(applicationContext)
         subscribe_act_rv.adapter = subscribeActRecyclerViewAdapter

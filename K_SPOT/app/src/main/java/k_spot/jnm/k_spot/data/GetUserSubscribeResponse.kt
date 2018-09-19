@@ -6,14 +6,14 @@ data class GetUserSubscribeResponse (
 )
 
 data class UserSubscribeData (
-        val celebrity: List<Broadcast>,
-        val broadcast: List<Broadcast>
+        val celebrity: ArrayList<BroadcastData>,
+        val broadcast: ArrayList<BroadcastData>
 )
 
-data class Broadcast (
-        val channel_id: Long,
+data class BroadcastData (
+        val channel_id: Int,
         val name: String,
         val thumbnail_img: String,
-        val new_post_check: Long
+        val new_post_check: Int
 )
 

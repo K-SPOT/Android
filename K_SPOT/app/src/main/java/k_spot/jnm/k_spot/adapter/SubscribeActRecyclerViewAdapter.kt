@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.data.BroadcastData
 
 
-class SubscribeActRecyclerViewAdapter (private var subscribeActItems : ArrayList<SubscribeActRecyclerViewAdapterData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class SubscribeActRecyclerViewAdapter (private var subscribeActItems : ArrayList<BroadcastData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.rv_item_subscribe_activity, parent, false)
         return Holder(mainView)
@@ -24,11 +26,14 @@ class SubscribeActRecyclerViewAdapter (private var subscribeActItems : ArrayList
 
         var holder : Holder = holder as Holder
 
-        holder.image.setImageResource(subscribeActItems[position].Image)
+        // rv 이미지 가져오기
+        Glide.with(ctx)
+                .load(subscribeActItems[position].thumbnail_img)
+                .into(holder.image)
 
         holder.name.text = subscribeActItems[position].name
 
-        if(subscribeActItems[position].newContentFlag == true){
+        if(subscribeActItems[position].new_post_check != 0){
             holder.new_contents_flag.visibility = View.VISIBLE
         }else{
             holder.new_contents_flag.visibility = View.INVISIBLE
@@ -41,9 +46,3 @@ class SubscribeActRecyclerViewAdapter (private var subscribeActItems : ArrayList
         var new_contents_flag : ImageView = itemView!!.findViewById(R.id.subscribe_act_rv_item_new_contents_iv)
     }
 }
-
-data class SubscribeActRecyclerViewAdapterData(
-        var Image : Int,
-        var name : String,
-        var newContentFlag : Boolean
-)
