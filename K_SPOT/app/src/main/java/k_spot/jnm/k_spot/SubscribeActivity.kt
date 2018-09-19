@@ -14,7 +14,6 @@ import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.adapter.SubscribeActRecyclerViewAdapter
 import k_spot.jnm.k_spot.data.BroadcastData
 import k_spot.jnm.k_spot.data.GetUserSubscribeResponse
-import k_spot.jnm.k_spot.data.UserSubscribeData
 import kotlinx.android.synthetic.main.activity_subscribe.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +34,6 @@ class SubscribeActivity : AppCompatActivity() {
     // 검정색
     var tabUnActiveColor = Color.parseColor("#000000")
 
-    lateinit var userSubscribeData : UserSubscribeData
     lateinit var subscribeActBroadCastTabItems: ArrayList<BroadcastData>
     lateinit var subscribeActCelebTabItems: ArrayList<BroadcastData>
     lateinit var subscribeActRecyclerViewAdapter: SubscribeActRecyclerViewAdapter
@@ -45,6 +43,7 @@ class SubscribeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_subscribe)
 
         getSubscribeCeleb()
+
         setOnClickListener()
     }
 
@@ -106,6 +105,7 @@ class SubscribeActivity : AppCompatActivity() {
 
     }
 
+    // 통신
     private fun getSubscribeCeleb() {
         networkService = ApplicationController.instance.networkService
         val getUserSubscribeResponse = networkService.getUserSubscribe()
@@ -114,16 +114,22 @@ class SubscribeActivity : AppCompatActivity() {
             }
             override fun onResponse(call: Call<GetUserSubscribeResponse>?, response: Response<GetUserSubscribeResponse>?) {
                 if(response!!.isSuccessful){
-                    subscribeActBroadCastTabItems = ArrayList()
                     subscribeActCelebTabItems = ArrayList()
-                    subscribeActCelebTabItems = response!!.body()!!.data!!.celebrity
+                    subscribeActBroadCastTabItems = ArrayList()
+
+                    // 검색 결과 없을 시
+                    if(response!!.body()!!.data!!.celebrity.size == 0 || response!!.body()!!.data!!.broadcast.size == 0) {
+                        subscribe_act_noting_result.visibility = View.VISIBLE
+                        subscribe_act_rv.visibility = View.GONE
+                    }
                     subscribeActBroadCastTabItems = response!!.body()!!.data!!.broadcast
+                    subscribeActCelebTabItems = response!!.body()!!.data!!.celebrity
+                    makeSubscribeActRecyclerView(subscribeActCelebTabItems)
                 }
             }
 
         })
     }
-
 
     // 탭바를 오른쪽 방송 탭 밑으로 이동!
     private fun clickBoradcastTabAnimation(){

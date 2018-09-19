@@ -102,11 +102,31 @@
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:visibility="visible"
         android:id="@+id/subscribe_act_rv"
         android:layout_marginTop="7dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/subscribe_act_tab_rl"></android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/subscribe_act_noting_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/subscribe_act_tab_rl">
+
+        <TextView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:text="구독 결과 없음"
+            android:textColor="#D8D8D8"
+            android:textSize="24dp" />
+
+    </RelativeLayout>
 
     
 
