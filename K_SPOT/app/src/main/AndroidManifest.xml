@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="k_spot.jnm.k_spot">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,12 +19,17 @@
         <activity
             android:name=".activity.MainActivity"
             android:fitsSystemWindows="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
 
         </activity>
         <activity
-            android:name=".activity.DetailedEntertainerPageActivity"
+            android:name=".activity.CategoryDetailActivity"
             android:fitsSystemWindows="true"
-            android:label="@string/title_activity_detailed_entertainer_page"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.SpotViewMoreActivity" />
         <activity android:name=".activity.RecommendViewMoreActivity" />
@@ -25,17 +37,19 @@
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchBraodViewMoreActivity" />
         <activity android:name=".SearchSpotViewMoreActivity" />
-        <activity android:name=".ReviewMoreActivity"></activity>
+        <activity android:name=".ReviewMoreActivity" />
         <activity android:name=".ReviewWriteActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".SubscribeActivity">
 
         </activity>
+        <activity android:name=".SubscribeActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".activity.MapDetailActivity"
+            android:label="@string/title_activity_map_detail"></activity>
     </application>
 
 </manifest>
