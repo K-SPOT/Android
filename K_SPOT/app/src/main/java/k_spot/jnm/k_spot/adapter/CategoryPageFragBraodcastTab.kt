@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
-import k_spot.jnm.k_spot.data.ChannelListData
-import k_spot.jnm.k_spot.data.GetCategoryListResponse
+import k_spot.jnm.k_spot.Get.ChannelListData
+import k_spot.jnm.k_spot.Get.GetCategoryListResponse
 import kotlinx.android.synthetic.main.fragment_category_list_broadcast_tab.view.*
 import retrofit2.Call
 import retrofit2.Callback

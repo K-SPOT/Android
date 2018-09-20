@@ -10,15 +10,15 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.R
-import k_spot.jnm.k_spot.data.MainFragViewPagerData
+import k_spot.jnm.k_spot.Get.Theme
 import java.util.*
 
 
-class MainFragViewPagerImageSliderAdapter(context: Context, mResources: ArrayList<MainFragViewPagerData>) : PagerAdapter() {
+class MainFragViewPagerImageSliderAdapter(context: Context, mResources: ArrayList<Theme>) : PagerAdapter() {
 
     var mContext : Context = context
     var mLayoutInflater : LayoutInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    var mResources : ArrayList<MainFragViewPagerData> = mResources
+    var mResources : ArrayList<Theme> = mResources
 
     override fun getItemPosition(`object`: Any): Int {
         return PagerAdapter.POSITION_NONE
@@ -41,24 +41,24 @@ class MainFragViewPagerImageSliderAdapter(context: Context, mResources: ArrayLis
         val imageView = itemView.findViewById(R.id.main_frag_rv_item_iv) as ImageView
 
         // str은 DB에서 받아온 String 값
-        val str : String = mResources[realPos].main_frag_view_pager_text
+//        val str : String = mResources[realPos].main_frag_view_pager_text
 
-        val tokens = StringTokenizer(str)
-        // str이 "안녕! \n오늘은 \n어디를 가볼까?" 일 때
-        // token1 = "안녕!"
-        val token1 : String = tokens.nextToken("\n")
-        // token2 = "오늘은"
-        val token2 : String = tokens.nextToken("\n")
-        // token3 = "어디를 가볼까?"
-        val token3 : String = tokens.nextToken("\n")
+//        val tokens = StringTokenizer(str)
+//        // str이 "안녕! \n오늘은 \n어디를 가볼까?" 일 때
+//        // token1 = "안녕!"
+//        val token1 : String = tokens.nextToken("\n")
+//        // token2 = "오늘은"
+//        val token2 : String = tokens.nextToken("\n")
+//        // token3 = "어디를 가볼까?"
+//        val token3 : String = tokens.nextToken("\n")
 
         // text1 = "안녕! \n 오늘은"
-        val text1 : String = token1 + "\n" + token2
+//        val text1 : String = mResources[realPos].title
 
-        textView.text = text1
-        textView2.text = token3
+        textView.text = mResources[realPos].title
+        textView2.text = mResources[realPos].subtitle
 
-        Glide.with(mContext).load(mResources[realPos].img_url).into(imageView)
+        Glide.with(mContext).load(mResources[realPos].main_img).into(imageView)
 
         container.addView(itemView, 0)
 
