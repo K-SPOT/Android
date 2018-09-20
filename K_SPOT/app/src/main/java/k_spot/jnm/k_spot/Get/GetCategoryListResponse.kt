@@ -1,4 +1,4 @@
-package k_spot.jnm.k_spot.data
+package k_spot.jnm.k_spot.Get
 
 data class GetCategoryListResponse (
         val message: String,
