@@ -31,13 +31,17 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.SpotViewMoreActivity" />
         <activity android:name=".activity.RecommendViewMoreActivity">
+
+        </activity>
+        <activity android:name=".SearchActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
-        <activity android:name=".SearchActivity" />
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchBraodViewMoreActivity" />
         <activity android:name=".SearchSpotViewMoreActivity" />
