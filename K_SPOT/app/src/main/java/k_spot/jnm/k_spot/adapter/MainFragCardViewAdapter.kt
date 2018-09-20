@@ -9,13 +9,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Get.Main
 import k_spot.jnm.k_spot.R
 
 
 
-class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<MainFragRecyclerViewData>) : RecyclerView.Adapter<MainFragCardViewAdapter.ViewHolder>() {
+class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<Main>) : RecyclerView.Adapter<MainFragCardViewAdapter.ViewHolder>() {
 
-    lateinit var mDataset: ArrayList<MainFragRecyclerViewData>
+    lateinit var mDataset: ArrayList<Main>
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
@@ -41,9 +43,9 @@ class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<MainF
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTextView.setText(mDataset[position].title)
-        holder.mTextView2.setText(mDataset[position].place_name)
-        holder.mImageView.setImageResource(mDataset[position].place_img)
+        holder.mTextView.setText(mDataset[position].name)
+        holder.mTextView2.setText(mDataset[position].description)
+        Glide.with(ctx).load(mDataset[position].img).into(holder.mImageView)
     }
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
@@ -53,10 +55,3 @@ class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<MainF
         val mTextView : TextView = itemView.findViewById(R.id.main_frag_rv_item_card_view_title_tv) as TextView
     }
 }
-
-data class MainFragRecyclerViewData (
-        val place_name : String,
-        val title : String,
-        // 지금은 Int 통신 시작하면 String으로 바꿔줘야함
-        val place_img : Int
-)

@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.Get.Theme
+import k_spot.jnm.k_spot.R
 import java.util.*
 
 
