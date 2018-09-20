@@ -24,7 +24,6 @@ class MainFragViewPagerImageSliderAdapter(context: Context, mResources: ArrayLis
         return PagerAdapter.POSITION_NONE
     }
 
-
     override fun getCount(): Int {
         return Integer.MAX_VALUE
     }
@@ -39,7 +38,6 @@ class MainFragViewPagerImageSliderAdapter(context: Context, mResources: ArrayLis
         val textView = itemView.findViewById(R.id.main_frag_rv_item_tv1) as TextView
         val textView2 = itemView.findViewById(R.id.main_frag_rv_item_tv2) as TextView
         val imageView = itemView.findViewById(R.id.main_frag_rv_item_iv) as ImageView
-
         // str은 DB에서 받아온 String 값
 //        val str : String = mResources[realPos].main_frag_view_pager_text
 
@@ -63,8 +61,6 @@ class MainFragViewPagerImageSliderAdapter(context: Context, mResources: ArrayLis
         container.addView(itemView, 0)
 
         return itemView
-
-
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {

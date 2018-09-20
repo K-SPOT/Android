@@ -58,33 +58,6 @@
             android:layout_marginRight="2dp"
             android:scaleType="fitXY"
             />
-
-        <!--이미지가 3장 이하면 이거 gone처-->
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/recommend_view_more_rv_item_contents_three_ll2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            >
-            <ImageView
-                android:id="@+id/recommend_view_more_rv_item_contents_iv2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@color/colorAccent"
-                android:layout_marginBottom="2dp"
-                android:scaleType="fitXY"/>
-
-            <ImageView
-                android:id="@+id/recommend_view_more_rv_item_contents_iv3"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@color/colorPrimaryDark"
-                android:scaleType="fitXY"/>
-        </LinearLayout>
     </LinearLayout>
     
     <!--첫 번쨰 설명 줄-->

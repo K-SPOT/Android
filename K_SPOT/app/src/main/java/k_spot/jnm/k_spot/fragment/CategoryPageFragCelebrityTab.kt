@@ -8,12 +8,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import k_spot.jnm.k_spot.Get.ChannelListData
+import k_spot.jnm.k_spot.Get.GetCategoryListResponse
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.CategoryPageFragRecyclerAdapter
-import k_spot.jnm.k_spot.Get.ChannelListData
-import k_spot.jnm.k_spot.Get.GetCategoryListResponse
 import kotlinx.android.synthetic.main.fragment_category_list_celebrity_tab_.view.*
 import retrofit2.Call
 import retrofit2.Callback

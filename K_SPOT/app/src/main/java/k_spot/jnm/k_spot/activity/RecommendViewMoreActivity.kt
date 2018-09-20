@@ -9,12 +9,25 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.WindowManager
+import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Get.GetThemeDetailResponse
+import k_spot.jnm.k_spot.Get.ThemeDetailThemeContentData
+import k_spot.jnm.k_spot.Network.ApplicationController
+import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.RecommendViewMoreRecyclerAdapter
-import k_spot.jnm.k_spot.adapter.RecommendViewMoreRecyclerAdpaterData
+import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_recommend_view_more.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+
 
 class RecommendViewMoreActivity : AppCompatActivity() {
+
+    lateinit var networkService : NetworkService
+    lateinit var themeDetailRecyclerViewItem: ArrayList<ThemeDetailThemeContentData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,50 +35,17 @@ class RecommendViewMoreActivity : AppCompatActivity() {
 
         setStatusBarTransparent()
 
-        makeRecyclerView()
+        getThemeDetailResponse()
 
         setListener()
     }
 
-    private fun makeRecyclerView() {
+    private fun makeRecyclerView(themeDetailRecyclerViewItem: ArrayList<ThemeDetailThemeContentData>) {
         val mRecyclerView = recommend_view_more_act_rv as RecyclerView
 //        val mRecyclerView = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
         mRecyclerView.setHasFixedSize(true)
-
-        var ImageSet0 = ArrayList<Int>()
-
-        ImageSet0.add(R.drawable.category_list_blackpink_img)
-        ImageSet0.add(R.drawable.category_list_exo_img)
-        ImageSet0.add(R.drawable.category_list_bts_img)
-
-        var ImageSet1 = ArrayList<Int>()
-
-        ImageSet1.add(R.drawable.category_list_exo_img)
-        ImageSet1.add(R.drawable.category_list_bts_img)
-
-        var ImageSet2 = ArrayList<Int>()
-
-        ImageSet2.add(R.drawable.category_list_bts_img)
-
-        var RecommendViewMoreDataSet = ArrayList<RecommendViewMoreRecyclerAdpaterData>()
-
-        RecommendViewMoreDataSet.add(RecommendViewMoreRecyclerAdpaterData("방탄소년단의 힘의 원천 ' 유정식당'\n" +
-                "\n",ImageSet0,"유정식당은 방탄 신인 시절 방송에서 추천한 맛집"
-                , "토종 흑돼지 전문식당! 방탄소년단 멤버들이 주로 먹었던 흑돼지고추장 오겹살과 돌솥비빔밥이 인기메뉴"
-                , "1인은 흑돼지돌솥비빔밥 2인은 쌈밥 추천!\n" + "\n"))
-
-        RecommendViewMoreDataSet.add(RecommendViewMoreRecyclerAdpaterData("방탄소년단이 나서서 홍보해주는 CAFE ' THE MINS '"
-                ,ImageSet1,"2AM의 멤버 이창민이 운영하는 카페\n" + "\n"
-                , "방탄소년단 멤버들이 자주 방문하는 곳으로도 유명\n" + "\n"
-                , "1인은 흑돼지돌솥비빔밥 2인은 쌈밥 추천!\n" + "\n"))
-
-        RecommendViewMoreDataSet.add(RecommendViewMoreRecyclerAdpaterData("방탄소년단의 힘의 원천 ' 유정식당'\n" +
-                "\n",ImageSet2,"유정식당은 방탄 신인 시절 방송에서 추천한 맛집"
-                , "토종 흑돼지 전문식당! 방탄소년단 멤버들이 주로 먹었던 흑돼지고추장 오겹살과 돌솥비빔밥이 인기메뉴"
-                ,"더민스는 생과일 에이드가 유명하며 특히 방탄소년단이 주로 마시는 생체리 에이드와 생레몬 에이드가 인기 메뉴다."))
-
         mRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
-        mRecyclerView.adapter = RecommendViewMoreRecyclerAdapter(RecommendViewMoreDataSet, applicationContext)
+        mRecyclerView.adapter = RecommendViewMoreRecyclerAdapter(themeDetailRecyclerViewItem, applicationContext)
     }
 
     // 상태바 투명하게 하는 함수
@@ -132,7 +112,7 @@ class RecommendViewMoreActivity : AppCompatActivity() {
                     recommend_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrab_btn_gray)
                     recommend_view_more_act_scrap_num_tv.setTextColor(Color.parseColor("#5E5E5E"))
                     recommend_view_more_act_top_bar_bottom_line.visibility = View.VISIBLE
-                }else{
+                } else {
                     window.statusBarColor = Color.TRANSPARENT
                     recommend_view_more_act_top_bar_rl.setBackgroundColor(Color.parseColor("#00000000"))
                     recommend_view_more_act_back_iv.setColorFilter(Color.parseColor("#FFFFFF"))
@@ -142,5 +122,33 @@ class RecommendViewMoreActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    fun getThemeDetailResponse() {
+        // 통신
+        networkService = ApplicationController.instance.networkService
+        val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
+        val getThemeDetailResponse = networkService.getThemeDetail(0, authorization, 6
+
+        )
+        getThemeDetailResponse.enqueue(object : Callback<GetThemeDetailResponse> {
+            override fun onFailure(call: Call<GetThemeDetailResponse>?, t: Throwable?) {
+            }
+            override fun onResponse(call: Call<GetThemeDetailResponse>?, response: Response<GetThemeDetailResponse>?) {
+                if (response!!.isSuccessful) {
+
+                    themeDetailRecyclerViewItem = ArrayList()
+
+                    Glide.with(applicationContext).load(response!!.body()!!.data!!.theme.img)
+                    recommend_view_more_act_title_tv2.text = response!!.body()!!.data!!.theme.title
+                    recommend_view_more_act_hash_tag_tv.text = response!!.body()!!.data!!.theme.subtitle
+
+                    themeDetailRecyclerViewItem = response!!.body()!!.data!!.theme_contents
+                    makeRecyclerView(themeDetailRecyclerViewItem)
+                }
+            }
+
+        })
+
     }
 }
