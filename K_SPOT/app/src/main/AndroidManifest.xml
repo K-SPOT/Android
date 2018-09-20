@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="k_spot.jnm.k_spot">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -22,11 +23,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:fitsSystemWindows="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.CategoryDetailActivity"
@@ -39,12 +36,8 @@
         <activity android:name=".SearchBraodViewMoreActivity" />
         <activity android:name=".SearchSpotViewMoreActivity" />
         <activity android:name=".ReviewMoreActivity" />
-        <activity android:name=".ReviewWriteActivity">
-
-        </activity>
-        <activity android:name=".SubscribeActivity">
-
-        </activity>
+        <activity android:name=".ReviewWriteActivity"></activity>
+        <activity android:name=".SubscribeActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -52,7 +45,31 @@
 
         <activity
             android:name=".activity.MapDetailActivity"
-            android:label="@string/title_activity_map_detail"></activity>
+            android:label="@string/title_activity_map_detail" />
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--카카오톡 로그인-->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+
+        <activity
+            android:name="com.kakao.auth.authorization.authcode.KakaoWebViewActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
