@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.Get.BroadcastData
+import k_spot.jnm.k_spot.R
 
 
 class SubscribeActRecyclerViewAdapter (private var subscribeActItems : ArrayList<BroadcastData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){

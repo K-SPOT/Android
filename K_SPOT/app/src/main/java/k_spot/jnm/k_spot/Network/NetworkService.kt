@@ -1,9 +1,6 @@
 package k_spot.jnm.k_spot.Network
 
-import k_spot.jnm.k_spot.Get.GetCategoryListResponse
-import k_spot.jnm.k_spot.Get.GetMainFragResponse
-import k_spot.jnm.k_spot.Get.GetThemeDetailResponse
-import k_spot.jnm.k_spot.Get.GetUserSubscribeResponse
+import k_spot.jnm.k_spot.Get.*
 import k_spot.jnm.k_spot.Post.PostKakaoResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -34,6 +31,13 @@ interface NetworkService {
             @Header("authorization") tokenValue : String?,
             @Path("theme_id") theme_id : Int
     ) : Call<GetThemeDetailResponse>
+
+    @GET("search/")
+    fun getSearchView(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?
+    ) : Call<GetSearchViewResponse>
+
     // 카카오 로그인 통신
     @FormUrlEncoded
     @POST("user/kakao/signin")

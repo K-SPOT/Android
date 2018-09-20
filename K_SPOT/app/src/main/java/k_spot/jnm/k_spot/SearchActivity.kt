@@ -5,33 +5,101 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
-import k_spot.jnm.k_spot.adapter.SearchActTagRecyclerAdapter
-import k_spot.jnm.k_spot.adapter.SearchActivityHashTagData
+import k_spot.jnm.k_spot.Get.BroadcastSearchViewData
+import k_spot.jnm.k_spot.Get.EventSearchViewData
+import k_spot.jnm.k_spot.Get.GetSearchViewResponse
+import k_spot.jnm.k_spot.Network.ApplicationController
+import k_spot.jnm.k_spot.Network.NetworkService
+import k_spot.jnm.k_spot.db.SharedPreferenceController
+import kotlinx.android.synthetic.main.activity_search.*
+import org.jetbrains.anko.startActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+
 
 class SearchActivity : AppCompatActivity() {
+
+    lateinit var networkService: NetworkService
+
+    lateinit var celebrity: ArrayList<BroadcastSearchViewData>
+    lateinit var broadcast: ArrayList<BroadcastSearchViewData>
+    lateinit var event: ArrayList<EventSearchViewData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val celebRecyclerView : RecyclerView = findViewById(R.id.search_act_search_recommend_celeb_rv)
-        makeRecommededHashTag(celebRecyclerView)
-
-        val broadcastRecyclerView : RecyclerView = findViewById(R.id.search_act_search_recommend_broadcast_rv)
-        makeRecommededHashTag(broadcastRecyclerView)
-
-        val eventRecyclerView : RecyclerView = findViewById(R.id.search_act_search_recommend_event_rv)
-        makeRecommededHashTag(eventRecyclerView)
+//        val celebRecyclerView : RecyclerView = findViewById(R.id.search_act_search_recommend_celeb_rv)
+//        makeRecommededHashTag(celebRecyclerView)
+//
+//        val broadcastRecyclerView : RecyclerView = findViewById(R.id.search_act_search_recommend_broadcast_rv)
+//        makeRecommededHashTag(broadcastRecyclerView)
+//
+//        val eventRecyclerView : RecyclerView = findViewById(R.id.search_act_search_recommend_event_rv)
+//        makeRecommededHashTag(eventRecyclerView)
 
         setStatusBarTransparent()
 
 
+        getSearchView()
+
+        setOnClickListener()
+
+
     }
 
+    fun setOnClickListener() {
+        search_act_back_btn.setOnClickListener {
+            finish()
+        }
+
+
+        search_act_search_recommend_celeb_rl.setOnClickListener {
+            var word = celebrity[0].channel_id
+        }
+
+        search_act_search_recommend_celeb_rl2.setOnClickListener {
+            var word = celebrity[1].channel_id
+        }
+
+        search_act_search_recommend_broadcast_rl.setOnClickListener {
+            var word = broadcast[0].channel_id
+        }
+
+        search_act_search_recommend_broadcast_rl2.setOnClickListener {
+            var word = broadcast[1].channel_id
+        }
+
+        search_act_search_recommend_broadcast_rl3.setOnClickListener {
+            var word = broadcast[2].channel_id
+        }
+
+        search_act_search_recommend_event_rl.setOnClickListener {
+            var word = event[0].spot_id
+        }
+
+        search_act_search_recommend_event_rl2.setOnClickListener {
+            var word = event[1].spot_id
+        }
+
+        search_act_search_btn.setOnTouchListener(View.OnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                search_act_search_btn.setBackgroundColor(Color.parseColor("#40D39F"))
+                return@OnTouchListener true
+            } else {
+                search_act_search_btn.setBackgroundColor(Color.parseColor("#C5C5C5"))
+            }
+            var word = search_act_search_edit_text.text
+            startActivity<SearchResultActivity>()
+            false
+        })
+
+    }
     // 상태바 투명하게 하는 함수
     private fun setStatusBarTransparent() {
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
@@ -85,27 +153,59 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeRecommededHashTag(recyclerView: RecyclerView) {
-        val mRecyclerView = recyclerView
-//        val mRecyclerView = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
-        mRecyclerView.setHasFixedSize(true)
+//    private fun makeRecommededHashTag(recyclerView: RecyclerView) {
+//        val mRecyclerView = recyclerView
+////        val mRecyclerView = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
+//        mRecyclerView.setHasFixedSize(true)
+//
+//        val mLayoutManager = GridLayoutManager(applicationContext, 1, GridLayoutManager.HORIZONTAL, false)
+//
+//        mRecyclerView.layoutManager = mLayoutManager
+//
+//        var myDataset = ArrayList<SearchActivityHashTagData>()
+//
+//        myDataset.add(SearchActivityHashTagData("블랙핑크"))
+//        myDataset.add(SearchActivityHashTagData("블랙핑크"))
+//        myDataset.add(SearchActivityHashTagData("블랙핑크"))
+//        myDataset.add(SearchActivityHashTagData("블랙핑크"))
+//        myDataset.add(SearchActivityHashTagData("블랙핑크"))
+//        myDataset.add(SearchActivityHashTagData("블랙핑크"))
+//        myDataset.add(SearchActivityHashTagData("블랙핑크"))
+//
+//
+//        val mAdapter = SearchActTagRecyclerAdapter(applicationContext, myDataset)
+//        mRecyclerView.adapter = mAdapter
+//    }
 
-        val mLayoutManager = GridLayoutManager(applicationContext, 1, GridLayoutManager.HORIZONTAL, false)
+    private fun getSearchView() {
+        networkService = ApplicationController.instance.networkService
+        val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
+        val getSearchViewResponse = networkService.getSearchView(0,authorization)
+        getSearchViewResponse.enqueue(object : Callback<GetSearchViewResponse> {
+            override fun onFailure(call: Call<GetSearchViewResponse>?, t: Throwable?) {
+            }
+            override fun onResponse(call: Call<GetSearchViewResponse>?, response: Response<GetSearchViewResponse>?) {
+                if(response!!.isSuccessful){
+                    celebrity = ArrayList()
+                    broadcast = ArrayList()
+                    event = ArrayList()
 
-        mRecyclerView.layoutManager = mLayoutManager
+                    broadcast = response!!.body()!!.data!!.broadcast
+                    celebrity = response!!.body()!!.data!!.celebrity
+                    event = response!!.body()!!.data!!.event
 
-        var myDataset = ArrayList<SearchActivityHashTagData>()
+                    search_act_search_recommend_celeb_tv1.text = celebrity[0].name
+                    search_act_search_recommend_celeb_tv2.text = celebrity[1].name
 
-        myDataset.add(SearchActivityHashTagData("블랙핑크"))
-        myDataset.add(SearchActivityHashTagData("블랙핑크"))
-        myDataset.add(SearchActivityHashTagData("블랙핑크"))
-        myDataset.add(SearchActivityHashTagData("블랙핑크"))
-        myDataset.add(SearchActivityHashTagData("블랙핑크"))
-        myDataset.add(SearchActivityHashTagData("블랙핑크"))
-        myDataset.add(SearchActivityHashTagData("블랙핑크"))
+                    search_act_search_recommend_broadcast_tv1.text = broadcast[0].name
+                    search_act_search_recommend_broadcast_tv2.text = broadcast[1].name
+                    search_act_search_recommend_broadcast_tv3.text = broadcast[2].name
 
+                    search_act_search_recommend_event_tv1.text = event[0].name
+                    search_act_search_recommend_event_tv2.text = event[1].name
+                }
+            }
 
-        val mAdapter = SearchActTagRecyclerAdapter(applicationContext, myDataset)
-        mRecyclerView.adapter = mAdapter
+        })
     }
 }
