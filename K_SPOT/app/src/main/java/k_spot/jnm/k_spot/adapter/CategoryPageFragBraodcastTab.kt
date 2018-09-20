@@ -1,23 +1,33 @@
 package k_spot.jnm.k_spot.adapter
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import k_spot.jnm.k_spot.Network.ApplicationController
+import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.data.ChannelListData
+import k_spot.jnm.k_spot.data.GetCategoryListResponse
 import kotlinx.android.synthetic.main.fragment_category_list_broadcast_tab.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class CategoryPageFragBraodcastTab: Fragment() {
 
-    lateinit var categoryPageItems: ArrayList<CategoryPageFragRecyclerAdpaterData>
+    lateinit var networkService: NetworkService
+    lateinit var channelBroadcastList: ArrayList<ChannelListData>
     lateinit var categoryPageFragRecyclerAdapter: CategoryPageFragRecyclerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_category_list_broadcast_tab, container, false)
-        makeRecyclerView(view)
-
+        getCategoryList(this!!.context!!, view)
         return view
     }
 
@@ -25,24 +35,33 @@ class CategoryPageFragBraodcastTab: Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    fun makeRecyclerView(view: View) {
-        categoryPageItems = ArrayList()
+    private fun getCategoryList(ctx : Context, view : View) {
+        networkService = ApplicationController.instance.networkService
+        val getCategoryListResponse = networkService.getCategoryList()
+        getCategoryListResponse.enqueue(object : Callback<GetCategoryListResponse> {
+            override fun onFailure(call: Call<GetCategoryListResponse>?, t: Throwable?) {
 
-        categoryPageItems.add(CategoryPageFragRecyclerAdpaterData(R.drawable.category_list_blackpink_img, "런닝맨", "20만", "3300만", true))
-        categoryPageItems.add(CategoryPageFragRecyclerAdpaterData(R.drawable.category_list_bts_img, "무한도전", "10만", "30만", false))
-        categoryPageItems.add(CategoryPageFragRecyclerAdpaterData(R.drawable.category_list_exo_img, "나혼자산다", "30만", "30만", true))
-        categoryPageItems.add(CategoryPageFragRecyclerAdpaterData(R.drawable.category_list_redvelvet_img, "레드벨벳", "50만", "30만", false))
-        categoryPageItems.add(CategoryPageFragRecyclerAdpaterData(R.drawable.category_list_twice_img, "트와이스", "20만", "90만", true))
-        categoryPageItems.add(CategoryPageFragRecyclerAdpaterData(R.drawable.category_list_winner_img, "위너", "20만", "40만", false))
-        categoryPageItems.add(CategoryPageFragRecyclerAdpaterData(R.drawable.category_list_winner_img, "위너", "20만", "330만", true))
+            }
 
-        var i = 0
-        while (i < 20) {
-            categoryPageItems.add(CategoryPageFragRecyclerAdpaterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "30만", true))
-            i++
-        }
-        categoryPageFragRecyclerAdapter = CategoryPageFragRecyclerAdapter(categoryPageItems, this!!.context!!)
-        view.category_list_brodcast_fragment_tab_rv.layoutManager = LinearLayoutManager(context)
-        view.category_list_brodcast_fragment_tab_rv.adapter = categoryPageFragRecyclerAdapter
+            override fun onResponse(call: Call<GetCategoryListResponse>?, response: Response<GetCategoryListResponse>?) {
+                if(response!!.isSuccessful){
+
+                    if(response!!.body()!!.data!!.channel_broadcast_list.size == 0) {
+                        Log.v("xx","Xxx")
+                    }else{
+                        channelBroadcastList = ArrayList()
+
+                        channelBroadcastList = response!!.body()!!.data!!.channel_broadcast_list
+
+                        categoryPageFragRecyclerAdapter = CategoryPageFragRecyclerAdapter(channelBroadcastList, ctx)
+                        view.category_list_brodcast_fragment_tab_rv.layoutManager = LinearLayoutManager(ctx)
+                        view.category_list_brodcast_fragment_tab_rv.adapter = categoryPageFragRecyclerAdapter
+
+                    }
+                }
+            }
+
+        })
     }
+
 }
