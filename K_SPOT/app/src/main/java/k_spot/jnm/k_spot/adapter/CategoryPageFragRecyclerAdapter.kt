@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.data.ChannelListData
 
-class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList<CategoryPageFragRecyclerAdpaterData>, private var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList<ChannelListData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.rv_item_category_list_frag, parent, false)
         return CategoryPageFragRecyclerAdapter.Holder(mainView)
@@ -24,20 +26,19 @@ class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList
 
         holder.category_list_index.text = (position+1).toString()
 
-        holder.category_list_image.setImageResource(categoryPageItems[position].Image)
-
         // 통신 시 주석 제거
-//        Glide.with(context)
-//                .load(categoryPageItems[position].Image)
-//                .into(holder.category_list_image)
+        Glide.with(ctx)
+                .load(categoryPageItems[position].thumbnail_img)
+                .into(holder.category_list_image)
 
         holder.category_list_name.text = categoryPageItems[position].name
 
-        holder.category_list_sub_num.text = categoryPageItems[position].sub_num
+        holder.category_list_sub_num.text = categoryPageItems[position].subscription_cnt.toString()
 
-        holder.category_list_post_num.text = categoryPageItems[position].post_num
+        holder.category_list_post_num.text = categoryPageItems[position].spot_cnt.toString()
 
-        if(categoryPageItems[position].flag == true){
+        // 구독된 경우
+        if(categoryPageItems[position].subscription == 0){
             holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
         }else{
             holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
@@ -53,11 +54,3 @@ class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList
         var category_list_sub_btn_image : ImageView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscribe_iv)
     }
 }
-
-data class CategoryPageFragRecyclerAdpaterData(
-        var Image : Int,
-        var name : String,
-        var sub_num : String,
-        var post_num : String,
-        var flag : Boolean
-)
