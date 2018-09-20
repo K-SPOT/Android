@@ -12,12 +12,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import k_spot.jnm.k_spot.Get.GetMainFragResponse
+import k_spot.jnm.k_spot.Get.Main
 import k_spot.jnm.k_spot.Get.Theme
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.MainFragCardViewAdapter
-import k_spot.jnm.k_spot.adapter.MainFragRecyclerViewData
 import k_spot.jnm.k_spot.adapter.MainFragViewPagerImageSliderAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_main_page.*
@@ -35,6 +35,9 @@ class MainPageFragment : Fragment() {
     lateinit var MainFragViewPagerImageSliderAdapter: MainFragViewPagerImageSliderAdapter
 //    lateinit var images: ArrayList<MainFragViewPagerData>
     lateinit var mainFragViewPagerItem : ArrayList<Theme>
+    lateinit var mainFragRecommendSpotRecyclerItem : ArrayList<Main>
+    lateinit var mainFragBestPlaceItem : ArrayList<Main>
+    lateinit var mainFragEventItem : ArrayList<Main>
     lateinit var networkService: NetworkService
 
 
@@ -52,17 +55,7 @@ class MainPageFragment : Fragment() {
 //        MainFragViewPagerImageSliderAdapter!!.notifyDataSetChanged()
 //        main_page_fragment_viewpager!!.setInterval(5000)
 //        main_page_fragment_viewpager!!.startAutoScroll(1000)
-        val mRecyclerView1 = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
-        // 첫 번째 CardView 생성 function
-        makeCardView(view, mRecyclerView1)
 
-        val mRecyclerView2 = view.findViewById(R.id.main_page_fragment_rv2) as RecyclerView
-
-        makeCardView(view, mRecyclerView2)
-
-        val mRecyclerView3 = view.findViewById(R.id.main_page_fragment_rv3) as RecyclerView
-
-        makeCardView(view, mRecyclerView3)
         return view
     }
 
@@ -144,7 +137,7 @@ class MainPageFragment : Fragment() {
 
     }
 
-    fun makeCardView(view: View, recyclerView: RecyclerView) {
+    fun makeCardView(view: View, recyclerView: RecyclerView, dataSet : ArrayList<Main>) {
         val mRecyclerView = recyclerView
 //        val mRecyclerView = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
         mRecyclerView.setHasFixedSize(true)
@@ -153,16 +146,7 @@ class MainPageFragment : Fragment() {
 
         mRecyclerView.layoutManager = mLayoutManager
 
-        var myDataset = ArrayList<MainFragRecyclerViewData>()
-
-        myDataset.add(MainFragRecyclerViewData("셀러브리티를 만나는 \n가장 새롭게 놀라운 경험", "SMTOWN 코엑스아티움", R.drawable.main_img))
-        myDataset.add(MainFragRecyclerViewData("셀러브리티를 만나는 \n가장 새롭게 놀라운 경험", "유럽 피사의 사탑", R.drawable.main_img))
-        myDataset.add(MainFragRecyclerViewData("셀러브리티를 만나는 \n가장 새롭게 놀라운 경험", "한국 태권도장", R.drawable.main_img))
-        myDataset.add(MainFragRecyclerViewData("셀러브리티를 만나는 \n가장 새롭게 놀라운 경험", "카카오 프렌즈", R.drawable.main_img))
-        myDataset.add(MainFragRecyclerViewData("셀러브리티를 만나는 \n가장 새롭게 놀라운 경험", "SMTOWN 코엑스아티움", R.drawable.main_img))
-
-
-        val mAdapter = MainFragCardViewAdapter(this!!.context!!, myDataset)
+        val mAdapter = MainFragCardViewAdapter(this!!.context!!, dataSet)
         mRecyclerView.adapter = mAdapter
     }
 
@@ -185,11 +169,28 @@ class MainPageFragment : Fragment() {
                 if (response!!.isSuccessful) {
                     mainFragViewPagerItem = ArrayList()
 
+                    mainFragRecommendSpotRecyclerItem = ArrayList()
+                    mainFragBestPlaceItem = ArrayList()
+                    mainFragEventItem = ArrayList()
+
                     mainFragViewPagerItem = response!!.body()!!.data!!.theme
 
+                    mainFragRecommendSpotRecyclerItem = response!!.body()!!.data!!.main_recommand_spot
+                    mainFragBestPlaceItem = response!!.body()!!.data!!.main_best_place
+                    mainFragEventItem = response!!.body()!!.data!!.main_best_event
+
+                    val mRecyclerView1 = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
+                    // 첫 번째 CardView 생성 function
+                    makeCardView(view, mRecyclerView1, mainFragRecommendSpotRecyclerItem)
+
+                    val mRecyclerView2 = view.findViewById(R.id.main_page_fragment_rv2) as RecyclerView
+
+                    makeCardView(view, mRecyclerView2, mainFragRecommendSpotRecyclerItem)
+
+                    val mRecyclerView3 = view.findViewById(R.id.main_page_fragment_rv3) as RecyclerView
+
+                    makeCardView(view, mRecyclerView3, mainFragEventItem)
                     makeViewPager(view ,mainFragViewPagerItem)
-
-
 
                 }
             }
