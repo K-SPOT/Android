@@ -8,35 +8,34 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Get.ChannelSearchResultData
 import k_spot.jnm.k_spot.R
 
-class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayList<SearchResultActBroadRecyclerAdapterData>, private var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayList<ChannelSearchResultData>, private var context: Context, private var ItemCount: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val mainView : View = LayoutInflater.from(context).inflate(R.layout.rv_item_search_result_act_celeb_broad_result, parent, false)
         return SearchResultActBroadRecyclerAdapter.Holder(mainView)
     }
 
     override fun getItemCount(): Int {
-        return searchBroadItems.size
+        return ItemCount
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var holder : Holder = holder as Holder
 
-        holder.result_image.setImageResource(searchBroadItems[position].Image)
+        Glide.with(context)
+                .load(searchBroadItems[position]!!.thumbnail_img)
+                .into(holder.result_image)
 
-        // 통신 시 주석 제거
-//        Glide.with(context)
-//                .load(categoryPageItems[position].Image)
-//                .into(holder.category_list_image)
+        holder.result_name.text = searchBroadItems[position]!!.name
 
-        holder.result_name.text = searchBroadItems[position].name
+        holder.result_sub_num.text = searchBroadItems[position]!!.subscription_cnt.toString()
 
-        holder.result_sub_num.text = searchBroadItems[position].sub_num
+        holder.result_post_num.text = searchBroadItems[position]!!.spot_cnt.toString()
 
-        holder.result_post_num.text = searchBroadItems[position].post_num
-
-        if(searchBroadItems[position].flag == true){
+        if(searchBroadItems[position]!!.subscription == 0){
             holder.result_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
         }else{
             holder.result_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
