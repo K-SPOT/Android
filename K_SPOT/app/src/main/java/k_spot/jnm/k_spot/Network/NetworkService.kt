@@ -47,4 +47,10 @@ interface NetworkService {
             @Field("access_token") access_token: String
     ): Call<PostKakaoResponse>
 
+
+
+
+
+    //윤환 통신
+
 }
