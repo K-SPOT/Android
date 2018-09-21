@@ -34,13 +34,6 @@
 
         </activity>
         <activity android:name=".SearchActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-
         </activity>
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchBraodViewMoreActivity" />
@@ -48,6 +41,8 @@
         <activity android:name=".ReviewMoreActivity" />
         <activity android:name=".ReviewWriteActivity"></activity>
         <activity android:name=".SubscribeActivity"></activity>
+
+        <activity android:name=".activity.UserInfoEditActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -57,7 +52,11 @@
             android:name=".activity.MapDetailActivity"
             android:label="@string/title_activity_map_detail" />
         <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!--카카오톡 로그인-->
