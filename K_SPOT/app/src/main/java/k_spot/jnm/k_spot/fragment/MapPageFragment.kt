@@ -31,6 +31,20 @@ class MapPageFragment : Fragment(){
         super.onActivityCreated(savedInstanceState)
         setRecyclerViewAdapter()
 
+        setClickListener()
+
+    }
+
+    fun setClickListener(){
+        btn_map_page_close_filtering.setOnClickListener {
+            ll_map_page_filtering.visibility = View.GONE
+            btn_map_page_close_filtering.visibility = View.GONE
+        }
+
+        btn_map_page_open_filtering.setOnClickListener {
+            ll_map_page_filtering.visibility = View.VISIBLE
+            btn_map_page_close_filtering.visibility = View.VISIBLE
+        }
     }
 
     private fun setRecyclerViewAdapter(){
