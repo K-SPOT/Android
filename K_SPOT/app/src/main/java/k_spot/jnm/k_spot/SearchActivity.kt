@@ -94,8 +94,8 @@ class SearchActivity : AppCompatActivity() {
             } else {
                 search_act_search_btn.setBackgroundColor(Color.parseColor("#C5C5C5"))
             }
-            var word = search_act_search_edit_text.text
-            startActivity<SearchResultActivity>()
+            var keyword = search_act_search_edit_text.text.toString()
+            startActivity<SearchResultActivity>("keyword" to keyword)
             false
         })
 
