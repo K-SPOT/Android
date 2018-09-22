@@ -1,6 +1,8 @@
 package k_spot.jnm.k_spot.Network
 
+import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.*
+import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.Post.PostKakaoResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -63,7 +65,28 @@ interface NetworkService {
 
 
 
+    //카테고리 상세보기 통신
+    @GET("channel/detail/{channel_id}")
+    fun getCategotyDetailResponse(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?,
+            @Path("channel_id") channel_id : Int
+    ) : Call<GetCategoryDetailResponse>
+    //채널 구독하기
+    @FormUrlEncoded
+    @POST("channel/subscription")
+    fun postChannelSubscripeResponse(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?,
+            @Field("channel_id") channel_id : Int
+    ) : Call<PostChannelSubscripeResponse>
+    //채널 구독 취소
+    @DELETE("channel/subscription/{channel_id}")
+    fun deleteChannelSubscripeResponse(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?,
+            @Path("channel_id") channel_id : Int
+    ) : Call<DeleteChannelScripteResponse>
 
-    //윤환 통신
 
 }
