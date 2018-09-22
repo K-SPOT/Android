@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import k_spot.jnm.k_spot.Get.PlaceRecommendData
 import k_spot.jnm.k_spot.R
-import k_spot.jnm.k_spot.data.RecommendSpotData
 
 
-class RecommendSpotRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<RecommendSpotData>) : RecyclerView.Adapter<RecommendSpotRecyclerViewAdapter.Holder>(){
+class PlaceRecommendRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<PlaceRecommendData>) : RecyclerView.Adapter<PlaceRecommendRecyclerViewAdapter.Holder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(ctx).inflate(R.layout.rv_item_category_detail_recommend_spot, parent, false)
         return Holder(view)
@@ -21,13 +23,16 @@ class RecommendSpotRecyclerViewAdapter(val ctx : Context, val dataList : ArrayLi
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         //holder.image
-        holder.mainTitle.text = dataList[position].main_title
+        holder.mainTitle.text = dataList[position].name
 
+        val requestOptions = RequestOptions()
+        Glide.with(ctx)
+                .load(dataList[position].img)
+                .into(holder.image)
     }
 
     inner class Holder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         var image : ImageView = itemView.findViewById(R.id.iv_rv_item_spot_main_img) as ImageView
         var mainTitle : TextView = itemView.findViewById(R.id.tv_rv_item_spot_main_title) as TextView
-        val subTitle : TextView = itemView.findViewById(R.id.tv_rv_item_spot_sub_title) as TextView
     }
 }
