@@ -38,6 +38,19 @@ interface NetworkService {
             @Header("authorization") tokenValue : String?
     ) : Call<GetSearchViewResponse>
 
+    @GET("search/{keyword}")
+    fun getSearchResult(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?,
+            @Path("keyword") keyword : String
+    ) : Call<GetSearchResultResponse>
+
+
+
+
+
+
+
     // 카카오 로그인 통신
     @FormUrlEncoded
     @POST("user/kakao/signin")
