@@ -12,9 +12,11 @@ import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Get.ChannelSearchResultData
 import k_spot.jnm.k_spot.R
 
-class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayList<ChannelSearchResultData>, private var context: Context, private var ItemCount: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayList<ChannelSearchResultData>, private var context: Context, private var ItemCount: Int, private var onItemClick: View.OnClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val mainView : View = LayoutInflater.from(context).inflate(R.layout.rv_item_search_result_act_celeb_broad_result, parent, false)
+        mainView.setOnClickListener(onItemClick)
         return SearchResultActBroadRecyclerAdapter.Holder(mainView)
     }
 
@@ -35,12 +37,28 @@ class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayLi
 
         holder.result_post_num.text = searchBroadItems[position]!!.spot_cnt.toString()
 
+        var flag: Int = searchBroadItems[position]!!.subscription
         if(searchBroadItems[position]!!.subscription == 0){
             holder.result_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
         }else{
             holder.result_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
         }
+
+        holder.result_sub_btn_btn.setOnClickListener {
+//            if 조건문으로 구독 안한 flag 일 경우
+//            subscription Flag 바꾸는 통신을 하고 한번 터치 시 tempFlag 값을 바꾸고
+            if(flag == 0){
+                holder.result_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
+                // 구독 신청 통신 필요
+                flag = 1
+            }else {
+                holder.result_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
+                // 플래그 바꾸는 통신 필요
+                flag = 0
+            }
+        }
     }
+
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var result_image : ImageView = itemView!!.findViewById(R.id.search_result_act_rv_item_image_iv)

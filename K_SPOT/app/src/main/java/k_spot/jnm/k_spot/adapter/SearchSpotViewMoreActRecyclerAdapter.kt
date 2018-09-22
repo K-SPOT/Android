@@ -8,13 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Get.PlaceSearchResultData
 import k_spot.jnm.k_spot.R
 
 
 
-class SearchSpotViewMoreActRecyclerAdapter(private var searchSpotViewMoreItems : ArrayList<SearchSpotViewMoreActSpotRecyclerAdapterData>, private var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SearchSpotViewMoreActRecyclerAdapter(private var searchSpotViewMoreItems : ArrayList<PlaceSearchResultData>, private var context: Context, private var onItemClick: View.OnClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val mainView : View = LayoutInflater.from(context).inflate(R.layout.rv_item_search_spot_view_more_act, parent, false)
+        mainView.setOnClickListener(onItemClick)
         return SearchSpotViewMoreActRecyclerAdapter.Holder(mainView)
     }
 
@@ -29,21 +32,17 @@ class SearchSpotViewMoreActRecyclerAdapter(private var searchSpotViewMoreItems :
 
         holder.result_image.background = drawable
         holder.result_image.clipToOutline = true
-
-        holder.result_image.setImageResource(searchSpotViewMoreItems[position].Image)
-
-        // 통신 시 주석 제거
-//        Glide.with(context)
-//                .load(categoryPageItems[position].Image)
-//                .into(holder.category_list_image)
+        Glide.with(context)
+                .load(searchSpotViewMoreItems[position].img)
+                .into(holder.result_image)
 
         holder.result_name.text = searchSpotViewMoreItems[position].name
 
-        holder.result_sub_text.text = searchSpotViewMoreItems[position].sub_text
+        holder.result_sub_text.text = searchSpotViewMoreItems[position].description
 
-        holder.result_address.text = searchSpotViewMoreItems[position].address
+        holder.result_address.text = searchSpotViewMoreItems[position].address_gu + " · " + searchSpotViewMoreItems[position].station
 
-        holder.result_sub_num.text = searchSpotViewMoreItems[position].sub_num
+        holder.result_sub_num.text = searchSpotViewMoreItems[position].scrap_cnt.toString()
     }
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -54,11 +53,3 @@ class SearchSpotViewMoreActRecyclerAdapter(private var searchSpotViewMoreItems :
         var result_sub_num : TextView = itemView!!.findViewById(R.id.search_spot_view_more_act_rv_item_sub_tv)
     }
 }
-
-data class SearchSpotViewMoreActSpotRecyclerAdapterData(
-        var Image : Int,
-        var name : String,
-        var sub_text : String,
-        var address : String,
-        var sub_num : String
-)

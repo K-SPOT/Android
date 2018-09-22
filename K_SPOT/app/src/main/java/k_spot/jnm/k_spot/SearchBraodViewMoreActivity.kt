@@ -4,14 +4,22 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import k_spot.jnm.k_spot.Get.ChannelSearchResultData
 import k_spot.jnm.k_spot.adapter.SearchResultActBroadRecyclerAdapter
+import kotlinx.android.synthetic.main.activity_search_braod_view_more.*
 
-class SearchBraodViewMoreActivity : AppCompatActivity() {
+class SearchBraodViewMoreActivity : AppCompatActivity(), View.OnClickListener {
+    override fun onClick(v: View?) {
+        val index: Int = search_broad_view_more_act_rv.getChildAdapterPosition(v)
+        val channel_id = searchBroadItems[index].channel_id
+        Log.v("channel_id", channel_id.toString())
+//        startActivity<ContentsDetail>("channel_id" to channel_id)
+    }
 
     lateinit var searchBroadItems: ArrayList<ChannelSearchResultData>
     lateinit var searchResultActBroadRecyclerAdapter: SearchResultActBroadRecyclerAdapter
@@ -19,42 +27,37 @@ class SearchBraodViewMoreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_braod_view_more)
-//        makeRecyclerView()
-
-        var searchBroadItems = intent.getParcelableArrayListExtra<Parcelable>("searchBroadItems")
-
-
-
-
+        searchBroadItems = intent.getParcelableArrayListExtra<ChannelSearchResultData>("searchBroadItems")
+        makeRecyclerView(searchBroadItems)
         setStatusBarTransparent()
-
-
+        setOnClickListener()
     }
 
-//    private fun makeRecyclerView() {
-//        searchBroadItems = ArrayList()
-//
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "3300만", true))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_bts_img, "방탄소년단", "10만", "30만", false))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_exo_img, "엑소", "30만", "30만", true))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "3300만", true))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_bts_img, "방탄소년단", "10만", "30만", false))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_exo_img, "엑소", "30만", "30만", true))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "3300만", true))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_bts_img, "방탄소년단", "10만", "30만", false))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_exo_img, "엑소", "30만", "30만", true))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "3300만", true))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_bts_img, "방탄소년단", "10만", "30만", false))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_exo_img, "엑소", "30만", "30만", true))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_blackpink_img, "블랙핑크", "20만", "3300만", true))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_bts_img, "방탄소년단", "10만", "30만", false))
-//        searchBroadItems.add(SearchResultActBroadRecyclerAdapterData(R.drawable.category_list_exo_img, "엑소", "30만", "30만", true))
-//
-//
-//        searchResultActBroadRecyclerAdapter = SearchResultActBroadRecyclerAdapter(searchBroadItems, applicationContext)
-//        search_broad_view_more_act_rv.layoutManager = LinearLayoutManager(applicationContext)
-//        search_broad_view_more_act_rv.adapter = searchResultActBroadRecyclerAdapter
-//    }
+    private fun setOnClickListener() {
+        search_broad_view_more_act_back_btn.setOnClickListener {
+            finish()
+        }
+        search_broad_view_more_act_filter.setOnClickListener {
+            search_broad_view_more_act_filter_on_rl.visibility = View.VISIBLE
+        }
+        search_broad_view_more_act_filter_cancle_btn.setOnClickListener {
+            search_broad_view_more_act_filter_on_rl.visibility = View.GONE
+        }
+        search_broad_view_more_act_filter_x_btn.setOnClickListener {
+            search_broad_view_more_act_filter_on_rl.visibility = View.GONE
+        }
+//##        // 검색 통신 필요 ##
+        search_broad_view_more_act_filter_enter_btn.setOnClickListener {
+            search_broad_view_more_act_filter_on_rl.visibility = View.GONE
+        }
+//##        // 검색 통신 필요 ##
+    }
+
+    private fun makeRecyclerView(searchBroadItems : ArrayList<ChannelSearchResultData>) {
+        searchResultActBroadRecyclerAdapter = SearchResultActBroadRecyclerAdapter(searchBroadItems, applicationContext, searchBroadItems.size, this)
+        search_broad_view_more_act_rv.layoutManager = LinearLayoutManager(applicationContext)
+        search_broad_view_more_act_rv.adapter = searchResultActBroadRecyclerAdapter
+    }
 
     // 상태바 투명하게 하는 함수
     private fun setStatusBarTransparent() {
