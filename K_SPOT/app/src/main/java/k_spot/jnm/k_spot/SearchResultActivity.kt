@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import k_spot.jnm.k_spot.Get.ChannelSearchResultData
@@ -18,6 +17,7 @@ import k_spot.jnm.k_spot.adapter.SearchResultActBroadRecyclerAdapter
 import k_spot.jnm.k_spot.adapter.SearchResultActSpotRecyclerAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_search_result.*
+import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,8 +31,6 @@ class SearchResultActivity : AppCompatActivity() {
     lateinit var searchResultActSpotRecyclerAdapter: SearchResultActSpotRecyclerAdapter
     lateinit var networkService: NetworkService
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
@@ -42,11 +40,22 @@ class SearchResultActivity : AppCompatActivity() {
         setStatusBarTransparent()
     }
 
+    fun setOnClickListener() {
+        search_result_act_celeb_borad_see_more_btn.setOnClickListener {
+            startActivity<SearchBraodViewMoreActivity>("searchBroadItems" to searchBroadItems)
+        }
+        search_result_act_celeb_borad_see_more_btn.setOnClickListener {
+//            startActivity<SearchSpotViewMoreActivity>()
+        }
+        search_result_act_celeb_borad_see_more_btn.setOnClickListener {
+            startActivity<SearchEventViewMoreActivity>()
+        }
+    }
+
     fun getSearchResult(keyword : String) {
         var keyword : String = keyword
         networkService = ApplicationController.instance.networkService
         val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
-        Log.v("123123", authorization)
         val getSearchResultResponse = networkService.getSearchResult(1, authorization, keyword)
         getSearchResultResponse.enqueue(object : Callback<GetSearchResultResponse> {
             override fun onFailure(call: Call<GetSearchResultResponse>?, t: Throwable?) {
@@ -74,6 +83,12 @@ class SearchResultActivity : AppCompatActivity() {
                             makeRecyclerView(searchBroadItems,2)
                         }
 
+                        if(searchSpotItems.size == 0 && searchEventItems.size == 0){
+                            search_result_act_celeb_borad_under_bar.visibility = View.GONE
+                        }
+
+                    }else {
+                        search_result_act_celeb_borad_all_rl.visibility = View.GONE
                     }
                     if(searchSpotItems.size != 0){
                         if(searchSpotItems.size == 1){
@@ -87,18 +102,26 @@ class SearchResultActivity : AppCompatActivity() {
                             makeRecyclerView1(searchSpotItems,4)
                         }
 
+                        if(searchEventItems.size == 0){
+                            search_result_act_spot_under_bar.visibility = View.GONE
+                        }
+
+                    }else {
+                        search_result_act_spot_all_rl.visibility = View.GONE
                     }
                     if(searchEventItems.size != 0){
                         if(searchEventItems.size == 1){
                             // 첫 번째 CardView 생성 function
-                            makeRecyclerView1(searchEventItems,1)
+                            makeRecyclerView2(searchEventItems,1)
                         }else if(searchEventItems.size == 2){
-                            makeRecyclerView1(searchEventItems,2)
+                            makeRecyclerView2(searchEventItems,2)
                         }else if(searchEventItems.size == 3){
-                            makeRecyclerView1(searchEventItems,3)
+                            makeRecyclerView2(searchEventItems,3)
                         }else if(searchEventItems.size >= 4){
-                            makeRecyclerView1(searchEventItems,4)
+                            makeRecyclerView2(searchEventItems,4)
                         }
+                    }else {
+                        search_result_act_event_all_rl.visibility = View.GONE
                     }
                 }
             }
@@ -178,4 +201,5 @@ class SearchResultActivity : AppCompatActivity() {
             }
         }
     }
+
 }
