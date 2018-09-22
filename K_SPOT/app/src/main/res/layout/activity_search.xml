@@ -312,6 +312,7 @@
 
 
     <RelativeLayout
+        style="@android:style/ButtonBar"
         android:id="@+id/search_act_search_btn"
         android:layout_width="match_parent"
         android:layout_height="70dp"

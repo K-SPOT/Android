@@ -56,7 +56,7 @@
 
     </RelativeLayout>
 
-    <!--장소-->
+    <!--이벤트-->
     <TextView
         android:id="@+id/search_event_view_more_act_tv"
         android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginLeft="16dp"
         android:layout_below="@+id/search_event_view_more_act_top_bar"
-        android:text="장소"
+        android:text="이벤트"
         android:textColor="#5E5E5E"
         android:textSize="16dp"
         android:fontFamily="@font/nanumsquareotf_bold"/>
@@ -94,6 +94,13 @@
         android:layout_height="match_parent"
         android:background="#77000000"
         android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/search_event_view_more_act_filter_cancle_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/search_event_view_more_act_filter_view_rl"
+            ></RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/search_event_view_more_act_filter_x_btn"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchBraodViewMoreActivity"
+    tools:context=".activity.SpotViewMoreActivity"
     android:fitsSystemWindows="true">
 
     <!--상단탭-->
@@ -89,10 +89,17 @@
 
     <!--필터 뷰-->
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/search_spot_view_more_act_filter_on_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#77000000">
+
+        <RelativeLayout
+            android:id="@+id/search_spot_view_more_act_filter_cancle_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/search_spot_view_more_act_filter_view_rl"></RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/search_spot_view_more_act_filter_x_btn"

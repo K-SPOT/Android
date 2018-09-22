@@ -9,6 +9,7 @@
     tools:context=".SearchResultActivity">
 
     <ScrollView
+        android:id="@+id/search_result_act_all_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_result_act_top_bar">
@@ -91,7 +92,6 @@
                     android:id="@+id/search_result_act_spot_rl"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:layout_below="@+id/search_result_act_celeb_borad_under_bar"
                     android:layout_marginTop="8dp">
 
                     <TextView
@@ -152,7 +152,6 @@
                     android:id="@+id/search_result_act_event_rl"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:layout_below="@+id/search_result_act_spot_under_bar"
                     android:layout_marginTop="8dp">
 
                     <TextView
@@ -205,6 +204,21 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/search_result_act_no_search_result_rl"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="검색 결과 없음"
+            android:layout_centerInParent="true"
+            android:textSize="30dp"
+            android:textColor="@color/searchgray"
+            android:fontFamily="@font/nanumsquareotf_bold_normal"/>
+    </RelativeLayout>
 
     <!--상단탭-->
     <RelativeLayout
