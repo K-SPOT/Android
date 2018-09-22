@@ -47,14 +47,7 @@ class MainPageFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_main_page, container, false)
 
-        // ViewPager 생성 function
-//        makeViewPager(view)
         getMainFragResonse(view)
-
-//        // Auto Scroll
-//        MainFragViewPagerImageSliderAdapter!!.notifyDataSetChanged()
-//        main_page_fragment_viewpager!!.setInterval(5000)
-//        main_page_fragment_viewpager!!.startAutoScroll(1000)
 
         return view
     }
@@ -191,6 +184,10 @@ class MainPageFragment : Fragment() {
 
                     makeCardView(view, mRecyclerView3, mainFragEventItem)
                     makeViewPager(view ,mainFragViewPagerItem)
+                    // Auto Scroll
+                    MainFragViewPagerImageSliderAdapter!!.notifyDataSetChanged()
+                    main_page_fragment_viewpager!!.setInterval(5000)
+                    main_page_fragment_viewpager!!.startAutoScroll(1000)
 
                 }
             }

@@ -11,53 +11,54 @@ import android.view.View
 import android.view.WindowManager
 import k_spot.jnm.k_spot.Get.PlaceSearchResultData
 import k_spot.jnm.k_spot.adapter.SearchSpotViewMoreActRecyclerAdapter
-import kotlinx.android.synthetic.main.activity_search_spot_view_more.*
+import kotlinx.android.synthetic.main.activity_search_event_view_more.*
 
-class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
+class SearchEventViewMoreActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
-        val index: Int = search_spot_view_more_act_rv.getChildAdapterPosition(v)
-        val spot_id = searchSpotItems[index].spot_id
+        val index: Int = search_event_view_more_act_rv.getChildAdapterPosition(v)
+        val spot_id = searchEventItems[index].spot_id
         Log.v("spot_id", spot_id.toString())
 //        startActivity<ContentsDetail>("channel_id" to channel_id)
     }
 
-    lateinit var searchSpotItems: ArrayList<PlaceSearchResultData>
+    lateinit var searchEventItems: ArrayList<PlaceSearchResultData>
     lateinit var searchSpotViewMoreActRecyclerAdapter: SearchSpotViewMoreActRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_spot_view_more)
-        searchSpotItems = intent.getParcelableArrayListExtra<PlaceSearchResultData>("searchSpotItems")
-        makeRecyclerView(searchSpotItems)
+        setContentView(R.layout.activity_search_event_view_more)
+
+        searchEventItems = intent.getParcelableArrayListExtra<PlaceSearchResultData>("searchEventItems")
+
+        makeRecyclerView(searchEventItems)
         setStatusBarTransparent()
         setOnClickListener()
-
     }
 
     private fun setOnClickListener() {
-        search_spot_view_more_act_back_btn.setOnClickListener {
+        search_event_view_more_act_back_btn.setOnClickListener {
             finish()
         }
-        search_spot_view_more_act_filter.setOnClickListener {
-            search_spot_view_more_act_filter_on_rl.visibility = View.VISIBLE
+        search_event_view_more_act_filter.setOnClickListener {
+            search_event_view_more_act_filter_on_rl.visibility = View.VISIBLE
         }
-        search_spot_view_more_act_filter_cancle_btn.setOnClickListener {
-            search_spot_view_more_act_filter_on_rl.visibility = View.GONE
+        search_event_view_more_act_filter_cancle_btn.setOnClickListener {
+            search_event_view_more_act_filter_on_rl.visibility = View.GONE
         }
-        search_spot_view_more_act_filter_x_btn.setOnClickListener {
-            search_spot_view_more_act_filter_on_rl.visibility = View.GONE
+        search_event_view_more_act_filter_x_btn.setOnClickListener {
+            search_event_view_more_act_filter_on_rl.visibility = View.GONE
         }
 //##        // 검색 통신 필요 ##
-        search_spot_view_more_act_filter_enter_btn.setOnClickListener {
-            search_spot_view_more_act_filter_on_rl.visibility = View.GONE
+        search_event_view_more_act_filter_enter_btn.setOnClickListener {
+            search_event_view_more_act_filter_on_rl.visibility = View.GONE
         }
 //##        // 검색 통신 필요 ##
     }
 
-    private fun makeRecyclerView(searchSpotItems: ArrayList<PlaceSearchResultData>) {
-        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchSpotItems, applicationContext, this)
-        search_spot_view_more_act_rv.layoutManager = LinearLayoutManager(applicationContext)
-        search_spot_view_more_act_rv.adapter = searchSpotViewMoreActRecyclerAdapter
+    private fun makeRecyclerView(searchEventItems: ArrayList<PlaceSearchResultData>) {
+        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchEventItems, applicationContext, this)
+        search_event_view_more_act_rv.layoutManager = LinearLayoutManager(applicationContext)
+        search_event_view_more_act_rv.adapter = searchSpotViewMoreActRecyclerAdapter
     }
 
     // 상태바 투명하게 하는 함수
@@ -113,4 +114,5 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
 }
