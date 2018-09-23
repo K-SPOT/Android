@@ -8,14 +8,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Get.ViewPagerSpotViewMoreActData
 import k_spot.jnm.k_spot.R
 import java.util.*
 
-class SpotViewMoreActAutoScrollAdapter(context: Context, mResources: ArrayList<SpotViewMoreActData>) : PagerAdapter() {
+class SpotViewMoreActAutoScrollAdapter(context: Context, mResources: ArrayList<ViewPagerSpotViewMoreActData>) : PagerAdapter() {
 
     var mContext : Context = context
     var mLayoutInflater : LayoutInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    var mResources : ArrayList<SpotViewMoreActData> = mResources
+    var mResources : ArrayList<ViewPagerSpotViewMoreActData> = mResources
 
     override fun getItemPosition(`object`: Any): Int {
         return PagerAdapter.POSITION_NONE
@@ -54,8 +55,3 @@ class SpotViewMoreActAutoScrollAdapter(context: Context, mResources: ArrayList<S
     }
 
 }
-
-
-data class SpotViewMoreActData(
-        val img : Int
-)

@@ -182,9 +182,11 @@
                     <!--지하철 설명-->
                     <RelativeLayout
                         android:id="@+id/spot_view_more_act_spot_subway_rl"
-                        android:layout_width="280dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_marginTop="28dp"
                         android:layout_below="@+id/spot_view_more_act_spot_address_rl">
 
@@ -207,13 +209,15 @@
                                 android:id="@+id/spot_view_more_act_spot_subway_line_num_iv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:src="@drawable/category_subway_line1_circle"
                                 />
                             <!--지하철역 이름-->
                             <TextView
                                 android:id="@+id/spot_view_more_act_spot_station_name_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="명동"
+                                android:text="동대문 역사 공원"
+                                android:layout_toRightOf="@+id/spot_view_more_act_spot_subway_line_num_iv"
                                 android:textColor="#323232"
                                 android:textSize="12dp"
                                 android:fontFamily="@font/nanumsquareotf_bold_normal"/>
@@ -434,10 +438,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="23dp"
                             android:layout_marginTop="30dp"
-                            android:text="밤에 야경보러 갔는데"
+                            android:text="밤에 야경보러 갔는데ㅇㅇㅇ"
                             android:textSize="15dp"
                             android:textColor="#323232"
                             android:fontFamily="@font/nanumsquareotf_bold_normal"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             />
 
                         <!--리뷰 내용-->
@@ -452,6 +458,8 @@
                             android:textSize="12dp"
                             android:textColor="#707070"
                             android:fontFamily="@font/nanumsquareotf_regular_normal"
+                            android:maxLines="3"
+                            android:ellipsize="end"
                             />
 
                         <!--리뷰사진-->
@@ -662,7 +670,6 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/category_email_icon"
                             android:layout_centerVertical="true"/>
-"/>
 
                         <TextView
                             android:id="@+id/spot_view_more_act_phone_num_tv"
@@ -679,45 +686,6 @@
                     </RelativeLayout>
                 </RelativeLayout>
 
-                <!--이메일 버튼-->
-                <RelativeLayout
-                    android:id="@+id/spot_view_more_act_email_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/spot_view_more_act_phone_num_btn"
-                    android:background="@drawable/spot_view_more_act_phone_num_box_shape">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true">
-
-                        <ImageView
-                            android:id="@+id/spot_view_more_act_email_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/category_email_icon"
-                            android:layout_centerVertical="true"
-                            />
-
-                        <TextView
-                            android:id="@+id/spot_view_more_act_email_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/spot_view_more_act_email_iv"
-                            android:layout_marginLeft="5dp"
-                            android:text="dbkim1234@ytn.co.kr"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
-                            android:textColor="#323232"
-                            android:textSize="16dp"
-                            android:layout_centerInParent="true"/>
-
-                    </RelativeLayout>
-                </RelativeLayout>
-
                 <!--최상단 이동 버튼-->
                 <RelativeLayout
                     android:id="@+id/spot_view_more_act_move_top_btn"
@@ -725,7 +693,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/spot_view_more_act_email_btn"
+                    android:layout_below="@+id/spot_view_more_act_phone_num_btn"
                     android:layout_marginBottom="49dp">
 
                     <ImageView
