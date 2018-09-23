@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
@@ -21,6 +20,7 @@ import k_spot.jnm.k_spot.Get.*
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.ReviewMoreActivity
 import k_spot.jnm.k_spot.adapter.SpotViewMoreActAutoScrollAdapter
 import k_spot.jnm.k_spot.adapter.SpotViewMoreActCardViewAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
@@ -377,7 +377,6 @@ class SpotViewMoreActivity : AppCompatActivity() {
         }
         spot_view_more_act_scroll_view.setOnScrollChangeListener(object : View.OnScrollChangeListener {
             override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
-                Log.v("ssd",scrollY.toString())
 
                 // 맨 위 스크롤이 아닐 때
                 if (!(scrollY <= 0)) {
@@ -414,7 +413,12 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
         // 리뷰 모두 보기
         spot_view_more_act_all_review_btn.setOnClickListener {
-            // ## 리뷰 모두 보기로 이동
+
+            var intent = Intent(applicationContext, ReviewMoreActivity::class.java)
+            var spot_id = spotViewMoreData[0].spot_id
+            intent.putExtra("spot_id", spot_id)
+            startActivity(intent)
+
         }
 
         spot_view_more_act_review_box_btn.setOnClickListener {

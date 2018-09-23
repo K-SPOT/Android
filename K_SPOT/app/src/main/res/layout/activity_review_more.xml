@@ -136,16 +136,26 @@
                 android:nestedScrollingEnabled="true">
             </android.support.v7.widget.RecyclerView>
 
-
-
-
-
-
         </LinearLayout>
 
-
-
-
     </android.support.v4.widget.NestedScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/review_more_act_review_write_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/reveiw_page_write_floating_btn"
+            android:layout_margin="8dp"
+            />
+    </RelativeLayout>
+
 
 </RelativeLayout>

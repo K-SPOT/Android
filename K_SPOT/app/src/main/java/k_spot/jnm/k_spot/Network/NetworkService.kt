@@ -4,6 +4,8 @@ import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.*
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.Post.PostKakaoResponse
+import k_spot.jnm.k_spot.Post.PostSpotReviewWriteResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -11,90 +13,105 @@ interface NetworkService {
     // 1. 유저 구독 정보 가져오기 made by 형민
     @GET("user/subscription/")
     fun getUserSubscribe(
-            @Header("flag") flag : Int? = 0,
-            @Header("authorization") tokenValue : String? = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODk0MzI2NTc4LCJpYXQiOjE1MzY3MjAwODcsImV4cCI6MTUzOTMxMjA4N30.GnYMR2wVmllHQaIri5O4uXD6TqWwxyAxS3O719hxr-M"
-    ) : Call<GetUserSubscribeResponse>
+            @Header("flag") flag: Int? = 0,
+            @Header("authorization") tokenValue: String? = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODk0MzI2NTc4LCJpYXQiOjE1MzY3MjAwODcsImV4cCI6MTUzOTMxMjA4N30.GnYMR2wVmllHQaIri5O4uXD6TqWwxyAxS3O719hxr-M"
+    ): Call<GetUserSubscribeResponse>
 
     @GET("channel/list/")
     fun getCategoryList(
-            @Header("flag") flag : Int? = 0,
-            @Header("authorization") tokenValue : String? = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODk0MzI2NTc4LCJpYXQiOjE1MzY3MjAwODcsImV4cCI6MTUzOTMxMjA4N30.GnYMR2wVmllHQaIri5O4uXD6TqWwxyAxS3O719hxr-M"
-    ) : Call<GetCategoryListResponse>
+            @Header("flag") flag: Int? = 0,
+            @Header("authorization") tokenValue: String? = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODk0MzI2NTc4LCJpYXQiOjE1MzY3MjAwODcsImV4cCI6MTUzOTMxMjA4N30.GnYMR2wVmllHQaIri5O4uXD6TqWwxyAxS3O719hxr-M"
+    ): Call<GetCategoryListResponse>
 
     @GET("main/")
     fun getMainFrag(
-            @Header("flag") flag : Int?,
-            @Header("authorization") tokenValue : String?
-    ) : Call<GetMainFragResponse>
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?
+    ): Call<GetMainFragResponse>
 
     @GET("theme/{theme_id}")
     fun getThemeDetail(
-            @Header("flag") flag : Int?,
-            @Header("authorization") tokenValue : String?,
-            @Path("theme_id") theme_id : Int
-    ) : Call<GetThemeDetailResponse>
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Path("theme_id") theme_id: Int
+    ): Call<GetThemeDetailResponse>
 
     @GET("search/")
     fun getSearchView(
-            @Header("flag") flag : Int?,
-            @Header("authorization") tokenValue : String?
-    ) : Call<GetSearchViewResponse>
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?
+    ): Call<GetSearchViewResponse>
 
     @GET("search/{keyword}")
     fun getSearchResult(
-            @Header("flag") flag : Int?,
-            @Header("authorization") tokenValue : String?,
-            @Path("keyword") keyword : String
-    ) : Call<GetSearchResultResponse>
-
-
-
-
-
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Path("keyword") keyword: String
+    ): Call<GetSearchResultResponse>
 
 
     // 카카오 로그인 통신
     @FormUrlEncoded
     @POST("user/kakao/signin")
     fun postKakaoLogin(
-            @Header("flag") flag : Int?,
-            @Header("authorization") tokenValue : String?,
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
             @Field("access_token") access_token: String
     ): Call<PostKakaoResponse>
-
-
 
 
     //카테고리 상세보기 통신
     @GET("channel/detail/{channel_id}")
     fun getCategotyDetailResponse(
-            @Header("flag") flag : Int?,
-            @Header("authorization") tokenValue : String?,
-            @Path("channel_id") channel_id : Int
-    ) : Call<GetCategoryDetailResponse>
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Path("channel_id") channel_id: Int
+    ): Call<GetCategoryDetailResponse>
+
     //채널 구독하기
     @FormUrlEncoded
     @POST("channel/subscription")
     fun postChannelSubscripeResponse(
-            @Header("flag") flag : Int?,
-            @Header("authorization") tokenValue : String?,
-            @Field("channel_id") channel_id : Int
-    ) : Call<PostChannelSubscripeResponse>
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Field("channel_id") channel_id: Int
+    ): Call<PostChannelSubscripeResponse>
+
     //채널 구독 취소
     @DELETE("channel/subscription/{channel_id}")
     fun deleteChannelSubscripeResponse(
-            @Header("flag") flag : Int?,
-            @Header("authorization") tokenValue : String?,
-            @Path("channel_id") channel_id : Int
-    ) : Call<DeleteChannelScripteResponse>
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Path("channel_id") channel_id: Int
+    ): Call<DeleteChannelScripteResponse>
 
     // SpotViewMoreAct + 리뷰 더보기 통신
     @GET("spot/{spot_id}/detail")
     fun getSpotViewMore(
-            @Header("flag") flag : Int?,
-            @Header("authorization") tokenValue : String?,
-            @Path("spot_id") spot_id : Int
-    ) : Call<GetSpotViewMoreResponse>
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Path("spot_id") spot_id: Int
+    ): Call<GetSpotViewMoreResponse>
+
+    // 리뷰 더보기
+    @GET("spot/{spot_id}/review")
+    fun getSpotReViewMore(
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Path("spot_id") spot_id: Int
+    ): Call<GetSpotViewReviewMoreResponse>
+
+    @Multipart
+    @POST("spot/review")
+    fun postSpotReviewWriteResponse(
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Part("spot_id") spot_id: Int,
+            @Part("title") title : String,
+            @Part("content") content : String,
+            @Part review_img: MultipartBody.Part?,
+            @Part("review_score") review_score : Double
+    ) : Call<PostSpotReviewWriteResponse>
 
 
 }
