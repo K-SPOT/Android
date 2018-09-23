@@ -182,7 +182,7 @@
                     <!--지하철 설명-->
                     <RelativeLayout
                         android:id="@+id/spot_view_more_act_spot_subway_rl"
-                        android:layout_width="match_parent"
+                        android:layout_width="280dp"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="16dp"
@@ -230,7 +230,6 @@
                             android:layout_height="wrap_content"
                             android:text="회현역"
                             android:layout_below="@+id/spot_view_more_act_spot_subway_line_iv"
-                            android:layout_alignParentLeft="true"
                             android:layout_marginTop="8dp"
                             android:textColor="#323232"
                             android:fontFamily="@font/nanumsquareotf_regular_normal"
