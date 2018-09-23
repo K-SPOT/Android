@@ -101,6 +101,14 @@ interface NetworkService {
             @Path("spot_id") spot_id: Int
     ): Call<GetSpotViewReviewMoreResponse>
 
+    // myPage 가져오기
+    @GET("user/mypage")
+    fun getMyPage(
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?
+    ): Call<GetMyPageResponse>
+
+    // 리뷰 글 쓰기 ( 실패 )
     @Multipart
     @POST("spot/review")
     fun postSpotReviewWriteResponse(
