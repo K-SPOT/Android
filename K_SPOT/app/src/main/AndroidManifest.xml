@@ -4,12 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
-    -->
+    <!--전화와 메시지를 보내기 위한 퍼미션-->
+    <uses-permission android:name="android.permission.DIAL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -27,15 +23,17 @@
             android:name=".activity.CategoryDetailActivity"
             android:fitsSystemWindows="true"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.SpotViewMoreActivity" />
-        <activity android:name=".activity.RecommendViewMoreActivity"></activity>
-        <activity android:name=".SearchActivity"
-            android:windowSoftInputMode="adjustResize">
+        <activity android:name=".activity.SpotViewMoreActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.RecommendViewMoreActivity"></activity>
+        <activity android:name=".SearchActivity"
+            android:windowSoftInputMode="adjustResize">
+
         </activity>
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchBraodViewMoreActivity" />

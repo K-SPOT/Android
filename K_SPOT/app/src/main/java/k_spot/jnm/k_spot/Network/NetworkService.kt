@@ -88,5 +88,13 @@ interface NetworkService {
             @Path("channel_id") channel_id : Int
     ) : Call<DeleteChannelScripteResponse>
 
+    // SpotViewMoreAct + 리뷰 더보기 통신
+    @GET("spot/{spot_id}/detail")
+    fun getSpotViewMore(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?,
+            @Path("spot_id") spot_id : Int
+    ) : Call<GetSpotViewMoreResponse>
+
 
 }

@@ -2,17 +2,20 @@ package k_spot.jnm.k_spot.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Get.ChannelRecyclerViewData
 import k_spot.jnm.k_spot.R
 
-class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayList<SpotViewMoreActRecyclerViewData>) : RecyclerView.Adapter<SpotViewMoreActCardViewAdapter.ViewHolder>() {
+class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayList<ChannelRecyclerViewData>) : RecyclerView.Adapter<SpotViewMoreActCardViewAdapter.ViewHolder>() {
 
-    lateinit var mDataset: ArrayList<SpotViewMoreActRecyclerViewData>
+    lateinit var mDataset: ArrayList<ChannelRecyclerViewData>
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
@@ -38,14 +41,35 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.title.setText(mDataset[position].title)
-        holder.mImageView.setImageResource(mDataset[position].img)
+        holder.title.setText(mDataset[position].channel_name)
+        Glide.with(ctx).load(mDataset[position].thumbnail_img).into(holder.mImageView)
 
-        if(mDataset[position].subscribeFlag == true){
+        var subFlag = mDataset[position].is_subscription
+
+        // sub가 안됐을 때
+        if(subFlag == "0"){
             holder.subscribeBtn.setImageResource(R.drawable.category_list_unsub_btn)
         }else{
             holder.subscribeBtn.setImageResource(R.drawable.category_list_sub_btn)
         }
+
+        holder.subscribeBtn.setOnClickListener {
+            // sub가 안됐을 때
+            if(subFlag == "0"){
+                holder.subscribeBtn.setImageResource(R.drawable.category_list_sub_btn)
+                subFlag = "1"
+                // # 구독 통신!!
+            }else{
+                holder.subscribeBtn.setImageResource(R.drawable.category_list_unsub_btn)
+                subFlag = "0"
+                // # 구독 취소 통신!!
+            }
+        }
+
+        holder.rl.setOnClickListener {
+            Log.v("channelID",mDataset[position].channel_id)
+        }
+
 
 
     }
@@ -57,10 +81,3 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
         val subscribeBtn : ImageView = itemView.findViewById(R.id.view_more_act_rv_item_subscribe_tv) as ImageView
     }
 }
-
-data class SpotViewMoreActRecyclerViewData (
-        // 지금은 Int 통신 시작하면 String으로 바꿔줘야함
-        val img : Int,
-        val title : String,
-        val subscribeFlag : Boolean
-)

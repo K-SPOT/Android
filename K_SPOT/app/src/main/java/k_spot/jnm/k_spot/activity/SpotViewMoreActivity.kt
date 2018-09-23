@@ -1,9 +1,12 @@
 package k_spot.jnm.k_spot.activity
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -13,18 +16,32 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Get.*
+import k_spot.jnm.k_spot.Network.ApplicationController
+import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.SpotViewMoreActAutoScrollAdapter
 import k_spot.jnm.k_spot.adapter.SpotViewMoreActCardViewAdapter
-import k_spot.jnm.k_spot.adapter.SpotViewMoreActData
-import k_spot.jnm.k_spot.adapter.SpotViewMoreActRecyclerViewData
+import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_spot_view_more.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class SpotViewMoreActivity : AppCompatActivity() {
 
     lateinit var spotViewMoreActAutoScrollAdapter: SpotViewMoreActAutoScrollAdapter
-    lateinit var images: ArrayList<SpotViewMoreActData>
+    lateinit var networkService: NetworkService
+    lateinit var spotViewMoreData : ArrayList<SpotViewMoreData>
+    lateinit var channelSpotViewMoreData: ChannelSpotViewMoreData
+    lateinit var reviewSpotViewMoreData : ArrayList<ReviewSpotViewMoreData>
+
+    lateinit var viewPagerImg: ArrayList<String>
+
+    lateinit var channelRecyclerViewData: ArrayList<ChannelRecyclerViewData>
+    lateinit var viewPagerSpotViewMoreActData : ArrayList<ViewPagerSpotViewMoreActData>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,33 +51,114 @@ class SpotViewMoreActivity : AppCompatActivity() {
         // MainActivity에는 필요없으므로 주석처리
         setStatusBarTransparent()
 
-        makeSpotViewMoreActViewPager()
-
-        makeSpotViewMoreActCardView()
-
-        makeBigReviewStar()
-
-        makeSmallReviewStar()
-
         setOnClickListener()
+        getSpotViewMore()
+    }
+
+
+    fun getSpotViewMore() {
+
+        networkService = ApplicationController.instance.networkService
+        val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
+        val getSpotViewMoreResponse = networkService.getSpotViewMore(0, authorization, 33)
+        getSpotViewMoreResponse.enqueue(object : Callback<GetSpotViewMoreResponse> {
+            override fun onFailure(call: Call<GetSpotViewMoreResponse>?, t: Throwable?) {
+            }
+
+            override fun onResponse(call: Call<GetSpotViewMoreResponse>?, response: Response<GetSpotViewMoreResponse>?) {
+                if (response!!.isSuccessful) {
+                    spotViewMoreData = ArrayList()
+                    reviewSpotViewMoreData = ArrayList()
+                    channelRecyclerViewData = ArrayList()
+                    viewPagerSpotViewMoreActData = ArrayList()
+                    spotViewMoreData = response!!.body()!!.data
+                    channelSpotViewMoreData = response!!.body()!!.data!![0].channel
+                    reviewSpotViewMoreData = response!!.body()!!.data!![0].reviews
+                    viewPagerImg = response!!.body()!!.data!![0].img
+                    var i = 0
+                    while(i<channelSpotViewMoreData.channel_id.size){
+                        channelRecyclerViewData.add(ChannelRecyclerViewData(channelSpotViewMoreData.channel_id[i],channelSpotViewMoreData.channel_name[i]
+                        , channelSpotViewMoreData.thumbnail_img[i],channelSpotViewMoreData.is_subscription[i]))
+                        i++
+                    }
+
+                    makeSpotViewMoreActCardView(channelRecyclerViewData)
+
+                    makeSpotViewMoreActCardView(channelRecyclerViewData)
+
+                    var j = 0
+                    while(j < viewPagerImg.size){
+                        viewPagerSpotViewMoreActData.add(ViewPagerSpotViewMoreActData(viewPagerImg[j]))
+                        j ++
+                    }
+
+                    makeSpotViewMoreActViewPager(viewPagerSpotViewMoreActData)
+
+                    // 스크랩
+                    spot_view_more_act_scrap_num_tv.text = spotViewMoreData[0].scrap_cnt.toString()
+
+                    var scrapFlag = spotViewMoreData[0].is_scrap
+                    // 스크랩 안 됐을 시 하얀색으로
+                    if(scrapFlag == 0) {
+                        spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
+                        //## 스크랩 통신 필요
+                        scrapFlag = 1
+                    }else{
+                        spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
+                        scrapFlag = 0
+                    }
+
+                    spot_view_more_act_spot_title_tv.text = spotViewMoreData[0].name
+
+                    spot_view_more_act_spot_semi_info_tv.text = spotViewMoreData[0].description
+
+                    // ## 구글 맵으로 넘어가기
+                    spot_view_more_act_spot_address_tv.text = spotViewMoreData[0].address
+
+                    spot_view_more_act_spot_station_name_tv.text = spotViewMoreData[0].station
+
+                    spot_view_more_act_spot_review_num_tv.text = spotViewMoreData[0].review_score.toString()
+
+                    spot_view_more_act_review_num_tv.text = spotViewMoreData[0].review_cnt.toString()
+
+                    spot_view_more_act_spot_left_station_tv.text = spotViewMoreData[0].prev_station
+
+                    spot_view_more_act_spot_right_station_tv.text = spotViewMoreData[0].next_station
+
+                    spot_view_more_act_open_time_tv.text = spotViewMoreData[0].open_time
+
+                    spot_view_more_act_close_time_tv.text = spotViewMoreData[0].close_time
+
+                    spot_view_more_act_phone_num_tv.text = spotViewMoreData[0].contact
+
+                    makeBigReviewStar(spotViewMoreData[0].review_score)
+
+                    spot_view_more_act_relative_celev_num_tv.text = channelRecyclerViewData.size.toString()
+
+                    makeSmallReviewStar(reviewSpotViewMoreData[0].review_score)
+
+                    spot_view_more_act_review_box_title_tv.text = reviewSpotViewMoreData[0].title
+
+                    spot_view_more_act_review_box_explain_tv.text = reviewSpotViewMoreData[0].content
+
+                    // ## Noimage 넣어야됌
+                    if (reviewSpotViewMoreData[0].img.length > 0) {
+                        Glide.with(applicationContext).load(reviewSpotViewMoreData[0].img).into(spot_view_more_act_review_box_picture_iv)
+                    }
+
+                    spot_view_more_act_review_box_writer_date_tv.text = reviewSpotViewMoreData[0].reg_time + " · " + reviewSpotViewMoreData[0].reg_time
+                }
+            }
+
+        })
     }
 
 
     // ViewPager 생성 function
-    fun makeSpotViewMoreActViewPager() {
-
-        // 배열 생성.
-        images = ArrayList()
-        images.add(SpotViewMoreActData(R.drawable.category_list_exo_img))
-        images.add(SpotViewMoreActData(R.drawable.category_list_exo_img))
-        images.add(SpotViewMoreActData(R.drawable.category_list_exo_img))
-        images.add(SpotViewMoreActData(R.drawable.category_list_exo_img))
-        images.add(SpotViewMoreActData(R.drawable.category_list_exo_img))
-        images.add(SpotViewMoreActData(R.drawable.category_list_exo_img))
-
+    fun makeSpotViewMoreActViewPager(viewPagerSpotViewMoreActData : ArrayList<ViewPagerSpotViewMoreActData> ) {
 
         // Auto Slider Adapter 적용
-        spotViewMoreActAutoScrollAdapter = SpotViewMoreActAutoScrollAdapter(applicationContext, images)
+        spotViewMoreActAutoScrollAdapter = SpotViewMoreActAutoScrollAdapter(applicationContext, viewPagerSpotViewMoreActData)
         spot_view_more_act_viewpager.adapter = spotViewMoreActAutoScrollAdapter
 
         // 아래 세 줄 위 세 줄로 대체
@@ -79,8 +177,8 @@ class SpotViewMoreActivity : AppCompatActivity() {
                 var realPos = position
 
                 // 페이지 바뀔 때마다 현재 페이지 num 표시
-                if (realPos + 1 > images.size) {
-                    realPos = realPos % images.size
+                if (realPos + 1 > viewPagerSpotViewMoreActData.size) {
+                    realPos = realPos % viewPagerSpotViewMoreActData.size
                 }
 
                 spot_view_more_act_viewpager_now_page_num_tv.text = (realPos + 1).toString()
@@ -91,7 +189,10 @@ class SpotViewMoreActivity : AppCompatActivity() {
             }
         })
 
-        spot_view_more_act_viewpager_all_page_tv.text = images.size.toString()
+        spot_view_more_act_viewpager_all_page_tv.text = viewPagerSpotViewMoreActData.size.toString()
+        spotViewMoreActAutoScrollAdapter!!.notifyDataSetChanged()
+        spot_view_more_act_viewpager!!.setInterval(5000)
+        spot_view_more_act_viewpager!!.startAutoScroll(1000)
 
     }
 
@@ -99,9 +200,13 @@ class SpotViewMoreActivity : AppCompatActivity() {
     public override fun onResume() {
         super.onResume()
 
-        spotViewMoreActAutoScrollAdapter.notifyDataSetChanged()
-        spot_view_more_act_viewpager.setInterval(5000)
-        spot_view_more_act_viewpager.startAutoScroll(5000)
+        val handler = Handler()
+        handler.postDelayed(Runnable {
+            // Auto Scroll
+            spotViewMoreActAutoScrollAdapter!!.notifyDataSetChanged()
+            spot_view_more_act_viewpager!!.setInterval(5000)
+            spot_view_more_act_viewpager!!.startAutoScroll(1000)
+        }, 3000)
     }
 
     // ViewPager 다른 엑티비티 갔을 떄 멈춰.
@@ -111,9 +216,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
     }
 
     // 큰 별 리뷰 만들기
-    fun makeBigReviewStar() {
-        // starCount 통신으로 받아와야함.
-        val starCount = 2.89
+    fun makeBigReviewStar(starCount: Double) {
 
         // size 5의 이미지 뷰 배열 생성
         var stars: Array<ImageView?> = arrayOfNulls<ImageView>(5)
@@ -159,9 +262,9 @@ class SpotViewMoreActivity : AppCompatActivity() {
         spot_view_more_act_review_star_num_tv.text = starCount.toString()
     }
 
-    fun makeSmallReviewStar() {
+    fun makeSmallReviewStar(starCount: Double) {
         // starCount 통신으로 받아와야함.
-        val starCount = 3.5
+
 
         // size 5의 이미지 뷰 배열 생성
         var stars: Array<ImageView?> = arrayOfNulls<ImageView>(5)
@@ -203,7 +306,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
     }
 
     // CardView 만들기
-    fun makeSpotViewMoreActCardView() {
+    fun makeSpotViewMoreActCardView(myDataset: ArrayList<ChannelRecyclerViewData>) {
         val mRecyclerView = spot_view_more_act_relative_celev_rl as RecyclerView
 //        val mRecyclerView = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
         mRecyclerView.setHasFixedSize(true)
@@ -211,16 +314,6 @@ class SpotViewMoreActivity : AppCompatActivity() {
         val mLayoutManager = GridLayoutManager(applicationContext, 1, GridLayoutManager.HORIZONTAL, false)
 
         mRecyclerView.layoutManager = mLayoutManager
-
-        var myDataset = ArrayList<SpotViewMoreActRecyclerViewData>()
-
-        myDataset.add(SpotViewMoreActRecyclerViewData(R.drawable.category_list_blackpink_img, "블랙핑크", true))
-        myDataset.add(SpotViewMoreActRecyclerViewData(R.drawable.category_list_blackpink_img, "블랙핑크", false))
-        myDataset.add(SpotViewMoreActRecyclerViewData(R.drawable.category_list_blackpink_img, "블랙핑크", false))
-        myDataset.add(SpotViewMoreActRecyclerViewData(R.drawable.category_list_blackpink_img, "블랙핑크", true))
-        myDataset.add(SpotViewMoreActRecyclerViewData(R.drawable.category_list_blackpink_img, "블랙핑크", false))
-        myDataset.add(SpotViewMoreActRecyclerViewData(R.drawable.category_list_blackpink_img, "블랙핑크", true))
-
         val mAdapter = SpotViewMoreActCardViewAdapter(applicationContext, myDataset)
         mRecyclerView.adapter = mAdapter
     }
@@ -282,8 +375,6 @@ class SpotViewMoreActivity : AppCompatActivity() {
         spot_view_more_act_move_top_btn.setOnClickListener {
             spot_view_more_act_scroll_view.post(Runnable { spot_view_more_act_scroll_view.scrollTo(0, 0) })
         }
-
-
         spot_view_more_act_scroll_view.setOnScrollChangeListener(object : View.OnScrollChangeListener {
             override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
                 Log.v("ssd",scrollY.toString())
@@ -293,18 +384,50 @@ class SpotViewMoreActivity : AppCompatActivity() {
                     window.statusBarColor = Color.WHITE
                     spot_view_more_act_top_bar_rl.setBackgroundColor(Color.parseColor("#FFFFFF"))
                     spot_view_more_act_back_iv.setColorFilter(Color.parseColor("#5E5E5E"))
-                    spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrab_btn_gray)
+                    spot_view_more_act_scrap_iv.setColorFilter(Color.parseColor("#5E5E5E"))
                     spot_view_more_act_scrap_num_tv.setTextColor(Color.parseColor("#5E5E5E"))
                     spot_view_more_act_top_bar_bottom_line.visibility = View.VISIBLE
                 }else{
                     window.statusBarColor = Color.TRANSPARENT
                     spot_view_more_act_top_bar_rl.setBackgroundColor(Color.parseColor("#00000000"))
                     spot_view_more_act_back_iv.setColorFilter(Color.parseColor("#FFFFFF"))
-                    spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
+                    spot_view_more_act_scrap_iv.setColorFilter(Color.parseColor("#FFFFFF"))
                     spot_view_more_act_scrap_num_tv.setTextColor(Color.parseColor("#FFFFFF"))
                     spot_view_more_act_top_bar_bottom_line.visibility = View.GONE
                 }
             }
         })
+
+        spot_view_more_act_back_btn.setOnClickListener {
+            finish()
+        }
+
+        // 스크랩 버튼
+        spot_view_more_act_scrap_btn.setOnClickListener {
+            //## 스크랩 통신 필요
+            //  # 로그인이 되어있지 않은 경우 로그인 팝업이 뜬다.
+        }
+
+        spot_view_more_act_spot_address_rl.setOnClickListener {
+            // ## Google map 연동 필요
+        }
+
+        // 리뷰 모두 보기
+        spot_view_more_act_all_review_btn.setOnClickListener {
+            // ## 리뷰 모두 보기로 이동
+        }
+
+        spot_view_more_act_review_box_btn.setOnClickListener {
+            // ## 리뷰 Write로 이동
+        }
+
+        spot_view_more_act_phone_num_btn.setOnClickListener {
+            var tel = "tel:"+spotViewMoreData[0].contact
+            var intent = Intent("android.intent.action.DIAL", Uri.parse(tel))
+            startActivity(intent)
+
+        }
+
+
     }
 }
