@@ -39,7 +39,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="21dp"
-        android:src="@color/colorAccent" />
+        android:src="@color/colorAccent"
+        android:scaleType="fitXY"/>
 
     <!--별 점 동적으로 생성-->
     <LinearLayout

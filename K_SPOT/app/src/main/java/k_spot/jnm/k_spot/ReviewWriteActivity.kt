@@ -20,11 +20,18 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Network.ApplicationController
+import k_spot.jnm.k_spot.Network.NetworkService
+import k_spot.jnm.k_spot.Post.PostSpotReviewWriteResponse
+import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_review_write.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
@@ -36,8 +43,8 @@ class ReviewWriteActivity : AppCompatActivity() {
     var isScore: Boolean = false
     var isText: Boolean = false
     var isIMG: Boolean = false
-
     private val REQ_CODE_SELECT_IMAGE = 100
+    lateinit var networkService: NetworkService
 
     lateinit var data: Uri
     private var image: MultipartBody.Part? = null
@@ -45,24 +52,48 @@ class ReviewWriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review_write)
-
+        var spot_id = intent.getIntExtra("spot_id", 0)
         // Content EditText의 수 바꾸기
         changeContentsEditTextNum()
 
         setStatusBarTransparent()
 
-        setOnClickListener()
+        setOnClickListener(spot_id)
+    }
+
+    fun postReviewWrite(spot_id: Int) {
+        networkService = ApplicationController.instance.networkService
+        var title = review_write_act_title_edit_text.text.toString()
+        var description = review_write_act_content_posting_et.text.toString()
+        Log.e("리뷰작성 버튼 눌림", "2")
+        Log.v("리뷰작성 버튼 눌림", image.toString())
+        val postSpotReviewWriteResponse = networkService.postSpotReviewWriteResponse(0, SharedPreferenceController.getAuthorization(applicationContext),
+                spot_id, title, description, image, 3.5)
+        postSpotReviewWriteResponse.enqueue(object : Callback<PostSpotReviewWriteResponse> {
+            override fun onFailure(call: Call<PostSpotReviewWriteResponse>?, t: Throwable?) {
+                Log.e("리뷰작성 실패", t.toString())
+            }
+
+            override fun onResponse(call: Call<PostSpotReviewWriteResponse>?, response: Response<PostSpotReviewWriteResponse>?) {
+                if (response!!.isSuccessful) {
+                    Log.e("리뷰작성 성공", "리뷰작성 성공")
+                }
+                Log.e("리뷰작성 이거왜이럼", "리뷰작성 이상하게 실패!")
+            }
+        })
     }
 
     // Content EditText의 수 바꾸기
     fun changeContentsEditTextNum() {
 
         val editTextContent = findViewById<EditText>(R.id.review_write_act_content_posting_et)
-        editTextContent.addTextChangedListener(object: TextWatcher{
+        editTextContent.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (editTextContent.text.toString().isNotBlank()) {
                     isText = true
@@ -133,6 +164,7 @@ class ReviewWriteActivity : AppCompatActivity() {
             }
         }
     }
+
     // 상태바 투명하게 하는 함수
     private fun setStatusBarTransparent() {
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
@@ -187,7 +219,7 @@ class ReviewWriteActivity : AppCompatActivity() {
     }
 
     // 큰 별 리뷰 만들기
-    fun makeReviewMoreStar(starCount : Double) {
+    fun makeReviewMoreStar(starCount: Double) {
 
         // size 5의 이미지 뷰 배열 생성
         var stars: Array<ImageView?> = arrayOfNulls<ImageView>(5)
@@ -224,14 +256,14 @@ class ReviewWriteActivity : AppCompatActivity() {
             val dp = applicationContext.resources.displayMetrics.density
 
             // 인디케이터 점 마진 설정
-            params.setMargins(3*dp.toInt(), 0, 3*dp.toInt(), 0)
+            params.setMargins(3 * dp.toInt(), 0, 3 * dp.toInt(), 0)
             //LinearView에 뷰 생성
             review_write_act_star_ll!!.addView(stars[i], params)
         }
 
     }
 
-    fun setOnClickListener() {
+    fun setOnClickListener(spot_id: Int) {
 
         // 이미지 바꾸기
         review_write_act_upload_pic_btn.setOnClickListener {
@@ -246,8 +278,8 @@ class ReviewWriteActivity : AppCompatActivity() {
         }
 
         review_write_act_finish_btn.setOnClickListener {
-            Log.v("content", review_write_act_content_posting_et.text.toString())
-            Log.v("content", review_write_act_title_edit_text.text.toString())
+            postReviewWrite(spot_id)
+
         }
 
         review_write_act_back_btn.setOnClickListener {
@@ -298,9 +330,6 @@ class ReviewWriteActivity : AppCompatActivity() {
             review_write_act_star_tv.text = "5"
 //            makeReviewMoreStar(5.0)
         }
-
-
-
 
 
     }

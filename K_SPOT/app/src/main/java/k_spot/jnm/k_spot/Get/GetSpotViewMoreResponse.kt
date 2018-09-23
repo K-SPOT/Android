@@ -1,5 +1,8 @@
 package k_spot.jnm.k_spot.Get
 
+import android.os.Parcel
+import android.os.Parcelable
+
 data class GetSpotViewMoreResponse (
         val message: String,
         val data: ArrayList<SpotViewMoreData>
@@ -41,7 +44,41 @@ data class ReviewSpotViewMoreData (
         val img: String,
         val review_score: Double,
         val reg_time: String
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readInt(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readDouble(),
+            parcel.readString()) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(review_id)
+        parcel.writeString(name)
+        parcel.writeString(title)
+        parcel.writeString(content)
+        parcel.writeString(img)
+        parcel.writeDouble(review_score)
+        parcel.writeString(reg_time)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<ReviewSpotViewMoreData> {
+        override fun createFromParcel(parcel: Parcel): ReviewSpotViewMoreData {
+            return ReviewSpotViewMoreData(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ReviewSpotViewMoreData?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
 
 data class ChannelRecyclerViewData (
         val channel_id: String,

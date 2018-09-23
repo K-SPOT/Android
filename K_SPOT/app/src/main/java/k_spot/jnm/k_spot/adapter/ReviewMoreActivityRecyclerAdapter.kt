@@ -7,19 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Get.ReviewMoreData
 import k_spot.jnm.k_spot.R
 
-class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterData : ArrayList<ReviewMoreRecyclerAdpaterData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-
-//    //클릭 리스너
-//    lateinit var onItemClick : View.OnClickListener
-//    fun setOnItemClickListener(l : View.OnClickListener){
-//        onItemClick = l
-//    }
+class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterData : ArrayList<ReviewMoreData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val mainView : View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_review_more_act, parent, false)
-//        mainView.setOnClickListener(onItemClick)
         return ReviewMoreActivityRecyclerAdapter.Holder(mainView)
 
     }
@@ -36,11 +31,16 @@ class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterDa
 
         holder.review_more_content.text = reviewMoreRecyclerAdpaterData[position].content
 
-        holder.review_more_img.setImageResource(reviewMoreRecyclerAdpaterData[position].Image)
+        if(reviewMoreRecyclerAdpaterData[position].img.length > 0){
+            Glide.with(ctx).load(reviewMoreRecyclerAdpaterData[position].img).into(holder.review_more_img)
+        }else {
+            holder.review_more_img.visibility = View.GONE
+        }
 
-        holder.review_more_writer.text = reviewMoreRecyclerAdpaterData[position].writer
 
-        holder.review_more_date.text = reviewMoreRecyclerAdpaterData[position].date
+        holder.review_more_writer.text = reviewMoreRecyclerAdpaterData[position].name
+
+        holder.review_more_date.text = reviewMoreRecyclerAdpaterData[position].reg_time.toString()
 
         // 신고하기 버튼 클릭 시
         holder.review_more_btn.setOnClickListener {
@@ -96,7 +96,7 @@ class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterDa
 
 
         // starCount 통신으로 받아와야함.
-        val starCount = reviewMoreRecyclerAdpaterData[position].score
+        val starCount = reviewMoreRecyclerAdpaterData[position].review_score
 
         // size 5의 이미지 뷰 배열 생성
         var stars: Array<ImageView?> = arrayOfNulls<ImageView>(5)
@@ -169,14 +169,3 @@ class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterDa
 
     }
 }
-
-data class ReviewMoreRecyclerAdpaterData(
-        // 원래는 String
-        var title : String,
-        var content : String,
-        var Image : Int,
-        var score : Double,
-        var writer : String,
-        var date : String
-
-)
