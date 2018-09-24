@@ -17,5 +17,11 @@
         android:text="맵"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/textbtn_user_page"
+        android:layout_marginTop="30dp"
+        android:text="유저 페이지"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -138,5 +138,28 @@ interface NetworkService {
             @Path("spot_id") spot_id: Int
     ): Call<DeleteChannelScripteResponse>
 
+    //채널에서 더보기
+    @GET("channel/{channel_id}/spot/{is_event}")
+    fun getChannelViewMoreResponse(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?,
+            @Path("channel_id") channel_id : Int,
+            @Path("is_event") is_event : Int
+    ) : Call<GetChannelViewMoreResponse>
+
+    //맵페이지 스팟 불러오기(GPS로)
+    @GET("/spot/{distance}/{latitude}/{longitude}/{is_food}/{is_cafe}/{is_sights}/{is_event}/{is_etc}")
+    fun getMapPageDataFromGPSResponse(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?,
+            @Path("distance") distance : Double,
+            @Path("latitude") latitude : Double,
+            @Path("longitude") longitude : Double,
+            @Path("is_food") is_food : Int,
+            @Path("is_cafe") is_cafe : Int,
+            @Path("is_sights") is_sights : Int,
+            @Path("is_event") is_event : Int,
+            @Path("is_etc") is_etc : Int
+    ) : Call<GetMapPageDataFromGPSResponse>
 
 }

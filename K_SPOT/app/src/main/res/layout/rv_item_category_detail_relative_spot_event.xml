@@ -7,8 +7,7 @@
         android:id="@+id/rv_item_categoty_detail_relative_spot_img"
         android:layout_width="160dp"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/category_list_blackpink_img" />
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_weight="1"

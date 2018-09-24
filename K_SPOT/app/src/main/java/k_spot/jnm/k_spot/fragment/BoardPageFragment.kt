@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.activity.CategoryDetailActivity
 import k_spot.jnm.k_spot.activity.MapDetailActivity
+import k_spot.jnm.k_spot.activity.UserInfoEditActivity
 import kotlinx.android.synthetic.main.fragment_board_page.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
@@ -28,6 +29,10 @@ class BoardPageFragment : Fragment(){
 
         textbtn_map.setOnClickListener {
             startActivity<MapDetailActivity>("X" to 100, "Y" to 100)
+        }
+
+        textbtn_user_page.setOnClickListener {
+            startActivity<UserInfoEditActivity>()
         }
     }
 }

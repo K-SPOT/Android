@@ -44,13 +44,14 @@
                 android:layout_height="wrap_content" />
         </RelativeLayout>
         <android.support.v4.widget.NestedScrollView
-            android:fillViewport="true"
+            android:id="@+id/ns_map_page_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
                 <LinearLayout
                     android:layout_marginTop="12dp"
                     android:gravity="center_horizontal"
@@ -436,7 +437,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clipToPadding="false"
-                        android:descendantFocusability="blocksDescendants"
                         android:nestedScrollingEnabled="false">
 
                     </android.support.v7.widget.RecyclerView>
@@ -448,7 +448,7 @@
     <ImageView
         android:id="@+id/btn_map_page_open_filtering"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="86dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/filter_floating_btn"
         android:layout_width="wrap_content"

@@ -11,8 +11,7 @@
     <k_spot.jnm.k_spot.viewpager.MainViewPager
         android:id="@+id/main_fragment_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/main_bottom_tab_layout">
+        android:layout_height="match_parent">
 
     </k_spot.jnm.k_spot.viewpager.MainViewPager>
     

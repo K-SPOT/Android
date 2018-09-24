@@ -1,16 +1,19 @@
 package k_spot.jnm.k_spot.adapter
 
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import k_spot.jnm.k_spot.Get.MapPageSpotData
 import k_spot.jnm.k_spot.R
-import k_spot.jnm.k_spot.data.MyAroundKSpotData
 
-class MapPageRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<MyAroundKSpotData>): RecyclerView.Adapter<MapPageRecyclerViewAdapter.Holder>() {
+class MapPageRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<MapPageSpotData>): RecyclerView.Adapter<MapPageRecyclerViewAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(ctx).inflate(R.layout.rv_item_map_page_my_around_k_spot, parent, false)
         return Holder(view)
@@ -20,10 +23,15 @@ class MapPageRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<MyA
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         //holder.image
-        holder.title.text = dataList[position].title
-        holder.starPoint.text = dataList[position].start_pnt.toString()
-        holder.content.text = dataList[position].content
-        holder.address.text = dataList[position].address
+        Glide.with(ctx).load(dataList[position].img).apply(RequestOptions().centerCrop()).into(holder.image)
+        holder.title.text = dataList[position].name
+        holder.content.text = dataList[position].description
+        holder.address.text = dataList[position].address_gu + " · " + dataList[position].station
+        holder.starPoint.text = dataList[position].review_score.toString()
+
+        val badgeRecyclerViewAdapter  = ChannelBadgeRecyclerViewAdapter(ctx, dataList[position].channel)
+        holder.badgeList.layoutManager = LinearLayoutManager(ctx,0,false)
+        holder.badgeList.adapter = badgeRecyclerViewAdapter
     }
 
     inner class Holder(itemView : View) : RecyclerView.ViewHolder(itemView){
@@ -32,7 +40,7 @@ class MapPageRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<MyA
         val content : TextView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_content) as TextView
         val starPoint : TextView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_star_pnt) as TextView
         val address : TextView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_address) as TextView
-        //val badgeList : ImageView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_img) as ImageView
+        val badgeList : RecyclerView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_badge_list) as RecyclerView
     }
 
 }
