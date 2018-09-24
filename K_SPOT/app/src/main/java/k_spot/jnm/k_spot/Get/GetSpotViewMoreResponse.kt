@@ -9,7 +9,7 @@ data class GetSpotViewMoreResponse (
 )
 
 data class SpotViewMoreData (
-        val spot_id: Int,
+        var spot_id: Int,
         val img: ArrayList<String>,
         val name: String,
         val description: String,
@@ -24,7 +24,7 @@ data class SpotViewMoreData (
         val close_time: String,
         val contact: String,
         val scrap_cnt: Int,
-        val is_scrap: Int,
+        var is_scrap: Int,
         val channel: ChannelSpotViewMoreData,
         val reviews: ArrayList<ReviewSpotViewMoreData>
 )

@@ -121,5 +121,22 @@ interface NetworkService {
             @Part("review_score") review_score : Double
     ) : Call<PostSpotReviewWriteResponse>
 
+    //채널 구독하기
+    @FormUrlEncoded
+    @POST("spot/scrap")
+    fun postSpotSubscripeResponse(
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Field("spot_id") spot_id: Int
+    ): Call<PostChannelSubscripeResponse>
+
+    //채널 구독 취소
+    @DELETE("spot/scrap/{spot_id}")
+    fun deleteSpotSubscripeResponse(
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Path("spot_id") spot_id: Int
+    ): Call<DeleteChannelScripteResponse>
+
 
 }
