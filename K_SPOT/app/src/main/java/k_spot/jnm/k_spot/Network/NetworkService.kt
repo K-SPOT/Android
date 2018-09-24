@@ -7,6 +7,7 @@ import k_spot.jnm.k_spot.Post.PostKakaoResponse
 import k_spot.jnm.k_spot.Post.PostSpotReviewWriteResponse
 import k_spot.jnm.k_spot.Post.PostUserInfoResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -177,13 +178,14 @@ interface NetworkService {
             @Path("is_etc") is_etc : Int
     )  : Call<GetMapPageSpotDataResponse>
 
+    //유저 정보 수정 String이 아닌 RequestBody로 name 타입을 지정!!!
     @Multipart
     @POST("/user/edit")
     fun postUserInfoResponse(
             @Header("flag") flag : Int?,
             @Header("authorization") tokenValue : String?,
-            @Part("name") name : String,
-            @Part profile_img : MultipartBody.Part
+            @Part profile_img : MultipartBody.Part?,
+            @Part("name") name : RequestBody
     ) : Call<PostUserInfoResponse>
 
     // SearchSpotResultFilter

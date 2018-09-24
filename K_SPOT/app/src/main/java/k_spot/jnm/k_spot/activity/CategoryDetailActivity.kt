@@ -28,7 +28,7 @@ import retrofit2.Response
 class CategoryDetailActivity : AppCompatActivity() {
 
     lateinit var channelInfoData : ChannelInfoData
-    val channel_id : Int = 1
+    var channel_id : Int = 1
 
     val placeRecommendData : ArrayList<PlaceRecommendData> by lazy {
         ArrayList<PlaceRecommendData>()
@@ -57,8 +57,10 @@ class CategoryDetailActivity : AppCompatActivity() {
         hideActionBar()
         setStatusBarColor()
 
+
+        channel_id = intent.getIntExtra("channel_id", 1)
         //인텐트 받기
-        requestDataList(1)
+        requestDataList(channel_id)
 
     }
 

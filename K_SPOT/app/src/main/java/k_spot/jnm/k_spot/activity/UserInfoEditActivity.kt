@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.system.Os.read
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -37,13 +38,15 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
 import java.io.InputStream
 
 class UserInfoEditActivity : AppCompatActivity() {
     val MY_PERMISSIONS_REQUEST_READ_CONTACTS : Int = 1001
+    val MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE : Int = 1002
     val REQUEST_CODE_SELECT_IMAGE : Int = 1004
     private var mImage : MultipartBody.Part? = null
-
+    lateinit var initName : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,10 +54,10 @@ class UserInfoEditActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user_info_edit)
         setStatusBarTransparent()
         setClickListener()
+        initName = intent.getStringExtra("name")
 
-        setUserInfoView(intent.getStringExtra("name"), intent.getStringExtra("image"))
+        setUserInfoView(initName, intent.getStringExtra("image"))
 
-        requestPermissionDenial()
     }
 
     private fun setUserInfoView(name : String, image_url: String){
@@ -101,38 +104,39 @@ class UserInfoEditActivity : AppCompatActivity() {
         }
     }
 
+    //여기서 이미지를 MultipartBody.Part로 만들어준다!!! 서버로 보내는 것이므로 이미지를 byte 처리
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_SELECT_IMAGE){
             if (resultCode == Activity.RESULT_OK){
                 data?.let {
                     var  seletedPictureUri = it.data
-
                     val options = BitmapFactory.Options()
-
                     val inputStream : InputStream = contentResolver.openInputStream(seletedPictureUri)
-
                     val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
                     val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
-
-                    mImage = MultipartBody.Part.createFormData("image", File(seletedPictureUri.toString()).name, photoBody)
-                    Log.e("사진", mImage.toString())
-
+                    mImage = MultipartBody.Part.createFormData("profile_img", File(seletedPictureUri.toString()).name, photoBody)
 
                     Glide.with(this@UserInfoEditActivity).load(seletedPictureUri).thumbnail(0.1f).into(iv_user_info_edit_user_image)
                 }
+
             }
         }
-
     }
 
+
     private fun resquestUserInfoChange(){
-        mImage?.let {
+
+        val name = et_user_info_edit_user_name.text.toString()
+        //여기서!!! RequestBody형식으로 String을 맵핑해서 보낸다!!! String을 Request 타입으로 바꿔서 보낸것!
+        val userName = RequestBody.create(MediaType.parse("text/plain"), name)
+
+        if (mImage != null){
             val networkService = ApplicationController.instance.networkService
             val postUserInfoResponse = networkService.postUserInfoResponse(0, SharedPreferenceController.getAuthorization(this),
-                    et_user_info_edit_user_name.text.toString(), mImage!!)
+                    mImage, userName)
             postUserInfoResponse.enqueue(object : Callback<PostUserInfoResponse>{
                 override fun onFailure(call: Call<PostUserInfoResponse>?, t: Throwable?) {
                     Log.e("사진 전송 에러", t.toString())
@@ -147,43 +151,54 @@ class UserInfoEditActivity : AppCompatActivity() {
                     }
                 }
             })
-        }
-        Log.e("사진 전송 에러", "아예 비어있다")
+        } else if (mImage == null && name != initName){
+            val networkService = ApplicationController.instance.networkService
+            val postUserInfoResponse = networkService.postUserInfoResponse(0, SharedPreferenceController.getAuthorization(this),
+                     null, userName)
+            postUserInfoResponse.enqueue(object : Callback<PostUserInfoResponse>{
+                override fun onFailure(call: Call<PostUserInfoResponse>?, t: Throwable?) {
+                    Log.e("사진 전송 에러", t.toString())
+                }
 
+                override fun onResponse(call: Call<PostUserInfoResponse>?, response: Response<PostUserInfoResponse>?) {
+                    response?.let {
+                        if (response.isSuccessful){
+                            toast("닉네임 변경 완료")
+                            finish()
+                        }
+                    }
+                }
+            })
+        } else {
+            finish()
+        }
     }
 
-    fun requestPermissionDenial(){
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
 
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            Manifest.permission.READ_CONTACTS)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), MY_PERMISSIONS_REQUEST_READ_CONTACTS)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    val intent = Intent(Intent.ACTION_PICK)
+                    intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
+                    intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
+                } else {
+                    requestReadExternalStoragePermission()
+                }
+                return
             }
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == MY_PERMISSIONS_REQUEST_READ_CONTACTS){
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Log.e("여긴?", "1")
+    private fun requestReadExternalStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             } else {
-                Log.e("여긴?", "2")
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE)
             }
         }
     }
-
 
 
     private fun setWindowFlag(bits: Int, on: Boolean) {
