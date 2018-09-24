@@ -176,4 +176,17 @@ interface NetworkService {
             @Path("is_etc") is_etc : Int
     )  : Call<GetMapPageSpotDataResponse>
 
+    // SearchSpotResultFilter
+    @GET("search/{keyword}/filter/place/{order}/{is_food}/{is_cafe}/{is_sights}/{is_etc}")
+    fun getSearchResultFilterResponse(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?,
+            @Path("keyword") keyword : String,
+            @Path("order") order : Int,
+            @Path("is_food") is_food : Int,
+            @Path("is_cafe") is_cafe : Int,
+            @Path("is_sights") is_sights : Int,
+            @Path("is_etc") is_etc : Int
+    ) : Call<GetSearchResultFilterResponse>
+
 }

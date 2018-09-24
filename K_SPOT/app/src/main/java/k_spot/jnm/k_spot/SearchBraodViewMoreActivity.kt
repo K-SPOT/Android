@@ -28,6 +28,9 @@ class SearchBraodViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_braod_view_more)
         searchBroadItems = intent.getParcelableArrayListExtra<ChannelSearchResultData>("searchBroadItems")
+        searchResultActBroadRecyclerAdapter = SearchResultActBroadRecyclerAdapter(searchBroadItems, applicationContext, searchBroadItems.size, this)
+        var keyword = intent.getStringExtra("keyword")
+        search_broad_view_more_act_result_tv.text = keyword + " " + "검색결과"
         makeRecyclerView(searchBroadItems)
         setStatusBarTransparent()
         setOnClickListener()

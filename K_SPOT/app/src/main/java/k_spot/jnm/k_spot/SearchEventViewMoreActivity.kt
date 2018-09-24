@@ -29,6 +29,9 @@ class SearchEventViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_search_event_view_more)
 
         searchEventItems = intent.getParcelableArrayListExtra<PlaceSearchResultData>("searchEventItems")
+        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchEventItems, applicationContext, this)
+        var keyword = intent.getStringExtra("keyword")
+        search_event_view_more_act_result_tv.text = keyword + " " + "검색결과"
 
         makeRecyclerView(searchEventItems)
         setStatusBarTransparent()

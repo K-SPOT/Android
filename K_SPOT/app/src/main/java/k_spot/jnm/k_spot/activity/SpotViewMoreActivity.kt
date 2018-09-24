@@ -57,6 +57,8 @@ class SpotViewMoreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spot_view_more)
 
+        var spot_id = intent.getIntExtra("spot_id", 0)
+
         spotViewMoreData = ArrayList()
         reviewSpotViewMoreData = ArrayList()
         channelRecyclerViewData = ArrayList()
@@ -70,15 +72,15 @@ class SpotViewMoreActivity : AppCompatActivity() {
         setStatusBarTransparent()
 
         setOnClickListener()
-        getSpotViewMore()
+        getSpotViewMore(spot_id)
     }
 
 
-    fun getSpotViewMore() {
+    fun getSpotViewMore(spot_id : Int) {
 
         networkService = ApplicationController.instance.networkService
         val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
-        val getSpotViewMoreResponse = networkService.getSpotViewMore(0, authorization, 33)
+        val getSpotViewMoreResponse = networkService.getSpotViewMore(0, authorization, spot_id)
         getSpotViewMoreResponse.enqueue(object : Callback<GetSpotViewMoreResponse> {
             override fun onFailure(call: Call<GetSpotViewMoreResponse>?, t: Throwable?) {
             }
@@ -96,7 +98,10 @@ class SpotViewMoreActivity : AppCompatActivity() {
                         j ++
                     }
 
-                    makeSpotViewMoreActViewPager(viewPagerSpotViewMoreActData)
+                    if(viewPagerSpotViewMoreActData.size > 0){
+                        makeSpotViewMoreActViewPager(viewPagerSpotViewMoreActData)
+                    }
+
 
                     var i = 0
                     while(i<channelSpotViewMoreData.channel_id.size){

@@ -9,18 +9,29 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import k_spot.jnm.k_spot.Get.GetSearchResultFilterResponse
 import k_spot.jnm.k_spot.Get.PlaceSearchResultData
+import k_spot.jnm.k_spot.Network.ApplicationController
+import k_spot.jnm.k_spot.Network.NetworkService
+import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
 import k_spot.jnm.k_spot.adapter.SearchSpotViewMoreActRecyclerAdapter
+import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_search_spot_view_more.*
+import org.jetbrains.anko.startActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         val index: Int = search_spot_view_more_act_rv.getChildAdapterPosition(v)
         val spot_id = searchSpotItems[index].spot_id
+        startActivity<SpotViewMoreActivity>("spot_id" to spot_id)
         Log.v("spot_id", spot_id.toString())
 //        startActivity<ContentsDetail>("channel_id" to channel_id)
     }
 
+    lateinit var networkService : NetworkService
     lateinit var searchSpotItems: ArrayList<PlaceSearchResultData>
     lateinit var searchSpotViewMoreActRecyclerAdapter: SearchSpotViewMoreActRecyclerAdapter
 
@@ -28,13 +39,46 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_spot_view_more)
         searchSpotItems = intent.getParcelableArrayListExtra<PlaceSearchResultData>("searchSpotItems")
+        var keyword = intent.getStringExtra("keyword")
+        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchSpotItems, applicationContext, this)
+        search_spot_view_more_act_result_tv.text = keyword + " " + "검색결과"
         makeRecyclerView(searchSpotItems)
         setStatusBarTransparent()
-        setOnClickListener()
-
+        setOnClickListener(keyword)
     }
 
-    private fun setOnClickListener() {
+    fun getSearchResultFilter(keyword: String, order: Int, is_food : Int, is_cafe : Int, is_sight : Int, is_etc : Int) {
+        networkService = ApplicationController.instance.networkService
+        val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
+        val getSearchResultFilterResponse = networkService.getSearchResultFilterResponse(0, authorization, keyword, order, is_food, is_cafe, is_sight, is_etc)
+        getSearchResultFilterResponse.enqueue(object : Callback<GetSearchResultFilterResponse> {
+            override fun onFailure(call: Call<GetSearchResultFilterResponse>?, t: Throwable?) {
+            }
+
+            override fun onResponse(call: Call<GetSearchResultFilterResponse>?, response: Response<GetSearchResultFilterResponse>?) {
+                if (response!!.isSuccessful) {
+                    Log.v("keyword", keyword)
+                    Log.v("order", order.toString())
+                    Log.v("is_food", is_food.toString())
+                    Log.v("is_cafe", is_cafe.toString())
+                    Log.v("is_sight", is_sight.toString())
+                    Log.v("is_etc", is_etc.toString())
+                    searchSpotItems = response!!.body()!!.data
+                    makeRecyclerView(searchSpotItems)
+                }
+            }
+
+        })
+    }
+
+    private fun setOnClickListener(keyword : String) {
+
+        var order : Int = 0
+        var is_food : Int = 0
+        var is_cafe : Int = 0
+        var is_sight : Int = 0
+        var is_etc : Int = 0
+
         search_spot_view_more_act_back_btn.setOnClickListener {
             finish()
         }
@@ -49,8 +93,64 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         }
 //##        // 검색 통신 필요 ##
         search_spot_view_more_act_filter_enter_btn.setOnClickListener {
+            getSearchResultFilter(keyword, order, is_food, is_cafe, is_sight, is_etc)
             search_spot_view_more_act_filter_on_rl.visibility = View.GONE
         }
+
+        // 인기순 버튼
+        search_spot_view_more_act_filter_popularity_btn.setOnClickListener {
+            order = 1
+            search_spot_view_more_act_filter_new_tv.setTextColor(Color.parseColor("#40D39F"))
+            search_spot_view_more_act_filter_popularity_tv.setTextColor(Color.parseColor("#C0C0C0"))
+        }
+        // 최신순 버튼
+        search_spot_view_more_act_filter_new_btn.setOnClickListener {
+            order = 0
+            search_spot_view_more_act_filter_new_tv.setTextColor(Color.parseColor("#40D39F"))
+            search_spot_view_more_act_filter_popularity_tv.setTextColor(Color.parseColor("#C0C0C0"))
+        }
+        // 맛집 버튼
+        search_spot_view_more_act_filter_restaurant_btn.setOnClickListener {
+            if(is_food == 0){
+                search_spot_view_more_act_filter_restaurant_btn.setImageResource(R.drawable.filter_restaurant_btn_green)
+                is_food = 1
+            }else if(is_food === 1){
+                search_spot_view_more_act_filter_restaurant_btn.setImageResource(R.drawable.filter_restaurant_btn_gray)
+                is_food = 0
+            }
+        }
+        // Cafe 버튼
+        search_spot_view_more_act_filter_cafe_btn.setOnClickListener {
+            if(is_cafe == 0){
+                search_spot_view_more_act_filter_cafe_btn.setImageResource(R.drawable.filter_cafe_btn_green)
+                is_cafe = 1
+            }else if(is_cafe === 1){
+                search_spot_view_more_act_filter_cafe_btn.setImageResource(R.drawable.filter_cafe_btn_gray)
+                is_cafe = 0
+            }
+        }
+        // 명소 버튼
+        search_spot_view_more_act_filter_hotplace_btn.setOnClickListener {
+            if(is_sight == 0){
+                search_spot_view_more_act_filter_hotplace_btn.setImageResource(R.drawable.filter_hotplace_btn_green)
+                is_sight = 1
+            }else if(is_sight === 1){
+                search_spot_view_more_act_filter_hotplace_btn.setImageResource(R.drawable.filter_hotplace_btn_gray)
+                is_sight = 0
+            }
+        }
+        // 기타 버튼
+        search_spot_view_more_act_filter_etc_btn.setOnClickListener {
+            if(is_etc == 0){
+                search_spot_view_more_act_filter_etc_btn.setImageResource(R.drawable.filter_etc_btn_green)
+                is_etc = 1
+            }else if(is_etc === 1){
+                search_spot_view_more_act_filter_etc_btn.setImageResource(R.drawable.filter_etc_btn_gray)
+                is_etc = 0
+            }
+
+        }
+
 //##        // 검색 통신 필요 ##
     }
 
@@ -113,4 +213,6 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+
 }
