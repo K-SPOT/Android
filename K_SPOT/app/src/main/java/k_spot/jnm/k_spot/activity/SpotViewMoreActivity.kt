@@ -11,14 +11,17 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.*
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
+import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.ReviewMoreActivity
 import k_spot.jnm.k_spot.ReviewWriteActivity
@@ -27,6 +30,7 @@ import k_spot.jnm.k_spot.adapter.SpotViewMoreActCardViewAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_spot_view_more.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,6 +81,14 @@ class SpotViewMoreActivity : AppCompatActivity() {
                     channelSpotViewMoreData = response!!.body()!!.data!![0].channel
                     reviewSpotViewMoreData = response!!.body()!!.data!![0].reviews
                     viewPagerImg = response!!.body()!!.data!![0].img
+                    var j = 0
+                    while(j < viewPagerImg.size){
+                        viewPagerSpotViewMoreActData.add(ViewPagerSpotViewMoreActData(viewPagerImg[j]))
+                        j ++
+                    }
+
+                    makeSpotViewMoreActViewPager(viewPagerSpotViewMoreActData)
+
                     var i = 0
                     while(i<channelSpotViewMoreData.channel_id.size){
                         channelRecyclerViewData.add(ChannelRecyclerViewData(channelSpotViewMoreData.channel_id[i],channelSpotViewMoreData.channel_name[i]
@@ -88,25 +100,17 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
                     makeSpotViewMoreActCardView(channelRecyclerViewData)
 
-                    var j = 0
-                    while(j < viewPagerImg.size){
-                        viewPagerSpotViewMoreActData.add(ViewPagerSpotViewMoreActData(viewPagerImg[j]))
-                        j ++
-                    }
-
-                    makeSpotViewMoreActViewPager(viewPagerSpotViewMoreActData)
-
                     // 스크랩
                     spot_view_more_act_scrap_num_tv.text = spotViewMoreData[0].scrap_cnt.toString()
 
                     var scrapFlag = spotViewMoreData[0].is_scrap
                     // 스크랩 안 됐을 시 하얀색으로
                     if(scrapFlag == 0) {
-                        spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
+                        spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
                         //## 스크랩 통신 필요
                         scrapFlag = 1
                     }else{
-                        spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
+                        spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
                         scrapFlag = 0
                     }
 
@@ -152,6 +156,41 @@ class SpotViewMoreActivity : AppCompatActivity() {
                 }
             }
 
+        })
+    }
+
+    private fun requestSpotSubscription(spot_id : Int){
+        val networkService : NetworkService = ApplicationController.instance.networkService
+        val postSpotSubscripeResponse = networkService.postSpotSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), spot_id)
+        postSpotSubscripeResponse.enqueue(object : Callback<PostChannelSubscripeResponse>{
+            override fun onFailure(call: Call<PostChannelSubscripeResponse>?, t: Throwable?) {
+                Log.e("스크랩 실패", t.toString())
+            }
+            override fun onResponse(call: Call<PostChannelSubscripeResponse>?, response: Response<PostChannelSubscripeResponse>?) {
+                response?.let {
+                    if (response.isSuccessful){
+                        toast("스크랩 완료")
+                    }
+                }
+            }
+        })
+    }
+
+    private fun deleteSpotSubscription(spot_id : Int){
+        val networkService : NetworkService = ApplicationController.instance.networkService
+        val deleteSpotSubscripeResponse = networkService.deleteSpotSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), spot_id)
+        deleteSpotSubscripeResponse.enqueue(object : Callback<DeleteChannelScripteResponse> {
+            override fun onFailure(call: Call<DeleteChannelScripteResponse>?, t: Throwable?) {
+                Log.e("스크랩 취소 실패", t.toString())
+            }
+
+            override fun onResponse(call: Call<DeleteChannelScripteResponse>?, response: Response<DeleteChannelScripteResponse>?) {
+                response?.let {
+                    if (response.isSuccessful){
+                        toast("스크랩 취소")
+                    }
+                }
+            }
         })
     }
 
@@ -405,8 +444,25 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
         // 스크랩 버튼
         spot_view_more_act_scrap_btn.setOnClickListener {
-            //## 스크랩 통신 필요
-            //  # 로그인이 되어있지 않은 경우 로그인 팝업이 뜬다.
+
+            // 스크랩 안 됐을 시 하얀색으로
+            if(spotViewMoreData[0].is_scrap == 0) {
+                spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
+                requestSpotSubscription(spotViewMoreData[0].spot_id)
+                Log.v("spotViewMoreData[0].spot_id", spotViewMoreData[0].spot_id.toString())
+                //## 스크랩 통신 필요
+                spotViewMoreData[0].is_scrap = 1
+                spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt + 1).toString()
+            }else{
+                Log.v("spotViewMoreData[0].spot_id", spotViewMoreData[0].spot_id.toString())
+                spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
+                deleteSpotSubscription(spotViewMoreData[0].spot_id)
+                spotViewMoreData[0].is_scrap = 0
+                spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt).toString()
+            }
+
+
+            //  ## 로그인이 되어있지 않은 경우 로그인 팝업이 뜬다.
         }
 
         spot_view_more_act_spot_address_rl.setOnClickListener {
