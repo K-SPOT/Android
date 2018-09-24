@@ -34,6 +34,11 @@ class MapPageRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<Map
         holder.badgeList.adapter = badgeRecyclerViewAdapter
     }
 
+    fun clearDataList(){
+        dataList.clear()
+        notifyDataSetChanged()
+    }
+
     inner class Holder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val image : ImageView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_img) as ImageView
         val title : TextView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_title) as TextView
