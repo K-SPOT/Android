@@ -1,6 +1,5 @@
 package k_spot.jnm.k_spot
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
@@ -50,29 +49,31 @@ class SearchResultActivity : AppCompatActivity(), View.OnClickListener {
 
         var keyword = intent.getStringExtra("keyword")
         getSearchResult(keyword)
+        searchBroadItems = ArrayList()
+        searchSpotItems = ArrayList()
+        searchEventItems = ArrayList()
+        searchResultActBroadRecyclerAdapter = SearchResultActBroadRecyclerAdapter(searchBroadItems, applicationContext, 0, this)
+        searchResultActSpotRecyclerAdapter = SearchResultActSpotRecyclerAdapter(searchSpotItems, applicationContext, 0, 0)
         setStatusBarTransparent()
-        setOnClickListener()
-        setViewId()
+        setOnClickListener(keyword)
     }
 
-    @SuppressLint("ResourceType")
-    private fun setViewId() {
-        search_result_act_celeb_borad_rv.id = 1
-    }
-
-    private fun setOnClickListener() {
+    private fun setOnClickListener(keyword : String) {
         search_result_act_celeb_borad_see_more_btn.setOnClickListener {
             var intent2 = Intent(applicationContext, SearchBraodViewMoreActivity::class.java)
+            intent2.putExtra("keyword", keyword)
             intent2.putParcelableArrayListExtra("searchBroadItems", searchBroadItems)
             startActivity(intent2)
         }
         search_result_act_spot_see_more_btn.setOnClickListener {
             var intent3 = Intent(applicationContext, SearchSpotViewMoreActivity::class.java)
             intent3.putParcelableArrayListExtra("searchSpotItems", searchSpotItems)
+            intent3.putExtra("keyword", keyword)
             startActivity(intent3)
         }
         search_result_act_event_see_more_btn.setOnClickListener {
             var intent4 = Intent(applicationContext, SearchEventViewMoreActivity::class.java)
+            intent4.putExtra("keyword", keyword)
             intent4.putParcelableArrayListExtra("searchEventItems", searchEventItems)
             startActivity(intent4)
         }
@@ -93,9 +94,6 @@ class SearchResultActivity : AppCompatActivity(), View.OnClickListener {
             override fun onResponse(call: Call<GetSearchResultResponse>?, response: Response<GetSearchResultResponse>?) {
                 if (response!!.isSuccessful) {
 
-                    searchBroadItems = ArrayList()
-                    searchSpotItems = ArrayList()
-                    searchEventItems = ArrayList()
                     searchBroadItems = response!!.body()!!.data!!.channel
                     searchSpotItems = response!!.body()!!.data!!.place
                     searchEventItems = response!!.body()!!.data!!.event

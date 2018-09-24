@@ -33,6 +33,9 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        celebrity = ArrayList()
+        broadcast = ArrayList()
+        event = ArrayList()
 
 //        val celebRecyclerView : RecyclerView = findViewById(R.id.search_act_search_recommend_celeb_rv)
 //        makeRecommededHashTag(celebRecyclerView)
@@ -186,9 +189,7 @@ class SearchActivity : AppCompatActivity() {
             }
             override fun onResponse(call: Call<GetSearchViewResponse>?, response: Response<GetSearchViewResponse>?) {
                 if(response!!.isSuccessful){
-                    celebrity = ArrayList()
-                    broadcast = ArrayList()
-                    event = ArrayList()
+
 
                     broadcast = response!!.body()!!.data!!.broadcast
                     celebrity = response!!.body()!!.data!!.celebrity
