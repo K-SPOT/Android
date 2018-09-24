@@ -11,6 +11,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import k_spot.jnm.k_spot.Get.PlaceSearchResultData
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
+import org.jetbrains.anko.startActivity
 
 class SearchResultActSpotRecyclerAdapter(private var searchSpotItems: ArrayList<PlaceSearchResultData>, private var context: Context, private var ItemCount: Int, private var spotOrEventFlag: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -43,6 +45,7 @@ class SearchResultActSpotRecyclerAdapter(private var searchSpotItems: ArrayList<
             holder.btn.setOnClickListener {
                 val spot_id = searchSpotItems[position].spot_id
                 Log.v("spot_id", spot_id.toString())
+                context.startActivity<SpotViewMoreActivity>("spot_id" to spot_id)
             }
         } else {
             holder.btn.setOnClickListener {
