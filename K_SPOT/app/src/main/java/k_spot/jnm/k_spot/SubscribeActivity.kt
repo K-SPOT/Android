@@ -42,9 +42,10 @@ class SubscribeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subscribe)
-
+        subscribeActCelebTabItems = ArrayList()
+        subscribeActBroadCastTabItems = ArrayList()
+        subscribeActRecyclerViewAdapter = SubscribeActRecyclerViewAdapter(subscribeActCelebTabItems, applicationContext)
         getSubscribeCeleb()
-
         setOnClickListener()
     }
 
@@ -116,8 +117,6 @@ class SubscribeActivity : AppCompatActivity() {
             }
             override fun onResponse(call: Call<GetUserSubscribeResponse>?, response: Response<GetUserSubscribeResponse>?) {
                 if(response!!.isSuccessful){
-                    subscribeActCelebTabItems = ArrayList()
-                    subscribeActBroadCastTabItems = ArrayList()
 
                     // 검색 결과 없을 시
                     if(response!!.body()!!.data!!.celebrity.size == 0 || response!!.body()!!.data!!.broadcast.size == 0) {
