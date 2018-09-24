@@ -105,61 +105,89 @@ class SpotViewMoreActivity : AppCompatActivity() {
                         i++
                     }
 
-                    makeSpotViewMoreActCardView(channelRecyclerViewData)
-
-                    // 스크랩
-                    spot_view_more_act_scrap_num_tv.text = spotViewMoreData[0].scrap_cnt.toString()
-
-                    var scrapFlag = spotViewMoreData[0].is_scrap
-                    // 스크랩 안 됐을 시 하얀색으로
-                    if(scrapFlag == 0) {
-                        spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
-                        //## 스크랩 통신 필요
-                        scrapFlag = 1
+                    if (channelRecyclerViewData.size != 0){
+                        makeSpotViewMoreActCardView(channelRecyclerViewData)
+                        spot_view_more_act_relative_celev_num_tv.text = channelRecyclerViewData.size.toString()
                     }else{
-                        spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
-                        scrapFlag = 0
+                        spot_view_more_act_relative_celev_rl.visibility = View.GONE
+                        spot_view_more_act_relative_celev_num_tv.text = "0"
                     }
 
-                    spot_view_more_act_spot_title_tv.text = spotViewMoreData[0].name
 
-                    spot_view_more_act_spot_semi_info_tv.text = spotViewMoreData[0].description
 
-                    // ## 구글 맵으로 넘어가기
-                    spot_view_more_act_spot_address_tv.text = spotViewMoreData[0].address
 
-                    spot_view_more_act_spot_station_name_tv.text = spotViewMoreData[0].station
 
-                    spot_view_more_act_spot_review_num_tv.text = spotViewMoreData[0].review_score.toString()
 
-                    spot_view_more_act_review_num_tv.text = spotViewMoreData[0].review_cnt.toString()
+                    if(spotViewMoreData.size != 0){
+                        makeBigReviewStar(spotViewMoreData[0].review_score)
+                        spot_view_more_act_spot_title_tv.text = spotViewMoreData[0].name
 
-                    spot_view_more_act_spot_left_station_tv.text = spotViewMoreData[0].prev_station
+                        spot_view_more_act_spot_semi_info_tv.text = spotViewMoreData[0].description
 
-                    spot_view_more_act_spot_right_station_tv.text = spotViewMoreData[0].next_station
+                        // ## 구글 맵으로 넘어가기
+                        spot_view_more_act_spot_address_tv.text = spotViewMoreData[0].address
 
-                    spot_view_more_act_open_time_tv.text = spotViewMoreData[0].open_time
+                        spot_view_more_act_spot_station_name_tv.text = spotViewMoreData[0].station
 
-                    spot_view_more_act_close_time_tv.text = spotViewMoreData[0].close_time
+                        spot_view_more_act_spot_review_num_tv.text = spotViewMoreData[0].review_score.toString()
 
-                    spot_view_more_act_phone_num_tv.text = spotViewMoreData[0].contact
+                        spot_view_more_act_review_num_tv.text = spotViewMoreData[0].review_cnt.toString()
 
-                    makeBigReviewStar(spotViewMoreData[0].review_score)
+                        spot_view_more_act_spot_left_station_tv.text = spotViewMoreData[0].prev_station
 
-                    spot_view_more_act_relative_celev_num_tv.text = channelRecyclerViewData.size.toString()
+                        spot_view_more_act_spot_right_station_tv.text = spotViewMoreData[0].next_station
 
-                    makeSmallReviewStar(reviewSpotViewMoreData[0].review_score)
+                        spot_view_more_act_open_time_tv.text = spotViewMoreData[0].open_time
 
-                    spot_view_more_act_review_box_title_tv.text = reviewSpotViewMoreData[0].title
+                        spot_view_more_act_close_time_tv.text = spotViewMoreData[0].close_time
 
-                    spot_view_more_act_review_box_explain_tv.text = reviewSpotViewMoreData[0].content
+                        spot_view_more_act_phone_num_tv.text = spotViewMoreData[0].contact
 
-                    // ## Noimage 넣어야됌
-                    if (reviewSpotViewMoreData[0].img.length > 0) {
-                        Glide.with(applicationContext).load(reviewSpotViewMoreData[0].img).into(spot_view_more_act_review_box_picture_iv)
+                        // 스크랩
+                        spot_view_more_act_scrap_num_tv.text = spotViewMoreData[0].scrap_cnt.toString()
+
+                        var scrapFlag = spotViewMoreData[0].is_scrap
+                        // 스크랩 안 됐을 시 하얀색으로
+                        if(scrapFlag == 0) {
+                            spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
+                            //## 스크랩 통신 필요
+                            scrapFlag = 1
+                        }else{
+                            spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
+                            scrapFlag = 0
+                        }
+
+                    }else {
+                        makeBigReviewStar(0.0)
                     }
 
-                    spot_view_more_act_review_box_writer_date_tv.text = reviewSpotViewMoreData[0].reg_time + " · " + reviewSpotViewMoreData[0].reg_time
+
+                    if(reviewSpotViewMoreData.size != 0){
+                        makeSmallReviewStar(reviewSpotViewMoreData[0].review_score)
+                        spot_view_more_act_review_box_title_tv.text = reviewSpotViewMoreData[0].title
+                        spot_view_more_act_review_box_explain_tv.text = reviewSpotViewMoreData[0].content
+                        spot_view_more_act_review_box_writer_date_tv.text = reviewSpotViewMoreData[0].reg_time + " · " + reviewSpotViewMoreData[0].reg_time
+
+                        if (reviewSpotViewMoreData[0].img.length > 0) {
+                            Glide.with(applicationContext).load(reviewSpotViewMoreData[0].img).into(spot_view_more_act_review_box_picture_iv)
+                        }else{
+                            // ## Noimage 넣어야됌
+                            spot_view_more_act_review_box_picture_iv.setImageResource(R.drawable.category_unscrap_btn_gray)
+                        }
+                    }else {
+                        makeSmallReviewStar(0.0)
+                        spot_view_more_act_review_box_title_tv.text = ""
+                        spot_view_more_act_review_box_explain_tv.text = ""
+                        spot_view_more_act_review_box_writer_date_tv.text = ""
+                        // ## Noimage 넣어야됌
+                    }
+
+
+
+
+
+
+
                 }
             }
 
