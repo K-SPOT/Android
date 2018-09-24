@@ -486,12 +486,14 @@
                 android:layout_height="78dp"
                 android:gravity="center">
                 <RelativeLayout
+                    android:id="@+id/btn_map_page_filter_is_popular"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
+                        android:id="@+id/tv_map_page_filter_is_popular"
                         android:text="인기순"
-                        android:textColor="#E0E0E0"
+                        android:textColor="#40D39F"
                         android:textSize="17dp"
                         android:fontFamily="@font/nanumsquareotf_regular"
                         android:layout_centerInParent="true"
@@ -503,10 +505,12 @@
                     android:layout_height="20dp"
                     android:background="#C0C0C0" />
                 <RelativeLayout
+                    android:id="@+id/btn_map_page_filter_is_new"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
+                        android:id="@+id/tv_map_page_filter_is_new"
                         android:text="최신순"
                         android:textColor="#E0E0E0"
                         android:textSize="17dp"
@@ -525,6 +529,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp">
                 <TextView
+                    android:id="@+id/tv_map_page_filter_distance"
                     android:layout_centerInParent="true"
                     android:textColor="#40D39F"
                     android:fontFamily="@font/nanumsquareotf_regular"
@@ -533,6 +538,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <ImageView
+                    android:paddingRight="16dp"
+                    android:paddingVertical="8dp"
+                    android:id="@+id/btn_map_page_filter_distance_left"
                     android:src="@drawable/map_page_filter_left_arrow"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
@@ -540,6 +548,9 @@
                     android:layout_height="wrap_content"
                     />
                 <ImageView
+                    android:paddingLeft="16dp"
+                    android:paddingVertical="8dp"
+                    android:id="@+id/btn_map_page_filter_distance_right"
                     android:src="@drawable/map_page_filter_right_arrow"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
@@ -556,32 +567,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                <ImageView
+                   android:id="@+id/btn_map_page_filter_is_restaurant"
                    android:layout_weight="1"
-                   android:src="@drawable/filter_restaurant_btn_gray"
+                   android:src="@drawable/filter_restaurant_btn_green"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    />
                 <ImageView
+                    android:id="@+id/btn_map_page_filter_is_cafe"
                     android:layout_weight="1"
-                    android:src="@drawable/filter_cafe_btn_gray"
+                    android:src="@drawable/filter_cafe_btn_green"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
                 <ImageView
+                    android:id="@+id/btn_map_page_filter_is_hot_place"
                     android:layout_weight="1"
-                    android:src="@drawable/filter_hotplace_btn_gray"
+                    android:src="@drawable/filter_hotplace_btn_green"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
                 <ImageView
+                    android:id="@+id/btn_map_page_filter_is_event"
                     android:layout_weight="1"
-                    android:src="@drawable/filter_event_btn_gray"
+                    android:src="@drawable/filter_event_btn_green"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
                 <ImageView
+                    android:id="@+id/btn_map_page_filter_is_etc"
                     android:layout_weight="1"
-                    android:src="@drawable/filter_etc_btn_gray"
+                    android:src="@drawable/filter_etc_btn_green"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -589,6 +605,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/btn_map_page_filter_apply_btn"
             android:background="#40D39F"
             android:layout_width="match_parent"
             android:layout_height="70dp">

@@ -1,6 +1,6 @@
 package k_spot.jnm.k_spot.Get
 
-data class GetMapPageDataFromGPSResponse(
+data class GetMapPageSpotDataResponse(
         val message : String,
         val data : ArrayList<MapPageSpotData>
 )

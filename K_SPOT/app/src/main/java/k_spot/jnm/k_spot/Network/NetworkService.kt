@@ -160,6 +160,20 @@ interface NetworkService {
             @Path("is_sights") is_sights : Int,
             @Path("is_event") is_event : Int,
             @Path("is_etc") is_etc : Int
-    ) : Call<GetMapPageDataFromGPSResponse>
+    ) : Call<GetMapPageSpotDataResponse>
+
+    //맵 페이지 스팟 불러오기(지도 클릭)
+    @GET("/spot/{address_gu}/{order}/{is_food}/{is_cafe}/{is_sights}/{is_event}/{is_etc}")
+    fun getMapPageResponseFromSpot(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?,
+            @Path("address_gu") address_gu : String,
+            @Path("order") order : Int,
+            @Path("is_food") is_food : Int,
+            @Path("is_cafe") is_cafe : Int,
+            @Path("is_sights") is_sights : Int,
+            @Path("is_event") is_event : Int,
+            @Path("is_etc") is_etc : Int
+    )  : Call<GetMapPageSpotDataResponse>
 
 }
