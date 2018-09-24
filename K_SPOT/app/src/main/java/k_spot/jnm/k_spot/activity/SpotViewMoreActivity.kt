@@ -41,7 +41,10 @@ class SpotViewMoreActivity : AppCompatActivity() {
     lateinit var spotViewMoreActAutoScrollAdapter: SpotViewMoreActAutoScrollAdapter
     lateinit var networkService: NetworkService
     lateinit var spotViewMoreData : ArrayList<SpotViewMoreData>
+
     lateinit var channelSpotViewMoreData: ChannelSpotViewMoreData
+
+
     lateinit var reviewSpotViewMoreData : ArrayList<ReviewSpotViewMoreData>
 
     lateinit var viewPagerImg: ArrayList<String>
@@ -53,6 +56,15 @@ class SpotViewMoreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spot_view_more)
+
+        spotViewMoreData = ArrayList()
+        reviewSpotViewMoreData = ArrayList()
+        channelRecyclerViewData = ArrayList()
+        viewPagerSpotViewMoreActData = ArrayList()
+        spotViewMoreActAutoScrollAdapter = SpotViewMoreActAutoScrollAdapter(applicationContext, viewPagerSpotViewMoreActData)
+        channelSpotViewMoreData = ChannelSpotViewMoreData(ArrayList(), ArrayList(),ArrayList(),ArrayList())
+        viewPagerImg = ArrayList()
+
         // 상태바 투명하게 하는 코드
         // MainActivity에는 필요없으므로 주석처리
         setStatusBarTransparent()
@@ -73,10 +85,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<GetSpotViewMoreResponse>?, response: Response<GetSpotViewMoreResponse>?) {
                 if (response!!.isSuccessful) {
-                    spotViewMoreData = ArrayList()
-                    reviewSpotViewMoreData = ArrayList()
-                    channelRecyclerViewData = ArrayList()
-                    viewPagerSpotViewMoreActData = ArrayList()
+
                     spotViewMoreData = response!!.body()!!.data
                     channelSpotViewMoreData = response!!.body()!!.data!![0].channel
                     reviewSpotViewMoreData = response!!.body()!!.data!![0].reviews
@@ -95,8 +104,6 @@ class SpotViewMoreActivity : AppCompatActivity() {
                         , channelSpotViewMoreData.thumbnail_img[i],channelSpotViewMoreData.is_subscription[i]))
                         i++
                     }
-
-                    makeSpotViewMoreActCardView(channelRecyclerViewData)
 
                     makeSpotViewMoreActCardView(channelRecyclerViewData)
 
@@ -479,7 +486,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
         }
 
-        spot_view_more_act_review_box_btn.setOnClickListener {
+        spot_view_more_act_review_write_box_btn.setOnClickListener {
             // ## 리뷰 Write로 이동
             startActivity<ReviewWriteActivity>("spot_id" to spotViewMoreData[0].spot_id)
         }
