@@ -21,10 +21,12 @@ import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.ReviewMoreActivity
+import k_spot.jnm.k_spot.ReviewWriteActivity
 import k_spot.jnm.k_spot.adapter.SpotViewMoreActAutoScrollAdapter
 import k_spot.jnm.k_spot.adapter.SpotViewMoreActCardViewAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_spot_view_more.*
+import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -423,6 +425,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
         spot_view_more_act_review_box_btn.setOnClickListener {
             // ## 리뷰 Write로 이동
+            startActivity<ReviewWriteActivity>("spot_id" to spotViewMoreData[0].spot_id)
         }
 
         spot_view_more_act_phone_num_btn.setOnClickListener {

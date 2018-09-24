@@ -10,8 +10,17 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.ChannelRecyclerViewData
+import k_spot.jnm.k_spot.Network.ApplicationController
+import k_spot.jnm.k_spot.Network.NetworkService
+import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.db.SharedPreferenceController
+import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayList<ChannelRecyclerViewData>) : RecyclerView.Adapter<SpotViewMoreActCardViewAdapter.ViewHolder>() {
 
@@ -58,11 +67,11 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
             if(subFlag == "0"){
                 holder.subscribeBtn.setImageResource(R.drawable.category_list_sub_btn)
                 subFlag = "1"
-                // # 구독 통신!!
+                requestChannelSubscription(mDataset[position].channel_id.toInt())
             }else{
                 holder.subscribeBtn.setImageResource(R.drawable.category_list_unsub_btn)
                 subFlag = "0"
-                // # 구독 취소 통신!!
+                deleteChannelSubscription(mDataset[position].channel_id.toInt())
             }
         }
 
@@ -70,8 +79,41 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
             Log.v("channelID",mDataset[position].channel_id)
         }
 
+    }
 
+    private fun requestChannelSubscription(channel_id : Int){
+        val networkService : NetworkService = ApplicationController.instance.networkService
+        val postChannelSubscripeResponse = networkService.postChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(ctx), channel_id)
+        postChannelSubscripeResponse.enqueue(object : Callback<PostChannelSubscripeResponse> {
+            override fun onFailure(call: Call<PostChannelSubscripeResponse>?, t: Throwable?) {
+                Log.e("구독하기 실패", t.toString())
+            }
+            override fun onResponse(call: Call<PostChannelSubscripeResponse>?, response: Response<PostChannelSubscripeResponse>?) {
+                response?.let {
+                    if (response.isSuccessful){
+                        ctx.toast("구독")
+                    }
+                }
+            }
+        })
+    }
 
+    private fun deleteChannelSubscription(channel_id : Int){
+        val networkService : NetworkService = ApplicationController.instance.networkService
+        val deleteChannelScripteResponse = networkService.deleteChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(ctx), channel_id)
+        deleteChannelScripteResponse.enqueue(object : Callback<DeleteChannelScripteResponse> {
+            override fun onFailure(call: Call<DeleteChannelScripteResponse>?, t: Throwable?) {
+                Log.e("구독 취소 하기 실패", t.toString())
+            }
+
+            override fun onResponse(call: Call<DeleteChannelScripteResponse>?, response: Response<DeleteChannelScripteResponse>?) {
+                response?.let {
+                    if (response.isSuccessful){
+                        ctx.toast("구독 취소")
+                    }
+                }
+            }
+        })
     }
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
