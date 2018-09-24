@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -117,14 +118,16 @@ class SubscribeActivity : AppCompatActivity() {
             }
             override fun onResponse(call: Call<GetUserSubscribeResponse>?, response: Response<GetUserSubscribeResponse>?) {
                 if(response!!.isSuccessful){
-
                     // 검색 결과 없을 시
-                    if(response!!.body()!!.data!!.celebrity.size == 0 || response!!.body()!!.data!!.broadcast.size == 0) {
+                    if(response!!.body()!!.data!!.celebrity.size == 0 && response!!.body()!!.data!!.broadcast.size == 0) {
                         subscribe_act_noting_result.visibility = View.VISIBLE
                         subscribe_act_rv.visibility = View.GONE
                     }
                     subscribeActBroadCastTabItems = response!!.body()!!.data!!.broadcast
                     subscribeActCelebTabItems = response!!.body()!!.data!!.celebrity
+                    Log.v("subscribeActCelebTabItems", subscribeActCelebTabItems[0].name)
+                    Log.v("subscribeActCelebTabItems", subscribeActCelebTabItems[1].name)
+                    Log.v("subscribeActCelebTabItems", subscribeActCelebTabItems[2].name)
                     makeSubscribeActRecyclerView(subscribeActCelebTabItems)
                 }
             }

@@ -7,22 +7,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.kakao.usermgmt.UserManagement
+import com.kakao.usermgmt.callback.LogoutResponseCallback
 import k_spot.jnm.k_spot.Get.ChannelMyPageData
 import k_spot.jnm.k_spot.Get.GetMyPageResponse
 import k_spot.jnm.k_spot.Get.UserMyPageData
+import k_spot.jnm.k_spot.LoginActivity
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.SubscribeActivity
 import k_spot.jnm.k_spot.activity.UserInfoEditActivity
 import k_spot.jnm.k_spot.adapter.MySubscribeRecyclerViewAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class MyPageFragment : Fragment(){
 
@@ -32,6 +36,8 @@ class MyPageFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         getMyPage()
+        ChannelMyPageData = ArrayList()
+        userMyPageData = UserMyPageData("","")
         return inflater.inflate(R.layout.fragment_my_page, container, false)
     }
 
@@ -59,15 +65,11 @@ class MyPageFragment : Fragment(){
             override fun onResponse(call: Call<GetMyPageResponse>?, response: Response<GetMyPageResponse>?) {
                 if (response!!.isSuccessful) {
                     userMyPageData = response!!.body()!!.data!!.user
-                    ChannelMyPageData = ArrayList()
                     ChannelMyPageData = response!!.body()!!.data!!.channel
 
                     Glide.with(ctx).load(userMyPageData.profile_img).into(my_page_frag_my_info_iv)
                     my_page_frag_my_name_tv.text = userMyPageData.name
                     setMySubscribeRecyclerView(ChannelMyPageData)
-                    setMySubscribeRecyclerView(ChannelMyPageData)
-
-
                 }
             }
 
@@ -78,5 +80,31 @@ class MyPageFragment : Fragment(){
         my_page_frag_change_my_info_bar_btn.setOnClickListener {
             startActivity<UserInfoEditActivity>("name" to userMyPageData.name, "image" to userMyPageData.profile_img)
         }
+
+        my_page_frag_logout_btn.setOnClickListener {
+            onClickLogout()
+        }
+
+        my_page_frag_my_subscribe_view_more_btn.setOnClickListener {
+            startActivity<SubscribeActivity>()
+        }
+
+        my_page_frag_scrab_bar_btn.setOnClickListener {
+            // ## 스크랩 액티비티로 이동
+        }
+
+        my_page_frag_change_my_info_bar_btn.setOnClickListener {
+            // ## 회원 정보 수정 액티비티로 이동
+        }
     }
+
+    private fun onClickLogout() {
+        UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
+            override fun onCompleteLogout() {
+                startActivity<LoginActivity>()
+            }
+        })
+    }
+
+
 }

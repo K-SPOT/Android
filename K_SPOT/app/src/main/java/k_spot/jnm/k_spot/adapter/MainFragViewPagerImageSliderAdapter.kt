@@ -11,6 +11,8 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Get.Theme
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.RecommendViewMoreActivity
+import org.jetbrains.anko.startActivity
 import java.util.*
 
 
@@ -52,6 +54,9 @@ class MainFragViewPagerImageSliderAdapter(context: Context, mResources: ArrayLis
 
         // text1 = "안녕! \n 오늘은"
 //        val text1 : String = mResources[realPos].title
+        itemView.setOnClickListener {
+            mContext.startActivity<RecommendViewMoreActivity>("theme_id" to mResources[realPos].theme_id.toInt())
+        }
 
         textView.text = mResources[realPos].title
         textView2.text = mResources[realPos].subtitle

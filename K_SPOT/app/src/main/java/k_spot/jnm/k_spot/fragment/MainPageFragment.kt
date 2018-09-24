@@ -17,15 +17,18 @@ import k_spot.jnm.k_spot.Get.Theme
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.SearchActivity
 import k_spot.jnm.k_spot.adapter.MainFragCardViewAdapter
 import k_spot.jnm.k_spot.adapter.MainFragViewPagerImageSliderAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
-import kotlinx.android.synthetic.main.fragment_main_page.*
 import kotlinx.android.synthetic.main.fragment_main_page.view.*
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+
 
 
 class MainPageFragment : Fragment() {
@@ -52,10 +55,20 @@ class MainPageFragment : Fragment() {
         mainFragBestPlaceItem = ArrayList()
         mainFragEventItem = ArrayList()
         MainFragViewPagerImageSliderAdapter = MainFragViewPagerImageSliderAdapter(this!!.context!!, mainFragViewPagerItem)
-
+        setOnClickListener(view)
         getMainFragResonse(view)
 
         return view
+    }
+
+    fun setOnClickListener(view : View) {
+        view.main_page_fragment_search_btn.setOnClickListener {
+            startActivity<SearchActivity>()
+        }
+        // ## 번뎍 붙여야됨
+        view.main_page_fragment_translation_btn.setOnClickListener {
+
+        }
     }
 
     override fun onResume() {
@@ -65,14 +78,14 @@ class MainPageFragment : Fragment() {
         handler.postDelayed(Runnable {
             // Auto Scroll
             MainFragViewPagerImageSliderAdapter!!.notifyDataSetChanged()
-            main_page_fragment_viewpager!!.setInterval(5000)
-            main_page_fragment_viewpager!!.startAutoScroll(1000)
+            view!!.main_page_fragment_viewpager!!.setInterval(5000)
+            view!!.main_page_fragment_viewpager!!.startAutoScroll(1000)
         }, 3000)
     }
 
     override fun onPause() {
         super.onPause()
-        main_page_fragment_viewpager!!.stopAutoScroll()
+        view!!.main_page_fragment_viewpager!!.stopAutoScroll()
     }
 
     // ViewPager 생성 function
@@ -136,7 +149,7 @@ class MainPageFragment : Fragment() {
 
     }
 
-    fun makeCardView(view: View, recyclerView: RecyclerView, dataSet : ArrayList<Main>) {
+    fun makeCardView(view: View, recyclerView: RecyclerView, dataSet : ArrayList<Main>, spotOrEvent: Int) {
         val mRecyclerView = recyclerView
 //        val mRecyclerView = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
         mRecyclerView.setHasFixedSize(true)
@@ -145,7 +158,7 @@ class MainPageFragment : Fragment() {
 
         mRecyclerView.layoutManager = mLayoutManager
 
-        val mAdapter = MainFragCardViewAdapter(this!!.context!!, dataSet)
+        val mAdapter = MainFragCardViewAdapter(this!!.context!!, dataSet, spotOrEvent)
         mRecyclerView.adapter = mAdapter
     }
 
@@ -175,26 +188,27 @@ class MainPageFragment : Fragment() {
 
                     val mRecyclerView1 = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
                     // 첫 번째 CardView 생성 function
-                    makeCardView(view, mRecyclerView1, mainFragRecommendSpotRecyclerItem)
+                    makeCardView(view, mRecyclerView1, mainFragRecommendSpotRecyclerItem, 0)
 
                     val mRecyclerView2 = view.findViewById(R.id.main_page_fragment_rv2) as RecyclerView
 
-                    makeCardView(view, mRecyclerView2, mainFragRecommendSpotRecyclerItem)
+                    makeCardView(view, mRecyclerView2, mainFragRecommendSpotRecyclerItem, 0)
 
                     val mRecyclerView3 = view.findViewById(R.id.main_page_fragment_rv3) as RecyclerView
 
-                    makeCardView(view, mRecyclerView3, mainFragEventItem)
+                    makeCardView(view, mRecyclerView3, mainFragEventItem, 1)
                     makeViewPager(view ,mainFragViewPagerItem)
                     // Auto Scroll
                     MainFragViewPagerImageSliderAdapter!!.notifyDataSetChanged()
-                    main_page_fragment_viewpager!!.setInterval(5000)
-                    main_page_fragment_viewpager!!.startAutoScroll(1000)
+                    view.main_page_fragment_viewpager!!.setInterval(5000)
+                    view.main_page_fragment_viewpager!!.startAutoScroll(1000)
 
                 }
             }
 
         })
     }
+
 
 
 }

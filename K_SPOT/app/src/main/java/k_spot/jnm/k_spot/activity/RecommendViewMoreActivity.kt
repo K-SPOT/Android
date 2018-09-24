@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.bumptech.glide.Glide
@@ -32,12 +33,22 @@ class RecommendViewMoreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recommend_view_more)
-
+        themeDetailRecyclerViewItem = ArrayList()
+        var theme_id = intent.getIntExtra("theme_id", 0)
+        Log.v("theme_id", theme_id.toString())
         setStatusBarTransparent()
 
-        getThemeDetailResponse()
+        getThemeDetailResponse(theme_id)
 
         setListener()
+
+        setOnClickListener()
+    }
+
+    fun setOnClickListener(){
+        recommend_view_more_act_back_btn.setOnClickListener {
+            finish()
+        }
     }
 
     private fun makeRecyclerView(themeDetailRecyclerViewItem: ArrayList<ThemeDetailThemeContentData>) {
@@ -109,42 +120,43 @@ class RecommendViewMoreActivity : AppCompatActivity() {
                     window.statusBarColor = Color.WHITE
                     recommend_view_more_act_top_bar_rl.setBackgroundColor(Color.parseColor("#FFFFFF"))
                     recommend_view_more_act_back_iv.setColorFilter(Color.parseColor("#5E5E5E"))
-                    recommend_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrab_btn_gray)
-                    recommend_view_more_act_scrap_num_tv.setTextColor(Color.parseColor("#5E5E5E"))
                     recommend_view_more_act_top_bar_bottom_line.visibility = View.VISIBLE
                 } else {
                     window.statusBarColor = Color.TRANSPARENT
                     recommend_view_more_act_top_bar_rl.setBackgroundColor(Color.parseColor("#00000000"))
                     recommend_view_more_act_back_iv.setColorFilter(Color.parseColor("#FFFFFF"))
-                    recommend_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
-                    recommend_view_more_act_scrap_num_tv.setTextColor(Color.parseColor("#FFFFFF"))
                     recommend_view_more_act_top_bar_bottom_line.visibility = View.GONE
                 }
             }
         })
     }
 
-    fun getThemeDetailResponse() {
+    fun getThemeDetailResponse(theme_id: Int) {
         // 통신
         networkService = ApplicationController.instance.networkService
         val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
-        val getThemeDetailResponse = networkService.getThemeDetail(0, authorization, 6
-
-        )
+        val getThemeDetailResponse = networkService.getThemeDetail(0, authorization, theme_id)
         getThemeDetailResponse.enqueue(object : Callback<GetThemeDetailResponse> {
             override fun onFailure(call: Call<GetThemeDetailResponse>?, t: Throwable?) {
             }
             override fun onResponse(call: Call<GetThemeDetailResponse>?, response: Response<GetThemeDetailResponse>?) {
                 if (response!!.isSuccessful) {
+                    if(response!!.body()!!.data!!.theme.img.length > 0){
+                        Glide.with(applicationContext).load(response!!.body()!!.data!!.theme.img)
+                    }
 
-                    themeDetailRecyclerViewItem = ArrayList()
+                    if (response!!.body()!!.data!!.theme.title.length > 0){
+                        recommend_view_more_act_title_tv2.text = response!!.body()!!.data!!.theme.title
+                    }
 
-                    Glide.with(applicationContext).load(response!!.body()!!.data!!.theme.img)
-                    recommend_view_more_act_title_tv2.text = response!!.body()!!.data!!.theme.title
-                    recommend_view_more_act_hash_tag_tv.text = response!!.body()!!.data!!.theme.subtitle
+                    if (response!!.body()!!.data!!.theme.subtitle.length > 0){
+                        recommend_view_more_act_hash_tag_tv.text = response!!.body()!!.data!!.theme.subtitle
+                    }
 
-                    themeDetailRecyclerViewItem = response!!.body()!!.data!!.theme_contents
-                    makeRecyclerView(themeDetailRecyclerViewItem)
+                    if(response!!.body()!!.data!!.theme_contents.size > 0){
+                        themeDetailRecyclerViewItem = response!!.body()!!.data!!.theme_contents
+                        makeRecyclerView(themeDetailRecyclerViewItem)
+                    }
                 }
             }
 
