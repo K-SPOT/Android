@@ -8,10 +8,7 @@ import android.view.View
 import android.view.WindowManager
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
-import k_spot.jnm.k_spot.Get.ChannelInfoData
-import k_spot.jnm.k_spot.Get.GetCategoryDetailResponse
-import k_spot.jnm.k_spot.Get.PlaceOrEventRelativeData
-import k_spot.jnm.k_spot.Get.PlaceRecommendData
+import k_spot.jnm.k_spot.Get.*
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
@@ -22,6 +19,7 @@ import k_spot.jnm.k_spot.data.RecommendSpotData
 import k_spot.jnm.k_spot.data.RelativeSpotData
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_detailed_entertainer_page.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -100,6 +98,9 @@ class CategoryDetailActivity : AppCompatActivity() {
             }
         })
     }
+
+
+
     private fun requestChannelSubscription(channel_id : Int){
         val networkService : NetworkService = ApplicationController.instance.networkService
         val postChannelSubscripeResponse = networkService.postChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), channel_id)
@@ -159,10 +160,12 @@ class CategoryDetailActivity : AppCompatActivity() {
 
     private fun setInitClickListener(){
         btn_category_detail_spot_more_btn.setOnClickListener {
+            startActivity<ViewMoreActivity>("channel_id" to channel_id, "is_event" to 0)
             toast("관련 스팟 더보기")
         }
 
         btn_category_detail_event_more_btn.setOnClickListener {
+            startActivity<ViewMoreActivity>("channel_id" to channel_id, "is_event" to 1)
             toast("이벤트 더보기")
         }
 

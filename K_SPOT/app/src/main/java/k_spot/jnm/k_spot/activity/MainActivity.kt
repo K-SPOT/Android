@@ -29,6 +29,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun hideBottomPageTab(){
+        main_bottom_tab_layout.visibility = View.GONE
+    }
+    fun showBottomPageTab(){
+        main_bottom_tab_layout.visibility = View.VISIBLE
+    }
+
 
     private fun configureMainTabMenu() {
         main_fragment_pager.adapter = MainBottomTabAdapter(5, supportFragmentManager)
