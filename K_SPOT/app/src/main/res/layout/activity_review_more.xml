@@ -51,7 +51,8 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants">
 
             <RelativeLayout
                 android:id="@+id/review_more_act_review_tv_bar_rl"

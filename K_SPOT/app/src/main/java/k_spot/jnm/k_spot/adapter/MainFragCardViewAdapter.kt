@@ -3,6 +3,7 @@ package k_spot.jnm.k_spot.adapter
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +13,11 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Get.Main
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
+import org.jetbrains.anko.startActivity
 
 
-
-class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<Main>) : RecyclerView.Adapter<MainFragCardViewAdapter.ViewHolder>() {
+class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<Main>, val spotOrEventFlag : Int) : RecyclerView.Adapter<MainFragCardViewAdapter.ViewHolder>() {
 
     lateinit var mDataset: ArrayList<Main>
 
@@ -34,7 +36,6 @@ class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<Main>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         val dp = ctx.resources.displayMetrics.density
         val rootLayoutParams : RelativeLayout.LayoutParams = holder.rl.layoutParams as RelativeLayout.LayoutParams
         if (position == 0) {
@@ -46,6 +47,14 @@ class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<Main>
         holder.mTextView.setText(mDataset[position].name)
         holder.mTextView2.setText(mDataset[position].description)
         Glide.with(ctx).load(mDataset[position].img).into(holder.mImageView)
+
+        if (spotOrEventFlag == 0 )
+        holder.rl.setOnClickListener {
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to mDataset[position].spot_id)
+        }else {
+            // ## 이벤트 상세보기로 이동해야됨
+            Log.v("123123", myDataset[position].spot_id.toString())
+        }
     }
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
