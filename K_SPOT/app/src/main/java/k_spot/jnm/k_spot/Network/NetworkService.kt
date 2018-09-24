@@ -5,6 +5,7 @@ import k_spot.jnm.k_spot.Get.*
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.Post.PostKakaoResponse
 import k_spot.jnm.k_spot.Post.PostSpotReviewWriteResponse
+import k_spot.jnm.k_spot.Post.PostUserInfoResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -175,5 +176,14 @@ interface NetworkService {
             @Path("is_event") is_event : Int,
             @Path("is_etc") is_etc : Int
     )  : Call<GetMapPageSpotDataResponse>
+
+    @Multipart
+    @POST("/user/edit")
+    fun postUserInfoResponse(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?,
+            @Part("name") name : String,
+            @Part profile_img : MultipartBody.Part
+    ) : Call<PostUserInfoResponse>
 
 }

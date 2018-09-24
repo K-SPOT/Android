@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
+            android:id="@+id/btn_edit_picture_option_dialog_album"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -26,6 +27,7 @@
             android:layout_height="0.25dp"
             android:background="#E0E0E0"/>
         <RelativeLayout
+            android:id="@+id/btn_edit_picture_option_dialog_default"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -43,6 +45,7 @@
             android:layout_height="0.25dp"
             android:background="#E0E0E0"/>
         <RelativeLayout
+            android:id="@+id/btn_edit_picture_option_dialog_cancel"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

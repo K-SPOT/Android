@@ -78,12 +78,6 @@ class MapPageFragment : Fragment() {
         setFilterOption()
         filterOptionListener()
 
-        if (!checkPermissions()) {
-            startLocationPermissionRequest()
-        } else {
-            getLastLocation()
-        }
-
         setMapAddressGuClickListener()
 
         btn_map_page_my_spot.setOnClickListener {
@@ -93,7 +87,16 @@ class MapPageFragment : Fragment() {
                 getLastLocation()
             }
         }
+
+        if (!checkPermissions()) {
+            startLocationPermissionRequest()
+        } else {
+            getLastLocation()
+        }
     }
+
+
+
 
     //시간나면 애니메이션 처리
     private fun setFilterBtnVisible() {
