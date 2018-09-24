@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/category_list_blackpink_img" />
+        android:src="@drawable/category_list_blackpink_img"
+        android:background="@drawable/rv_item_review_more_act_box_shape"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,20 +44,6 @@
                 android:text="블랙핑크"
                 android:textColor="#FFFFFF"
                 android:textSize="13dp" />
-
-            <RelativeLayout
-                android:id="@+id/my_page_frag_rv_item_subscribe_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true">
-
-                <ImageView
-                    android:id="@+id/my_page_frag_rv_item_subscribe_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/mypage_sub_btn" />
-            </RelativeLayout>
         </RelativeLayout>
 
 

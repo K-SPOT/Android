@@ -8,11 +8,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import k_spot.jnm.k_spot.Get.ChannelListData
+import k_spot.jnm.k_spot.Get.GetCategoryListResponse
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
-import k_spot.jnm.k_spot.Get.ChannelListData
-import k_spot.jnm.k_spot.Get.GetCategoryListResponse
+import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_category_list_broadcast_tab.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,7 +38,8 @@ class CategoryPageFragBraodcastTab: Fragment() {
 
     private fun getCategoryList(ctx : Context, view : View) {
         networkService = ApplicationController.instance.networkService
-        val getCategoryListResponse = networkService.getCategoryList()
+        val authorization: String = SharedPreferenceController.getAuthorization(context = this!!.context!!)
+        val getCategoryListResponse = networkService.getCategoryList(0, authorization)
         getCategoryListResponse.enqueue(object : Callback<GetCategoryListResponse> {
             override fun onFailure(call: Call<GetCategoryListResponse>?, t: Throwable?) {
 

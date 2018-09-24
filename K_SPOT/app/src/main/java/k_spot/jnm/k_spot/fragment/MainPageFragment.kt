@@ -47,6 +47,12 @@ class MainPageFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_main_page, container, false)
 
+        mainFragViewPagerItem = ArrayList()
+        mainFragRecommendSpotRecyclerItem = ArrayList()
+        mainFragBestPlaceItem = ArrayList()
+        mainFragEventItem = ArrayList()
+        MainFragViewPagerImageSliderAdapter = MainFragViewPagerImageSliderAdapter(this!!.context!!, mainFragViewPagerItem)
+
         getMainFragResonse(view)
 
         return view
@@ -160,11 +166,6 @@ class MainPageFragment : Fragment() {
 
             override fun onResponse(call: Call<GetMainFragResponse>?, response: Response<GetMainFragResponse>?) {
                 if (response!!.isSuccessful) {
-                    mainFragViewPagerItem = ArrayList()
-
-                    mainFragRecommendSpotRecyclerItem = ArrayList()
-                    mainFragBestPlaceItem = ArrayList()
-                    mainFragEventItem = ArrayList()
 
                     mainFragViewPagerItem = response!!.body()!!.data!!.theme
 

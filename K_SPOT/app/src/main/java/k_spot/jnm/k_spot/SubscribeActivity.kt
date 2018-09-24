@@ -14,6 +14,7 @@ import k_spot.jnm.k_spot.Get.GetUserSubscribeResponse
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.adapter.SubscribeActRecyclerViewAdapter
+import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_subscribe.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -107,8 +108,9 @@ class SubscribeActivity : AppCompatActivity() {
 
     // 통신
     private fun getSubscribeCeleb() {
+        val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
         networkService = ApplicationController.instance.networkService
-        val getUserSubscribeResponse = networkService.getUserSubscribe()
+        val getUserSubscribeResponse = networkService.getUserSubscribe(0, authorization)
         getUserSubscribeResponse.enqueue(object : Callback<GetUserSubscribeResponse> {
             override fun onFailure(call: Call<GetUserSubscribeResponse>?, t: Throwable?) {
             }

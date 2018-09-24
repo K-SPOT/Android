@@ -501,6 +501,7 @@
                     <!--리뷰쓰기 btn-->
 
                     <RelativeLayout
+                        android:id="@+id/spot_view_more_act_review_write_box_btn"
                         android:layout_below="@+id/spot_view_more_act_review_box_btn"
                         android:layout_marginTop="38dp"
                         android:layout_width="match_parent"
