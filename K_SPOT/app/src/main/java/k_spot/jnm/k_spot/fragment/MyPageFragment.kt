@@ -13,10 +13,12 @@ import k_spot.jnm.k_spot.Get.UserMyPageData
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.UserInfoEditActivity
 import k_spot.jnm.k_spot.adapter.MySubscribeRecyclerViewAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.jetbrains.anko.support.v4.ctx
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +37,9 @@ class MyPageFragment : Fragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        toast("마이 페이지")
+
+        setOnClickListener()
+
     }
 
     private fun setMySubscribeRecyclerView(ChannelMyPageData : ArrayList<ChannelMyPageData>){
@@ -68,5 +72,11 @@ class MyPageFragment : Fragment(){
             }
 
         })
+    }
+
+    private fun setOnClickListener(){
+        my_page_frag_change_my_info_bar_btn.setOnClickListener {
+            startActivity<UserInfoEditActivity>("name" to userMyPageData.name, "image" to userMyPageData.profile_img)
+        }
     }
 }
