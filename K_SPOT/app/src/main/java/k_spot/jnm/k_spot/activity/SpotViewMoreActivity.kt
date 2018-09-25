@@ -57,7 +57,8 @@ class SpotViewMoreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spot_view_more)
 
-        var spot_id = intent.getIntExtra("spot_id", 0)
+        var spot_id = intent.getIntExtra("spot_id", 33)
+        Log.v("spot_id", spot_id.toString())
 
         spotViewMoreData = ArrayList()
         reviewSpotViewMoreData = ArrayList()

@@ -145,8 +145,12 @@ class RecommendViewMoreActivity : AppCompatActivity() {
                         Glide.with(applicationContext).load(response!!.body()!!.data!!.theme.img)
                     }
 
-                    if (response!!.body()!!.data!!.theme.title.length > 0){
-                        recommend_view_more_act_title_tv2.text = response!!.body()!!.data!!.theme.title
+                    if (response!!.body()!!.data!!.theme.title.size > 0){
+                        if(response!!.body()!!.data!!.theme.title.size == 1) {
+                            recommend_view_more_act_title_tv2.text = response!!.body()!!.data!!.theme.title[0]
+                        }else if(response!!.body()!!.data!!.theme.title.size == 2){
+                            recommend_view_more_act_title_tv2for2.text = response!!.body()!!.data!!.theme!!.title[1]
+                        }
                     }
 
                     if (response!!.body()!!.data!!.theme.subtitle.length > 0){
