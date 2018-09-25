@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import k_spot.jnm.k_spot.Get.PlaceSearchResultData
@@ -17,7 +16,6 @@ class SearchEventViewMoreActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         val index: Int = search_event_view_more_act_rv.getChildAdapterPosition(v)
         val spot_id = searchEventItems[index].spot_id
-        Log.v("spot_id", spot_id.toString())
 //        startActivity<ContentsDetail>("channel_id" to channel_id)
     }
 
@@ -42,20 +40,6 @@ class SearchEventViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         search_event_view_more_act_back_btn.setOnClickListener {
             finish()
         }
-        search_event_view_more_act_filter.setOnClickListener {
-            search_event_view_more_act_filter_on_rl.visibility = View.VISIBLE
-        }
-        search_event_view_more_act_filter_cancle_btn.setOnClickListener {
-            search_event_view_more_act_filter_on_rl.visibility = View.GONE
-        }
-        search_event_view_more_act_filter_x_btn.setOnClickListener {
-            search_event_view_more_act_filter_on_rl.visibility = View.GONE
-        }
-//##        // 검색 통신 필요 ##
-        search_event_view_more_act_filter_enter_btn.setOnClickListener {
-            search_event_view_more_act_filter_on_rl.visibility = View.GONE
-        }
-//##        // 검색 통신 필요 ##
     }
 
     private fun makeRecyclerView(searchEventItems: ArrayList<PlaceSearchResultData>) {

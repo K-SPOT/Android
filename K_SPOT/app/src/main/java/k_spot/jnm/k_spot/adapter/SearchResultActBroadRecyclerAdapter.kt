@@ -2,6 +2,7 @@ package k_spot.jnm.k_spot.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,17 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.ChannelSearchResultData
+import k_spot.jnm.k_spot.Network.ApplicationController
+import k_spot.jnm.k_spot.Network.NetworkService
+import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.db.SharedPreferenceController
+import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayList<ChannelSearchResultData>, private var context: Context, private var ItemCount: Int, private var onItemClick: View.OnClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -49,10 +59,12 @@ class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayLi
 //            subscription Flag 바꾸는 통신을 하고 한번 터치 시 tempFlag 값을 바꾸고
             if(flag == 0){
                 holder.result_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
+                requestChannelSubscription(searchBroadItems[position].channel_id)
                 // 구독 신청 통신 필요
                 flag = 1
             }else {
                 holder.result_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
+                deleteChannelSubscription(searchBroadItems[position].channel_id)
                 // 플래그 바꾸는 통신 필요
                 flag = 0
             }
@@ -67,6 +79,41 @@ class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayLi
         var result_post_num : TextView = itemView!!.findViewById(R.id.search_result_act_rv_item_post_num_tv)
         var result_sub_btn_image : ImageView = itemView!!.findViewById(R.id.search_result_act_rv_item_subscribe_iv)
         var result_sub_btn_btn : RelativeLayout = itemView!!.findViewById(R.id.search_result_act_rv_item_subscribe_btn)
+    }
+
+    private fun requestChannelSubscription(channel_id : Int){
+        val networkService : NetworkService = ApplicationController.instance.networkService
+        val postChannelSubscripeResponse = networkService.postChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(context), channel_id)
+        postChannelSubscripeResponse.enqueue(object : Callback<PostChannelSubscripeResponse> {
+            override fun onFailure(call: Call<PostChannelSubscripeResponse>?, t: Throwable?) {
+                Log.e("구독하기 실패", t.toString())
+            }
+            override fun onResponse(call: Call<PostChannelSubscripeResponse>?, response: Response<PostChannelSubscripeResponse>?) {
+                response?.let {
+                    if (response.isSuccessful){
+                        context.toast("구독")
+                    }
+                }
+            }
+        })
+    }
+
+    private fun deleteChannelSubscription(channel_id : Int){
+        val networkService : NetworkService = ApplicationController.instance.networkService
+        val deleteChannelScripteResponse = networkService.deleteChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(context), channel_id)
+        deleteChannelScripteResponse.enqueue(object : Callback<DeleteChannelScripteResponse> {
+            override fun onFailure(call: Call<DeleteChannelScripteResponse>?, t: Throwable?) {
+                Log.e("구독 취소 하기 실패", t.toString())
+            }
+
+            override fun onResponse(call: Call<DeleteChannelScripteResponse>?, response: Response<DeleteChannelScripteResponse>?) {
+                response?.let {
+                    if (response.isSuccessful){
+                        context.toast("구독 취소")
+                    }
+                }
+            }
+        })
     }
 }
 

@@ -56,16 +56,33 @@ class SearchResultActSpotRecyclerAdapter(private var searchSpotItems: ArrayList<
         }
 
 
-//        // 아이콘 네 개 논리처리
-//        if(searchSpotItems[position].iconFlag == 0){
-//            holder.result_icon_image.setImageResource(R.drawable.search_page_place_restaurant_icon)
-//        }else if(searchSpotItems[position].iconFlag == 1){
-//            holder.result_icon_image.setImageResource(R.drawable.search_page_place_restaurant_icon)
-//        }else if(searchSpotItems[position].iconFlag == 2) {
-//            holder.result_icon_image.setImageResource(R.drawable.search_page_place_restaurant_icon)
-//        }else {
-//            holder.result_icon_image.setImageResource(R.drawable.search_page_event_birthday_icon)
-//        }
+        // 아이콘 네 개 논리처리
+        //맛집
+        if(searchSpotItems.size > 0){
+            if(searchSpotItems[position].type == 0){
+                holder.result_icon_image.setImageResource(R.drawable.search_page_place_restaurant_icon)
+            } // 카페
+            else if(searchSpotItems[position].type == 1){
+                holder.result_icon_image.setImageResource(R.drawable.search_page_place_cafe_icon)
+            } // 명소
+            else if(searchSpotItems[position].type == 2) {
+                holder.result_icon_image.setImageResource(R.drawable.search_page_place_hotplace_icon)
+            } // 생일
+            else if(searchSpotItems[position].type == 3){
+                holder.result_icon_image.setImageResource(R.drawable.search_page_event_birthday_icon)
+            } // 기념
+            else if(searchSpotItems[position].type == 4){
+                holder.result_icon_image.setImageResource(R.drawable.search_page_event_firecracker_icon)
+            } // 이벤트 기타
+            else if(searchSpotItems[position].type == 5){
+                holder.result_icon_image.setImageResource(R.drawable.search_page_event_etc_icon)
+            } // 기타
+            else if(searchSpotItems[position].type == 6){
+                holder.result_icon_image.setImageResource(R.drawable.search_page_place_etc_icon)
+            }
+
+        }
+
     }
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {

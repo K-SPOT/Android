@@ -260,7 +260,7 @@
                 android:layout_marginLeft="4dp"
                 android:layout_toRightOf="@+id/search_result_act_result_iv"
                 android:fontFamily="@font/nanumsquareotf_bold_normal"
-                android:text="방탄"
+                android:text=""
                 android:textColor="#5E5E5E"
                 android:textSize="15dp" />
         </RelativeLayout>
