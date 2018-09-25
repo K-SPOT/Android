@@ -93,9 +93,6 @@ class MyPageFragment : Fragment(){
             // ## 스크랩 액티비티로 이동
         }
 
-        my_page_frag_change_my_info_bar_btn.setOnClickListener {
-            // ## 회원 정보 수정 액티비티로 이동
-        }
     }
 
     private fun onClickLogout() {

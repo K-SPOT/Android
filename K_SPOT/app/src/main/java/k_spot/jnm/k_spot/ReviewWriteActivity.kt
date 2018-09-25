@@ -1,7 +1,9 @@
 package k_spot.jnm.k_spot
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,6 +11,8 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,6 +27,7 @@ import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostSpotReviewWriteResponse
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_review_write.*
+import kotlinx.android.synthetic.main.activity_user_info_edit.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,6 +41,8 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 
 class ReviewWriteActivity : AppCompatActivity() {
+    val MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE : Int = 2001
+    val REQUEST_CODE_SELECT_IMAGE : Int = 2002
 
     var isTitle: Boolean = false
     var isScore: Boolean = false
@@ -43,30 +50,31 @@ class ReviewWriteActivity : AppCompatActivity() {
     var isIMG: Boolean = false
     private val REQ_CODE_SELECT_IMAGE = 100
     lateinit var networkService: NetworkService
+    var spot_id : Int = 0
 
-    lateinit var data: Uri
+
     private var image: MultipartBody.Part? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review_write)
-        var spot_id = intent.getIntExtra("spot_id", 0)
+        spot_id = intent.getIntExtra("spot_id", 0)
         // Content EditText의 수 바꾸기
         changeContentsEditTextNum()
 
         setStatusBarTransparent()
 
         setOnClickListener(spot_id)
+        Log.e("스팟 아이디 값은 " , spot_id.toString())
     }
 
-    fun postReviewWrite(spot_id: Int) {
+    fun postReviewWrite() {
         networkService = ApplicationController.instance.networkService
-        var title = review_write_act_title_edit_text.text.toString()
-        var description = review_write_act_content_posting_et.text.toString()
-        Log.e("리뷰작성 버튼 눌림", "2")
-        Log.v("리뷰작성 버튼 눌림", image.toString())
+        var title = RequestBody.create(MediaType.parse("text/plain"), review_write_act_title_edit_text.text.toString())
+        var description = RequestBody.create(MediaType.parse("text/plain"), review_write_act_content_posting_et.text.toString())
+
         val postSpotReviewWriteResponse = networkService.postSpotReviewWriteResponse(0, SharedPreferenceController.getAuthorization(applicationContext),
-                spot_id, title, description, image, 3.5)
+                33, title, description, image, 3.5)
         postSpotReviewWriteResponse.enqueue(object : Callback<PostSpotReviewWriteResponse> {
             override fun onFailure(call: Call<PostSpotReviewWriteResponse>?, t: Throwable?) {
                 Log.e("리뷰작성 실패", t.toString())
@@ -74,11 +82,12 @@ class ReviewWriteActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<PostSpotReviewWriteResponse>?, response: Response<PostSpotReviewWriteResponse>?) {
                 if (response!!.isSuccessful) {
-                    Log.e("리뷰작성 성공", "리뷰작성 성공")
+                    toast("리뷰 작성 성공")
+                    finish()
                 }
-                Log.e("리뷰작성 이거왜이럼", "리뷰작성 이상하게 실패!")
             }
         })
+        Log.e("리뷰 ", "사건3")
     }
 
     // Content EditText의 수 바꾸기
@@ -108,10 +117,6 @@ class ReviewWriteActivity : AppCompatActivity() {
 
     }
 
-    // 이거 모르겠다;;;
-    private fun checkUploadedContent() {
-        review_write_act_finish_btn.isSelected = isText || isIMG || isTitle || isScore
-    }
 
     // 이미지 뷰 바꾸고 클릭 됐을 때 이미지 뷰 선택 창으로 이동
     fun changeImage() {
@@ -124,40 +129,18 @@ class ReviewWriteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQ_CODE_SELECT_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
-                try {
-                    //if(ApplicationController.getInstance().is)
-                    this.data = data!!.data
-                    Log.v("이미지", this.data.toString())
+                data?.let {
+                    var  seletedPictureUri = it.data
                     val options = BitmapFactory.Options()
+                    val inputStream : InputStream = contentResolver.openInputStream(seletedPictureUri)
+                    val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
+                    val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
 
-                    var input: InputStream? = null
+                    image = MultipartBody.Part.createFormData("review_img", File(seletedPictureUri.toString()).name, photoBody)
 
-                    try {
-                        input = contentResolver.openInputStream(this.data)
-                    } catch (e: FileNotFoundException) {
-                        e.printStackTrace()
-                    }
-
-                    val bitmap = BitmapFactory.decodeStream(input, null, options) // InputStream 으로부터 Bitmap 생성
-                    val baos = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos)
-                    val photoBody = RequestBody.create(MediaType.parse("image/jpg"), baos.toByteArray())
-                    val photo = File(this.data.toString()) // 가져온 파일의 이름
-
-                    // RequestBody photoBody = RequestBody.create(MediaType.parse("image/jpg"), baos.toByteArray());
-
-                    image = MultipartBody.Part.createFormData("image", photo.name, photoBody) // 실제 파일의 이름 전송
-
-                    //body = MultipartBody.Part.createFormData("image", photo.getName(), profile_pic);
-
-                    Glide.with(this).load(data.data).into(review_write_act_upload_pic_iv)
-                    isIMG = true
-                    checkUploadedContent()
-                } catch (e: Exception) {
-                    toast("잘못된 파일 형식입니다!")
-                    isIMG = false
-                    checkUploadedContent()
-                    e.printStackTrace()
+                    Glide.with(this@ReviewWriteActivity).load(seletedPictureUri).thumbnail(0.1f).into(review_write_act_upload_pic_iv)
                 }
             }
         }
@@ -415,13 +398,13 @@ class ReviewWriteActivity : AppCompatActivity() {
 
         // View에 그림 보여주기
         review_write_act_upload_pic_iv.setOnClickListener {
-            review_write_act_upload_pic_iv.setImageBitmap(null)
-            isIMG = false
-            checkUploadedContent()
+//            review_write_act_upload_pic_iv.setImageBitmap(null)
+//            isIMG = false
+//            checkUploadedContent()
         }
 
         review_write_act_finish_btn.setOnClickListener {
-            postReviewWrite(spot_id)
+            postReviewWrite()
 
         }
 
@@ -475,6 +458,32 @@ class ReviewWriteActivity : AppCompatActivity() {
         }
 
 
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    val intent = Intent(Intent.ACTION_PICK)
+                    intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
+                    intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
+                } else {
+                    requestReadExternalStoragePermission()
+                }
+                return
+            }
+        }
+    }
+
+    private fun requestReadExternalStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE)
+            }
+        }
     }
 
 }

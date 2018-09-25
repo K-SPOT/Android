@@ -110,15 +110,15 @@ interface NetworkService {
             @Header("authorization") tokenValue: String?
     ): Call<GetMyPageResponse>
 
-    // 리뷰 글 쓰기 ( 실패 )
+    // 리뷰 글 쓰기
     @Multipart
     @POST("spot/review")
     fun postSpotReviewWriteResponse(
             @Header("flag") flag: Int?,
             @Header("authorization") tokenValue: String?,
             @Part("spot_id") spot_id: Int,
-            @Part("title") title : String,
-            @Part("content") content : String,
+            @Part("title") title : RequestBody,
+            @Part("content") content : RequestBody,
             @Part review_img: MultipartBody.Part?,
             @Part("review_score") review_score : Double
     ) : Call<PostSpotReviewWriteResponse>
