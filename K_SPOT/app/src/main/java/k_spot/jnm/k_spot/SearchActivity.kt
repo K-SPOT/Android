@@ -63,31 +63,45 @@ class SearchActivity : AppCompatActivity() {
 
 
         search_act_search_recommend_celeb_rl.setOnClickListener {
-            var word = celebrity[0].channel_id
+            if(celebrity.size >= 1){
+                var word = celebrity[0].channel_id
+            }
         }
 
         search_act_search_recommend_celeb_rl2.setOnClickListener {
-            var word = celebrity[1].channel_id
+            if(celebrity.size >= 2){
+                var word = celebrity[1].channel_id
+            }
         }
 
         search_act_search_recommend_broadcast_rl.setOnClickListener {
-            var word = broadcast[0].channel_id
+            if(broadcast.size >= 1){
+                var word = broadcast[0].channel_id
+            }
         }
 
         search_act_search_recommend_broadcast_rl2.setOnClickListener {
-            var word = broadcast[1].channel_id
+            if(broadcast.size >= 2){
+                var word = broadcast[1].channel_id
+            }
         }
 
         search_act_search_recommend_broadcast_rl3.setOnClickListener {
-            var word = broadcast[2].channel_id
+            if(broadcast.size >= 3){
+                var word = broadcast[2].channel_id
+            }
         }
 
         search_act_search_recommend_event_rl.setOnClickListener {
-            var word = event[0].spot_id
+            if(event.size >= 1){
+                var word = broadcast[2].channel_id
+            }
         }
 
         search_act_search_recommend_event_rl2.setOnClickListener {
-            var word = event[1].spot_id
+            if(event.size >= 2){
+                var word = event[1].spot_id
+            }
         }
 
         search_act_search_btn.setOnTouchListener(View.OnTouchListener { v, event ->

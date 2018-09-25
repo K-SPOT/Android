@@ -12,11 +12,11 @@ data class SearchViewData (
 )
 
 data class BroadcastSearchViewData (
-        val channel_id: Long,
+        val channel_id: Int,
         val name: String
 )
 
 data class EventSearchViewData (
-        val spot_id: Long,
+        val spot_id: Int,
         val name: String
 )

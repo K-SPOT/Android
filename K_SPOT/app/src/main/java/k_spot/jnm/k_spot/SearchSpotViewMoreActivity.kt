@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import k_spot.jnm.k_spot.Get.GetSearchResultFilterResponse
 import k_spot.jnm.k_spot.Get.PlaceSearchResultData
 import k_spot.jnm.k_spot.Network.ApplicationController
@@ -57,14 +58,10 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onResponse(call: Call<GetSearchResultFilterResponse>?, response: Response<GetSearchResultFilterResponse>?) {
                 if (response!!.isSuccessful) {
-                    Log.v("keyword", keyword)
-                    Log.v("order", order.toString())
-                    Log.v("is_food", is_food.toString())
-                    Log.v("is_cafe", is_cafe.toString())
-                    Log.v("is_sight", is_sight.toString())
-                    Log.v("is_etc", is_etc.toString())
                     searchSpotItems = response!!.body()!!.data
-                    makeRecyclerView(searchSpotItems)
+                    if(searchSpotItems.size > 0){
+                        makeRecyclerView(searchSpotItems)
+                    }
                 }
             }
 
@@ -83,7 +80,8 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
             finish()
         }
         search_spot_view_more_act_filter.setOnClickListener {
-            search_spot_view_more_act_filter_on_rl.visibility = View.VISIBLE
+            clickBoradcastTabAnimation()
+//            search_spot_view_more_act_filter_on_rl.visibility = View.VISIBLE
         }
         search_spot_view_more_act_filter_cancle_btn.setOnClickListener {
             search_spot_view_more_act_filter_on_rl.visibility = View.GONE
@@ -100,8 +98,8 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         // 인기순 버튼
         search_spot_view_more_act_filter_popularity_btn.setOnClickListener {
             order = 1
-            search_spot_view_more_act_filter_new_tv.setTextColor(Color.parseColor("#40D39F"))
-            search_spot_view_more_act_filter_popularity_tv.setTextColor(Color.parseColor("#C0C0C0"))
+            search_spot_view_more_act_filter_popularity_tv.setTextColor(Color.parseColor("#40D39F"))
+            search_spot_view_more_act_filter_new_tv.setTextColor(Color.parseColor("#C0C0C0"))
         }
         // 최신순 버튼
         search_spot_view_more_act_filter_new_btn.setOnClickListener {
@@ -152,6 +150,16 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         }
 
 //##        // 검색 통신 필요 ##
+    }
+
+    // 탭바를 오른쪽 방송 탭 밑으로 이동!
+    private fun clickBoradcastTabAnimation(){
+        val anim = AnimationUtils
+                .loadAnimation(applicationContext,
+                        R.anim.search_spot_view_more_act_anim)
+        search_spot_view_more_act_filter_on_rl.visibility = View.VISIBLE
+        search_spot_view_more_act_filter_on_rl.startAnimation(anim)
+
     }
 
     private fun makeRecyclerView(searchSpotItems: ArrayList<PlaceSearchResultData>) {

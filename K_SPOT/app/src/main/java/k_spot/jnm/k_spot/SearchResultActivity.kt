@@ -48,6 +48,7 @@ class SearchResultActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_search_result)
 
         var keyword = intent.getStringExtra("keyword")
+        search_result_act_result_tv.text = keyword.toString()
         getSearchResult(keyword)
         searchBroadItems = ArrayList()
         searchSpotItems = ArrayList()
@@ -101,6 +102,7 @@ class SearchResultActivity : AppCompatActivity(), View.OnClickListener {
                     if(searchBroadItems.size == 0 && searchSpotItems.size == 0 && searchEventItems.size == 0){
                         search_result_act_all_scroll_view.visibility = View.GONE
                         search_result_act_no_search_result_rl.visibility = View.VISIBLE
+                        search_result_act_result_iv.visibility = View.GONE
                     }
 
                     if (searchBroadItems.size != 0) {

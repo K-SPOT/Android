@@ -40,20 +40,6 @@ class SearchBraodViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         search_broad_view_more_act_back_btn.setOnClickListener {
             finish()
         }
-        search_broad_view_more_act_filter.setOnClickListener {
-            search_broad_view_more_act_filter_on_rl.visibility = View.VISIBLE
-        }
-        search_broad_view_more_act_filter_cancle_btn.setOnClickListener {
-            search_broad_view_more_act_filter_on_rl.visibility = View.GONE
-        }
-        search_broad_view_more_act_filter_x_btn.setOnClickListener {
-            search_broad_view_more_act_filter_on_rl.visibility = View.GONE
-        }
-//##        // 검색 통신 필요 ##
-        search_broad_view_more_act_filter_enter_btn.setOnClickListener {
-            search_broad_view_more_act_filter_on_rl.visibility = View.GONE
-        }
-//##        // 검색 통신 필요 ##
     }
 
     private fun makeRecyclerView(searchBroadItems : ArrayList<ChannelSearchResultData>) {
