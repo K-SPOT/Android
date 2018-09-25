@@ -11,7 +11,7 @@ data class ThemeDetailData (
 )
 
 data class ThemeDetailThemeData (
-        val title: String,
+        val title: ArrayList<String>,
         val subtitle: String,
         val img: String
 )

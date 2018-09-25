@@ -50,7 +50,7 @@ class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<Main>
 
         if (spotOrEventFlag == 0 )
         holder.rl.setOnClickListener {
-            ctx.startActivity<SpotViewMoreActivity>("spot_id" to mDataset[position].spot_id)
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to mDataset[position].spot_id.toInt())
         }else {
             // ## 이벤트 상세보기로 이동해야됨
             Log.v("123123", myDataset[position].spot_id.toString())
