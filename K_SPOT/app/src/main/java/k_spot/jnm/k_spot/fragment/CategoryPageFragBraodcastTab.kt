@@ -1,4 +1,4 @@
-package k_spot.jnm.k_spot.adapter
+package k_spot.jnm.k_spot.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -13,6 +13,7 @@ import k_spot.jnm.k_spot.Get.GetCategoryListResponse
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.adapter.CategoryPageFragRecyclerAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_category_list_broadcast_tab.view.*
 import retrofit2.Call
