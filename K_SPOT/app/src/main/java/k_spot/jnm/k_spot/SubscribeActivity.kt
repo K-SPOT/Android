@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -70,8 +69,9 @@ class SubscribeActivity : AppCompatActivity() {
 
                 tabFlag = false
 
-                makeSubscribeActRecyclerView(subscribeActBroadCastTabItems)
-
+                if(subscribeActBroadCastTabItems.size  != 0){
+                    makeSubscribeActRecyclerView(subscribeActBroadCastTabItems)
+                }
             }
         }
 
@@ -93,7 +93,9 @@ class SubscribeActivity : AppCompatActivity() {
 
                 tabFlag = true
 
-                makeSubscribeActRecyclerView(subscribeActCelebTabItems)
+                if(subscribeActBroadCastTabItems.size  != 0){
+                    makeSubscribeActRecyclerView(subscribeActCelebTabItems)
+                }
 
             }
         }
@@ -125,10 +127,11 @@ class SubscribeActivity : AppCompatActivity() {
                     }
                     subscribeActBroadCastTabItems = response!!.body()!!.data!!.broadcast
                     subscribeActCelebTabItems = response!!.body()!!.data!!.celebrity
-                    Log.v("subscribeActCelebTabItems", subscribeActCelebTabItems[0].name)
-                    Log.v("subscribeActCelebTabItems", subscribeActCelebTabItems[1].name)
-                    Log.v("subscribeActCelebTabItems", subscribeActCelebTabItems[2].name)
-                    makeSubscribeActRecyclerView(subscribeActCelebTabItems)
+
+                    if(subscribeActBroadCastTabItems.size  != 0){
+                        makeSubscribeActRecyclerView(subscribeActCelebTabItems)
+                    }
+
                 }
             }
 
