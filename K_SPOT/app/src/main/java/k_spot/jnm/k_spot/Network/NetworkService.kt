@@ -201,5 +201,12 @@ interface NetworkService {
             @Path("is_etc") is_etc : Int
     ) : Call<GetSearchResultFilterResponse>
 
+    //유저 스크랩 목록 보기
+    @GET("user/scrap")
+    fun getUserScapListResponse(
+            @Header("flag") flag : Int?,
+            @Header("authorization") tokenValue : String?
+    ) : Call<GetUserScapListResponse>
+
 
 }

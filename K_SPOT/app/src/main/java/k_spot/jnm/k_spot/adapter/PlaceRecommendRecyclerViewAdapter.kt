@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import k_spot.jnm.k_spot.Get.PlaceRecommendData
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
+import org.jetbrains.anko.startActivity
 
 
 class PlaceRecommendRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<PlaceRecommendData>) : RecyclerView.Adapter<PlaceRecommendRecyclerViewAdapter.Holder>(){
@@ -29,6 +31,10 @@ class PlaceRecommendRecyclerViewAdapter(val ctx : Context, val dataList : ArrayL
         Glide.with(ctx)
                 .load(dataList[position].img)
                 .into(holder.image)
+
+        holder.image.setOnClickListener {
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to dataList[position].spot_id)
+        }
     }
 
     inner class Holder(itemView : View) : RecyclerView.ViewHolder(itemView) {

@@ -1,5 +1,8 @@
 package k_spot.jnm.k_spot.fragment
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -18,26 +21,30 @@ import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.SubscribeActivity
 import k_spot.jnm.k_spot.activity.UserInfoEditActivity
+import k_spot.jnm.k_spot.activity.UserScrapListActivity
 import k_spot.jnm.k_spot.adapter.MySubscribeRecyclerViewAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.startActivityForResult
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class MyPageFragment : Fragment(){
+class MyPageFragment : Fragment() {
 
-    lateinit var networkService : NetworkService
-    lateinit var userMyPageData : UserMyPageData
-    lateinit var ChannelMyPageData : ArrayList<ChannelMyPageData>
+    val REQUEST_CODE_USER_EDIT = 1002
+
+    lateinit var networkService: NetworkService
+    lateinit var userMyPageData: UserMyPageData
+    lateinit var ChannelMyPageData: ArrayList<ChannelMyPageData>
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         getMyPage()
         ChannelMyPageData = ArrayList()
-        userMyPageData = UserMyPageData("","")
+        userMyPageData = UserMyPageData("", "")
         return inflater.inflate(R.layout.fragment_my_page, container, false)
     }
 
@@ -48,7 +55,7 @@ class MyPageFragment : Fragment(){
 
     }
 
-    private fun setMySubscribeRecyclerView(ChannelMyPageData : ArrayList<ChannelMyPageData>){
+    private fun setMySubscribeRecyclerView(ChannelMyPageData: ArrayList<ChannelMyPageData>) {
 
         my_page_frag_my_subscribe_rv.layoutManager = LinearLayoutManager(context, 0, false)
         my_page_frag_my_subscribe_rv.adapter = MySubscribeRecyclerViewAdapter(this!!.context!!, ChannelMyPageData)
@@ -62,6 +69,7 @@ class MyPageFragment : Fragment(){
         getMyPageResponse.enqueue(object : Callback<GetMyPageResponse> {
             override fun onFailure(call: Call<GetMyPageResponse>?, t: Throwable?) {
             }
+
             override fun onResponse(call: Call<GetMyPageResponse>?, response: Response<GetMyPageResponse>?) {
                 if (response!!.isSuccessful) {
                     userMyPageData = response!!.body()!!.data!!.user
@@ -76,9 +84,11 @@ class MyPageFragment : Fragment(){
         })
     }
 
-    private fun setOnClickListener(){
+    private fun setOnClickListener() {
         my_page_frag_change_my_info_bar_btn.setOnClickListener {
-            startActivity<UserInfoEditActivity>("name" to userMyPageData.name, "image" to userMyPageData.profile_img)
+            //            startActivity<UserInfoEditActivity>("name" to userMyPageData.name, "image" to userMyPageData.profile_img)
+
+            startActivityForResult<UserInfoEditActivity>(REQUEST_CODE_USER_EDIT, "name" to my_page_frag_my_name_tv.text, "image" to userMyPageData.profile_img)
         }
 
         my_page_frag_logout_btn.setOnClickListener {
@@ -90,9 +100,25 @@ class MyPageFragment : Fragment(){
         }
 
         my_page_frag_scrab_bar_btn.setOnClickListener {
-            // ## 스크랩 액티비티로 이동
+            startActivity<UserScrapListActivity>()
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_USER_EDIT){
+            if (resultCode == RESULT_OK){
+                val newName : String? = data!!.getStringExtra("name")
+                newName?.let {
+                    my_page_frag_my_name_tv.text = it
+                }
+                val newImage : String? = data!!.getStringExtra("image")
+                newImage?.let {
+                    Glide.with(ctx).load(Uri.parse(it)).into(my_page_frag_my_info_iv)
+                }
+            }
+        }
     }
 
     private fun onClickLogout() {
@@ -102,6 +128,8 @@ class MyPageFragment : Fragment(){
             }
         })
     }
+
+
 
 
 }

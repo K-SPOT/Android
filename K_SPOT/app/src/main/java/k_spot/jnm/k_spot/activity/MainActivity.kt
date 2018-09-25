@@ -12,9 +12,12 @@ import android.widget.RelativeLayout
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.MainBottomTabAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.longToast
 
 
 class MainActivity : AppCompatActivity() {
+    private val FINISH_INTERVAL_TIME: Long = 2000
+    private var backPressedTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,6 +125,17 @@ class MainActivity : AppCompatActivity() {
 
             // 상태바 투명으로 바꾸는 코드
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        }
+    }
+
+    override fun onBackPressed() {
+        var tempTime: Long = System.currentTimeMillis()
+        var intervalTime: Long = tempTime - backPressedTime
+        if (intervalTime in 0..FINISH_INTERVAL_TIME) {
+            super.onBackPressed()
+        } else {
+            backPressedTime = tempTime
+            longToast("한번 더 뒤로가기를 누르면 종료됩니다.")
         }
     }
 

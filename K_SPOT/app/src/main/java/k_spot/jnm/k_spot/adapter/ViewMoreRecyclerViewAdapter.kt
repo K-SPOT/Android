@@ -1,6 +1,7 @@
 package k_spot.jnm.k_spot.adapter
 
 import android.content.Context
+import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import k_spot.jnm.k_spot.Get.ViewMoreData
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
+import org.jetbrains.anko.startActivity
 
 class ViewMoreRecyclerViewAdapter(val ctx : Context, val moreDataList : ArrayList<ViewMoreData>) : RecyclerView.Adapter<ViewMoreRecyclerViewAdapter.Holder>(){
 
@@ -38,6 +41,10 @@ class ViewMoreRecyclerViewAdapter(val ctx : Context, val moreDataList : ArrayLis
         holder.badgeList.layoutManager = LinearLayoutManager(ctx,0,false)
         holder.badgeList.adapter = badgeRecyclerViewAdapter
 
+        holder.cardBtn.setOnClickListener {
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to moreDataList[position].spot_id)
+        }
+
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -48,6 +55,7 @@ class ViewMoreRecyclerViewAdapter(val ctx : Context, val moreDataList : ArrayLis
         val address: TextView = itemView.findViewById(R.id.rv_item_view_more_spot_address) as TextView
         val badgeList : RecyclerView = itemView.findViewById(R.id.rv_view_more_act_badge_list) as RecyclerView
 
+        val cardBtn : CardView = itemView.findViewById(R.id.rv_item_view_more_spot_card) as CardView
 
     }
 }

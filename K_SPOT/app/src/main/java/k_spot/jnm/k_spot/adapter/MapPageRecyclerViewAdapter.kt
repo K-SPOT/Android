@@ -1,6 +1,7 @@
 package k_spot.jnm.k_spot.adapter
 
 import android.content.Context
+import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import k_spot.jnm.k_spot.Get.MapPageSpotData
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
+import org.jetbrains.anko.startActivity
 
 class MapPageRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<MapPageSpotData>): RecyclerView.Adapter<MapPageRecyclerViewAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -32,6 +35,10 @@ class MapPageRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<Map
         val badgeRecyclerViewAdapter  = ChannelBadgeRecyclerViewAdapter(ctx, dataList[position].channel)
         holder.badgeList.layoutManager = LinearLayoutManager(ctx,0,false)
         holder.badgeList.adapter = badgeRecyclerViewAdapter
+
+        holder.cardBtn.setOnClickListener {
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to dataList[position].spot_id)
+        }
     }
 
     fun clearDataList(){
@@ -46,6 +53,7 @@ class MapPageRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<Map
         val starPoint : TextView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_star_pnt) as TextView
         val address : TextView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_address) as TextView
         val badgeList : RecyclerView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_badge_list) as RecyclerView
+        val cardBtn : CardView = itemView.findViewById(R.id.rv_item_map_page_my_around_k_spot_btn) as CardView
     }
 
 }

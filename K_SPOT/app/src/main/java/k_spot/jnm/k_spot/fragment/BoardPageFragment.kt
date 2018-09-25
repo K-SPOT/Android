@@ -21,18 +21,13 @@ class BoardPageFragment : Fragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         textbtn_category_detail.setOnClickListener {
             startActivity<CategoryDetailActivity>()
         }
-
 
         textbtn_map.setOnClickListener {
             startActivity<MapDetailActivity>("X" to 100, "Y" to 100)
         }
 
-        textbtn_user_page.setOnClickListener {
-            startActivity<UserInfoEditActivity>()
-        }
     }
 }

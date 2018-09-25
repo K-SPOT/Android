@@ -10,13 +10,11 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.system.Os.read
+import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -38,15 +36,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.IOException
 import java.io.InputStream
 
 class UserInfoEditActivity : AppCompatActivity() {
-    val MY_PERMISSIONS_REQUEST_READ_CONTACTS : Int = 1001
-    val MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE : Int = 1002
-    val REQUEST_CODE_SELECT_IMAGE : Int = 1004
-    private var mImage : MultipartBody.Part? = null
-    lateinit var initName : String
+    val MY_PERMISSIONS_REQUEST_READ_CONTACTS: Int = 1001
+    val MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE: Int = 1002
+    val REQUEST_CODE_SELECT_IMAGE: Int = 1004
+    private var mImage: MultipartBody.Part? = null
+    lateinit var initName: String
+    var newName: String? = null
+    var newImage: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,37 +59,39 @@ class UserInfoEditActivity : AppCompatActivity() {
 
     }
 
-    private fun setUserInfoView(name : String, image_url: String){
+    private fun setUserInfoView(name: String, image_url: String) {
         et_user_info_edit_user_name.setText(name)
         Glide.with(this).load(image_url).into(iv_user_info_edit_user_image)
         tv_user_info_edit_user_name_length_count.text = "${name.length}/20"
 
-        et_user_info_edit_user_name.addTextChangedListener(object : TextWatcher{
+        et_user_info_edit_user_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 tv_user_info_edit_user_name_length_count.text = "${s!!.length}/20"
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
 
     }
 
-    fun setDefaultUserImage(){
+    fun setDefaultUserImage() {
         iv_user_info_edit_user_image.setImageResource(R.drawable.mypage_default_profile_img)
     }
 
-    fun setSeletedPictureOption(){
+    fun setSeletedPictureOption() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
         intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
     }
 
-    private fun setClickListener(){
+    private fun setClickListener() {
         btn_user_info_edit_selected_picture_option.setOnClickListener {
-            val dialog : Dialog = PictureSelectedDialog(this)
+            val dialog: Dialog = PictureSelectedDialog(this)
             dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.show()
         }
@@ -107,17 +108,19 @@ class UserInfoEditActivity : AppCompatActivity() {
     //여기서 이미지를 MultipartBody.Part로 만들어준다!!! 서버로 보내는 것이므로 이미지를 byte 처리
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_SELECT_IMAGE){
-            if (resultCode == Activity.RESULT_OK){
+        if (requestCode == REQUEST_CODE_SELECT_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
                 data?.let {
-                    var  seletedPictureUri = it.data
+                    var seletedPictureUri = it.data
                     val options = BitmapFactory.Options()
-                    val inputStream : InputStream = contentResolver.openInputStream(seletedPictureUri)
+                    val inputStream: InputStream = contentResolver.openInputStream(seletedPictureUri)
                     val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
                     val byteArrayOutputStream = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
                     val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
                     mImage = MultipartBody.Part.createFormData("profile_img", File(seletedPictureUri.toString()).name, photoBody)
+
+                    newImage = seletedPictureUri.toString()
 
                     Glide.with(this@UserInfoEditActivity).load(seletedPictureUri).thumbnail(0.1f).into(iv_user_info_edit_user_image)
                 }
@@ -127,43 +130,56 @@ class UserInfoEditActivity : AppCompatActivity() {
     }
 
 
-    private fun resquestUserInfoChange(){
-
+    private fun resquestUserInfoChange() {
         val name = et_user_info_edit_user_name.text.toString()
         //여기서!!! RequestBody형식으로 String을 맵핑해서 보낸다!!! String을 Request 타입으로 바꿔서 보낸것!
         val userName = RequestBody.create(MediaType.parse("text/plain"), name)
 
-        if (mImage != null){
+        if (mImage != null) {
             val networkService = ApplicationController.instance.networkService
             val postUserInfoResponse = networkService.postUserInfoResponse(0, SharedPreferenceController.getAuthorization(this),
                     mImage, userName)
-            postUserInfoResponse.enqueue(object : Callback<PostUserInfoResponse>{
+            postUserInfoResponse.enqueue(object : Callback<PostUserInfoResponse> {
                 override fun onFailure(call: Call<PostUserInfoResponse>?, t: Throwable?) {
                     Log.e("사진 전송 에러", t.toString())
                 }
 
                 override fun onResponse(call: Call<PostUserInfoResponse>?, response: Response<PostUserInfoResponse>?) {
                     response?.let {
-                        if (response.isSuccessful){
+                        if (response.isSuccessful) {
+                            newName = name
                             toast("변경 완료")
+
+                            val intent = Intent()
+                            intent.putExtra("name", newName)
+                            intent.putExtra("image", newImage)
+                            setResult(Activity.RESULT_OK, intent)
+
+
                             finish()
                         }
                     }
                 }
             })
-        } else if (mImage == null && name != initName){
+        } else if (mImage == null && name != initName) {
             val networkService = ApplicationController.instance.networkService
             val postUserInfoResponse = networkService.postUserInfoResponse(0, SharedPreferenceController.getAuthorization(this),
-                     null, userName)
-            postUserInfoResponse.enqueue(object : Callback<PostUserInfoResponse>{
+                    null, userName)
+            postUserInfoResponse.enqueue(object : Callback<PostUserInfoResponse> {
                 override fun onFailure(call: Call<PostUserInfoResponse>?, t: Throwable?) {
                     Log.e("사진 전송 에러", t.toString())
                 }
 
                 override fun onResponse(call: Call<PostUserInfoResponse>?, response: Response<PostUserInfoResponse>?) {
                     response?.let {
-                        if (response.isSuccessful){
+                        if (response.isSuccessful) {
+                            newName = name
                             toast("닉네임 변경 완료")
+
+                            val intent = Intent()
+                            intent.putExtra("name", newName)
+                            setResult(Activity.RESULT_OK, intent)
+
                             finish()
                         }
                     }
@@ -211,6 +227,7 @@ class UserInfoEditActivity : AppCompatActivity() {
         }
         win.attributes = winParams
     }
+
     private fun setStatusBarTransparent() {
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
@@ -226,6 +243,7 @@ class UserInfoEditActivity : AppCompatActivity() {
         val view: View? = window.decorView
         view!!.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
     }
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         val window = window
@@ -247,4 +265,6 @@ class UserInfoEditActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }

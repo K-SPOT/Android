@@ -9,69 +9,72 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import k_spot.jnm.k_spot.Get.GetChannelViewMoreResponse
+import k_spot.jnm.k_spot.Get.GetUserScapListResponse
 import k_spot.jnm.k_spot.Get.ViewMoreData
 import k_spot.jnm.k_spot.Network.ApplicationController
-import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.ViewMoreRecyclerViewAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
-import kotlinx.android.synthetic.main.activity_view_more.*
+import kotlinx.android.synthetic.main.activity_user_scrap_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ViewMoreActivity : AppCompatActivity() {
+class UserScrapListActivity : AppCompatActivity() {
 
-    val viewMoreMoreDataList : ArrayList<ViewMoreData> by lazy {
+    val userScrapDataList : ArrayList<ViewMoreData> by lazy {
         ArrayList<ViewMoreData>()
     }
 
-    val viewMoreRecyclerViewAdapter : ViewMoreRecyclerViewAdapter by lazy {
-        ViewMoreRecyclerViewAdapter(this, viewMoreMoreDataList)
+    val userScrapRecyclerViewAdapter : ViewMoreRecyclerViewAdapter by lazy {
+        ViewMoreRecyclerViewAdapter(this, userScrapDataList)
     }
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_more)
+        setContentView(R.layout.activity_user_scrap_list)
         setStatusBarTransparent()
+        setViewAndClickListener()
 
-        if (intent.getIntExtra("is_event", 0) == 0){
-            tv_view_more_act_title.text = "장소"
-        } else if (intent.getIntExtra("is_event", 0) == 1){
-            tv_view_more_act_title.text = "이벤트"
-        }
+        requestUserScapData()
 
-        requestViewMore(intent.getIntExtra("channel_id", 0), intent.getIntExtra("is_event", 0))
+
 
     }
 
-
-
-    private fun requestViewMore(channel_id : Int, is_event : Int){
-        val networkService : NetworkService = ApplicationController.instance.networkService
-        val getChannelViewMoreResponse = networkService.getChannelViewMoreResponse(0, SharedPreferenceController.getAuthorization(this), channel_id, is_event)
-        getChannelViewMoreResponse.enqueue(object : Callback<GetChannelViewMoreResponse> {
-            override fun onFailure(call: Call<GetChannelViewMoreResponse>?, t: Throwable?) {
-                Log.e("카테고리 더보기 페이지 실패", t.toString())
+    private fun requestUserScapData(){
+        val networkService = ApplicationController.instance.networkService
+        val getUserScapListResponse = networkService.getUserScapListResponse(0,SharedPreferenceController.getAuthorization(this))
+        getUserScapListResponse.enqueue(object : Callback<GetUserScapListResponse>{
+            override fun onFailure(call: Call<GetUserScapListResponse>?, t: Throwable?) {
+                Log.e("유저 스크랩 리스트 요청 실패", t.toString())
             }
-
-            override fun onResponse(call: Call<GetChannelViewMoreResponse>?, response: Response<GetChannelViewMoreResponse>?) {
+            override fun onResponse(call: Call<GetUserScapListResponse>?, response: Response<GetUserScapListResponse>?) {
                 response?.let {
                     if (response.isSuccessful){
-                        viewMoreMoreDataList.addAll(response.body()!!.data)
-                        setRecyclerView()
+                        response.body()?.let {
+                            userScrapDataList.addAll(it.data)
+                            setRecyclerView()
+                        }
+
                     }
                 }
             }
         })
     }
 
+
     private fun setRecyclerView(){
-        rv_view_more_act_list.layoutManager = LinearLayoutManager(this)
-        rv_view_more_act_list.adapter = viewMoreRecyclerViewAdapter
+        rv_user_scrap_list_act_list.layoutManager = LinearLayoutManager(this)
+        rv_user_scrap_list_act_list.adapter = userScrapRecyclerViewAdapter
+    }
+
+    private fun setViewAndClickListener(){
+        tv_user_scrap_list_act_title.text = "스크랩"
+        btn_user_scrap_list_act_back.setOnClickListener {
+            finish()
+        }
     }
 
 

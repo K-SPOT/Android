@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -14,6 +15,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import k_spot.jnm.k_spot.Get.PlaceOrEventRelativeData
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
+import org.jetbrains.anko.startActivity
 
 class RelativePlaceOrEventRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<PlaceOrEventRelativeData>) : RecyclerView.Adapter<RelativePlaceOrEventRecyclerViewAdapter.Holder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -31,6 +34,11 @@ class RelativePlaceOrEventRecyclerViewAdapter(val ctx : Context, val dataList : 
 
         val requestOptions = RequestOptions().transforms(CenterCrop(), RoundedCorners(12))
         Glide.with(ctx).load(dataList[position].img).apply(requestOptions).into(holder.img)
+
+        holder.whole_btn.setOnClickListener {
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to dataList[position].spot_id)
+        }
+
     }
 
     inner class Holder(itemView : View) : RecyclerView.ViewHolder(itemView){
@@ -39,6 +47,6 @@ class RelativePlaceOrEventRecyclerViewAdapter(val ctx : Context, val dataList : 
         val content : TextView = itemView.findViewById(R.id.rv_item_categoty_detail_relative_spot_content) as TextView
         val address : TextView = itemView.findViewById(R.id.rv_item_categoty_detail_relative_spot_address) as TextView
         val likeCnt : TextView = itemView.findViewById(R.id.rv_item_categoty_detail_relative_spot_like_cnt) as TextView
-
+        val whole_btn : LinearLayout = itemView.findViewById(R.id.rv_item_categoty_detail_relative_spot_whole_btn) as LinearLayout
     }
 }
