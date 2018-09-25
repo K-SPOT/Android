@@ -4,10 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--전화와 메시지를 보내기 위한 퍼미션-->
+    <!-- 전화와 메시지를 보내기 위한 퍼미션 -->
     <uses-permission android:name="android.permission.DIAL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -20,26 +20,24 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:fitsSystemWindows="true"></activity>
+            android:fitsSystemWindows="true" />
         <activity
             android:name=".activity.CategoryDetailActivity"
             android:fitsSystemWindows="true"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.SpotViewMoreActivity">
-        </activity>
-        <activity android:name=".activity.RecommendViewMoreActivity"></activity>
-        <activity android:name=".SearchActivity"
-            android:windowSoftInputMode="adjustResize">
-
-        </activity>
+        <activity android:name=".activity.SpotViewMoreActivity"></activity>
+        <activity android:name=".activity.RecommendViewMoreActivity" />
+        <activity
+            android:name=".SearchActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".SearchBraodViewMoreActivity" />
-        <!--<activity android:name=".SearchSpotViewMoreActivity" />-->
+        <!-- <activity android:name=".SearchSpotViewMoreActivity" /> -->
         <activity android:name=".ReviewMoreActivity" />
         <activity android:name=".ReviewWriteActivity" />
         <activity android:name=".SubscribeActivity" />
         <activity android:name=".activity.UserInfoEditActivity" />
-        <activity android:name=".SearchSpotViewMoreActivity"/>
+        <activity android:name=".SearchSpotViewMoreActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -71,8 +69,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchEventViewMoreActivity"></activity>
-        <activity android:name=".activity.ViewMoreActivity"></activity>
+        <activity android:name=".SearchEventViewMoreActivity" />
+        <activity android:name=".activity.ViewMoreActivity" />
+        <activity android:name=".activity.UserScrapListActivity"></activity>
     </application>
 
 </manifest>

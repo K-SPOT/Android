@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:background="#FFFFFF"
-            android:elevation="5dp">
+            android:elevation="1dp">
             <ImageView
                 android:id="@+id/btn_user_info_edit_act_back"
                 android:layout_centerVertical="true"

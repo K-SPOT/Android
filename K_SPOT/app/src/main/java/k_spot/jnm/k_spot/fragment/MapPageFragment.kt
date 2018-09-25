@@ -289,6 +289,7 @@ class MapPageFragment : Fragment() {
             }
 
             setFilterOption()
+            rl_map_page_open_filtering_backgound.visibility = View.GONE
             (activity as MainActivity).showBottomPageTab()
             ll_map_page_filtering.visibility = View.GONE
             btn_map_page_close_filtering.visibility = View.GONE
@@ -296,6 +297,7 @@ class MapPageFragment : Fragment() {
 
         btn_map_page_open_filtering.setOnClickListener {
             (activity as MainActivity).hideBottomPageTab()
+            rl_map_page_open_filtering_backgound.visibility = View.VISIBLE
             ll_map_page_filtering.visibility = View.VISIBLE
             btn_map_page_close_filtering.visibility = View.VISIBLE
         }

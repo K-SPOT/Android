@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginHorizontal="16dp"
     app:cardCornerRadius="17dp"
-    android:layout_marginTop="16dp">
+    android:layout_marginTop="16dp"
+    android:id="@+id/rv_item_view_more_spot_card">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
