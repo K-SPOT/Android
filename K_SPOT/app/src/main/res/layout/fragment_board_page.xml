@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragment.BoardPageFragment">
+    xmlns:tools="http://schemas.android.com/tools">
     <Button
         android:id="@+id/textbtn_category_detail"
         android:layout_marginTop="50dp"

@@ -1,7 +1,9 @@
 package k_spot.jnm.k_spot.fragment
 
 import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.LocationManager
@@ -21,17 +23,20 @@ import k_spot.jnm.k_spot.Get.MapPageSpotData
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.activity.MainActivity
+import k_spot.jnm.k_spot.activity.MapDetailActivity
 import k_spot.jnm.k_spot.adapter.MapPageRecyclerViewAdapter
 import k_spot.jnm.k_spot.data.FilterOptionData
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_map_page.*
+import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.startActivityForResult
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MapPageFragment : Fragment() {
-
+    private val MAP_ACTIVITY_CODE = 1000
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 7778
     private val locationManager: LocationManager by lazy {
         context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -48,10 +53,10 @@ class MapPageFragment : Fragment() {
     }
 
     private val filterOption: FilterOptionData by lazy {
-        FilterOptionData(0, 1.0, 0.0, 0.0, 1, 1, 1, 1, 1)
+        FilterOptionData(0, 1.0, 37.498146, 127.027653, 1, 1, 1, 1, 1)
     }
     private val filterOptionTemp: FilterOptionData by lazy {
-        FilterOptionData(0, 1.0, 0.0, 0.0, 1, 1, 1, 1, 1)
+        FilterOptionData(0, 1.0, 37.498146, 127.027653, 1, 1, 1, 1, 1)
     }
 
     private val distanceArrayList: ArrayList<Double> by lazy {
@@ -81,12 +86,10 @@ class MapPageFragment : Fragment() {
         setMapAddressGuClickListener()
 
         btn_map_page_my_spot.setOnClickListener {
-            if (!checkPermissions()) {
-                startLocationPermissionRequest()
-            } else {
-                getLastLocation()
-            }
+            startActivityForResult<MapDetailActivity>(MAP_ACTIVITY_CODE)
         }
+
+        requestSpotDataFromSpot("강남구")
 
         if (!checkPermissions()) {
             startLocationPermissionRequest()
@@ -317,7 +320,8 @@ class MapPageFragment : Fragment() {
                     if (it.isSuccessful && it.result != null) {
                         filterOption.latitude = it.result.latitude
                         filterOption.longitude = it.result.longitude
-                        requestSpotDataFromGPS()
+
+                        requestSpotDataFromGPS("내 주변")
                     }
                 }
             }
@@ -345,6 +349,8 @@ class MapPageFragment : Fragment() {
                         } else {
                             spotDataListFromGPS.addAll(responseSpot.body()!!.data)
                         }
+                        tv_map_page_title.text = "$address_gu"
+                        tv_map_page_subtitle.text = "$address_gu K-spot"
                         setRecyclerViewAdapter()
                     }
                 }
@@ -354,7 +360,7 @@ class MapPageFragment : Fragment() {
     }
 
 
-    private fun requestSpotDataFromGPS() {
+    private fun requestSpotDataFromGPS(title: String) {
         val networkService = ApplicationController.instance.networkService
         val getMapPageDataFromGPSResponse = networkService.getMapPageDataFromGPSResponse(0, SharedPreferenceController.getAuthorization(context!!),
                 filterOption.distance, filterOption.latitude, filterOption.longitude, filterOption.is_food, filterOption.is_cafe, filterOption.is_sights, filterOption.is_event, filterOption.is_etc)
@@ -373,6 +379,8 @@ class MapPageFragment : Fragment() {
                         } else {
                             spotDataListFromGPS.addAll(responseSpot.body()!!.data)
                         }
+                        tv_map_page_title.text = title
+                        tv_map_page_subtitle.text = "$title K-spot"
                         setRecyclerViewAdapter()
                     }
                 }
@@ -393,6 +401,17 @@ class MapPageFragment : Fragment() {
     private fun startLocationPermissionRequest() {
         ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                 REQUEST_PERMISSIONS_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == MAP_ACTIVITY_CODE){
+            if (resultCode == RESULT_OK){
+                filterOption.latitude = data!!.getDoubleExtra("latitude", 37.498146)
+                filterOption.longitude = data!!.getDoubleExtra("longitude", 127.027653)
+                requestSpotDataFromGPS("내 주변")
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

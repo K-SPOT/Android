@@ -11,8 +11,7 @@ class MainBottomTabAdapter(private val fragmentCount : Int, fm : FragmentManager
             0 -> MainPageFragment()
             1 -> CategoryPageFragment()
             2 -> MapPageFragment()
-            3 -> BoardPageFragment()
-            4 -> MyPageFragment()
+            3 -> MyPageFragment()
             else -> MyPageFragment()
         }
     }
