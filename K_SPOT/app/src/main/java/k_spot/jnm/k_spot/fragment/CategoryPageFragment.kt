@@ -10,16 +10,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.SearchActivity
 import k_spot.jnm.k_spot.adapter.CategoryPageTabPagerAdapter
 import kotlinx.android.synthetic.main.fragment_category_list.*
+import kotlinx.android.synthetic.main.fragment_category_list.view.*
 import kotlinx.android.synthetic.main.tablayout_category_page_fragment.*
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 class CategoryPageFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        return inflater.inflate(R.layout.fragment_category_list, container, false)
+        var view = inflater.inflate(R.layout.fragment_category_list, container, false)
+        setOnClickListener(view)
+        return view
 
 
 
@@ -31,6 +35,13 @@ class CategoryPageFragment : Fragment(){
         configureRankTabMenu()
         toast("카테고리 페이지")
     }
+
+    private fun setOnClickListener(view: View) {
+        view.category_list_fragment_search_btn.setOnClickListener {
+            startActivity<SearchActivity>()
+        }
+    }
+
 
 
 
