@@ -74,6 +74,11 @@
                 android:clipToPadding="false"
                 android:descendantFocusability="blocksDescendants"
                 android:nestedScrollingEnabled="true"></android.support.v7.widget.RecyclerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                ></View>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

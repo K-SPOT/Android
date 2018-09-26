@@ -197,19 +197,22 @@ class SpotViewMoreActivity : AppCompatActivity() {
                         spot_view_more_act_review_box_title_tv.text = reviewSpotViewMoreData[0].title
                         spot_view_more_act_review_box_explain_tv.text = reviewSpotViewMoreData[0].content
                         spot_view_more_act_review_box_writer_date_tv.text = reviewSpotViewMoreData[0].reg_time + " · " + reviewSpotViewMoreData[0].reg_time
+                        spot_view_more_act_review_no_result_rl.visibility = View.GONE
+                        spot_view_more_act_review_result_rl.visibility = View.VISIBLE
+                        spot_view_more_act_review_num_tv.visibility = View.VISIBLE
+                        spot_view_more_act_all_review_btn.visibility = View.VISIBLE
 
                         if (reviewSpotViewMoreData[0].img.length > 0) {
                             Glide.with(applicationContext).load(reviewSpotViewMoreData[0].img).into(spot_view_more_act_review_box_picture_iv)
                         } else {
-                            // ## Noimage 넣어야됌
-                            spot_view_more_act_review_box_picture_iv.setImageResource(R.drawable.category_unscrap_btn_gray)
+                            spot_view_more_act_review_box_picture_iv.setImageResource(R.drawable.category_reveiw_default_image)
                         }
                     } else {
                         makeSmallReviewStar(0.0)
-                        spot_view_more_act_review_box_title_tv.text = ""
-                        spot_view_more_act_review_box_explain_tv.text = ""
-                        spot_view_more_act_review_box_writer_date_tv.text = ""
-                        // ## Noimage 넣어야됌
+                        spot_view_more_act_review_no_result_rl.visibility = View.VISIBLE
+                        spot_view_more_act_review_result_rl.visibility = View.GONE
+                        spot_view_more_act_review_num_tv.visibility = View.GONE
+                        spot_view_more_act_all_review_btn.visibility = View.GONE
                     }
 
 
@@ -517,7 +520,6 @@ class SpotViewMoreActivity : AppCompatActivity() {
                 spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
                 requestSpotSubscription(spotViewMoreData[0].spot_id)
                 Log.v("spotViewMoreData[0].spot_id", spotViewMoreData[0].spot_id.toString())
-                //## 스크랩 통신 필요
                 spotViewMoreData[0].is_scrap = 1
                 spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt + 1).toString()
             } else {
@@ -533,7 +535,12 @@ class SpotViewMoreActivity : AppCompatActivity() {
         }
 
         spot_view_more_act_spot_address_rl.setOnClickListener {
-            // ## Google map 연동 필요
+            val address = spot_view_more_act_spot_address_tv.text.toString()
+            val spotUri =
+                    Uri.parse("https://www.google.com/maps/search/?api=1&query=$address&zoom=23" )
+            val intent = Intent(Intent.ACTION_VIEW, spotUri)
+            intent.setPackage("com.google.android.apps.maps")
+            startActivity(intent)
         }
 
         // 리뷰 모두 보기
@@ -547,7 +554,6 @@ class SpotViewMoreActivity : AppCompatActivity() {
         }
 
         spot_view_more_act_review_write_box_btn.setOnClickListener {
-            // ## 리뷰 Write로 이동
             startActivity<ReviewWriteActivity>("spot_id" to spotViewMoreData[0].spot_id)
         }
 

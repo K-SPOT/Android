@@ -16,7 +16,9 @@ import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.CategoryDetailActivity
 import k_spot.jnm.k_spot.db.SharedPreferenceController
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -76,7 +78,7 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
         }
 
         holder.rl.setOnClickListener {
-            Log.v("channelID",mDataset[position].channel_id)
+            ctx.startActivity<CategoryDetailActivity>("channel_id" to mDataset[position].channel_id)
         }
 
     }

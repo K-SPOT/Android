@@ -3,8 +3,8 @@ package k_spot.jnm.k_spot.activity
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
@@ -44,8 +44,16 @@ class ViewMoreActivity : AppCompatActivity() {
             tv_view_more_act_title.text = "이벤트"
         }
 
+        setOnClickListener()
+
         requestViewMore(intent.getIntExtra("channel_id", 0), intent.getIntExtra("is_event", 0))
 
+    }
+
+    private fun setOnClickListener() {
+        btn_view_more_act_back.setOnClickListener {
+            finish()
+        }
     }
 
 

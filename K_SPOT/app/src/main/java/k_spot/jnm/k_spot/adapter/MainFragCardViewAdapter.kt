@@ -37,8 +37,12 @@ class MainFragCardViewAdapter(val ctx: Context, val myDataset: ArrayList<Main>, 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dp = ctx.resources.displayMetrics.density
         val rootLayoutParams: RelativeLayout.LayoutParams = holder.rl.layoutParams as RelativeLayout.LayoutParams
-        if (position == 0) {
-            rootLayoutParams.leftMargin = (24 * dp).toInt()
+        if (position != 0) {
+            rootLayoutParams.leftMargin = (16 * dp).toInt()
+        }
+
+        if(position == (mDataset.size - 1)){
+            rootLayoutParams.rightMargin = (31 * dp).toInt()
         }
 
         // - get element from your dataset at this position
