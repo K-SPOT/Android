@@ -340,7 +340,7 @@
                         android:layout_marginTop="33dp"
                         android:layout_toRightOf="@+id/spot_view_more_act_relative_celev_info_tv"
                         android:fontFamily="@font/nanumsquareotf_light_normal"
-                        android:text="8개"
+                        android:text="0개"
                         android:textColor="#323232"
                         android:textSize="15dp" />
 
@@ -366,7 +366,7 @@
                 <RelativeLayout
                     android:id="@+id/spot_view_more_act_review_info_rl"
                     android:layout_width="match_parent"
-                    android:layout_height="428dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/spot_view_more_act_relative_celev_info_rl">
 
                     <!--리뷰 30,256개 모두보기-->
@@ -397,7 +397,7 @@
                             android:layout_marginLeft="12dp"
                             android:layout_toRightOf="@+id/spot_view_more_act_review_info_tv"
                             android:fontFamily="@font/nanumsquareotf_light_normal"
-                            android:text="30,256개"
+                            android:text="0개"
                             android:textColor="#323232"
                             android:textSize="15dp" />
 
@@ -438,6 +438,7 @@
                             android:layout_width="129dp"
                             android:layout_height="21dp"
                             android:gravity="center"
+                            android:layout_centerVertical="true"
                             android:orientation="horizontal"></LinearLayout>
 
                         <TextView
@@ -448,7 +449,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/spot_view_more_act_review_star_ll"
                             android:fontFamily="@font/nanumsquareotf_regular_normal"
-                            android:text="4.6"
+                            android:text="0.0"
                             android:textColor="#323232"
                             android:textSize="18dp" />
 
@@ -474,70 +475,98 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="38dp"
                         android:background="@drawable/spot_view_more_act_review_box_shape"
-                        android:elevation="4dp">
+                        android:elevation="4dp"
+                        >
 
-                        <!--리뷰 제목(수정필요: 글 한 줄로 잘라주는 기능)-->
-                        <TextView
-                            android:id="@+id/spot_view_more_act_review_box_title_tv"
-                            android:layout_width="210dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="23dp"
-                            android:layout_marginTop="30dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/nanumsquareotf_bold_normal"
-                            android:maxLines="1"
-                            android:text="밤에 야경보러 갔는데ㅇㅇㅇ"
-                            android:textColor="#323232"
-                            android:textSize="15dp" />
+                        <RelativeLayout
+                            android:id="@+id/spot_view_more_act_review_result_rl"
+                            android:layout_width="match_parent"
+                            android:layout_height="198dp"
+                            android:visibility="gone">
 
-                        <!--리뷰 내용-->
-                        <TextView
-                            android:id="@+id/spot_view_more_act_review_box_explain_tv"
-                            android:layout_width="168dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/spot_view_more_act_review_box_title_tv"
-                            android:layout_marginLeft="23dp"
-                            android:layout_marginTop="10dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
-                            android:maxLines="3"
-                            android:text="전망도 너무 예쁘고 좋았어요ㅜㅜ다음엔 꼭 남자친구랑 가고 싶어요^^,,,,방탄LOVE~!"
-                            android:textColor="#707070"
-                            android:textSize="12dp" />
+                            <!--리뷰 제목(수정필요: 글 한 줄로 잘라주는 기능)-->
+                            <TextView
+                                android:id="@+id/spot_view_more_act_review_box_title_tv"
+                                android:layout_width="210dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="23dp"
+                                android:layout_marginTop="30dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/nanumsquareotf_bold_normal"
+                                android:maxLines="1"
+                                android:text="밤에 야경보러 갔는데ㅇㅇㅇ"
+                                android:textColor="#323232"
+                                android:textSize="15dp" />
 
-                        <!--리뷰사진-->
-                        <ImageView
-                            android:id="@+id/spot_view_more_act_review_box_picture_iv"
-                            android:layout_width="72dp"
-                            android:layout_height="72dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="23dp"
-                            android:layout_marginTop="30dp"
-                            android:src="@color/colorAccent" />
+                            <!--리뷰 내용-->
+                            <TextView
+                                android:id="@+id/spot_view_more_act_review_box_explain_tv"
+                                android:layout_width="168dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/spot_view_more_act_review_box_title_tv"
+                                android:layout_marginLeft="23dp"
+                                android:layout_marginTop="10dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/nanumsquareotf_regular_normal"
+                                android:maxLines="3"
+                                android:text="전망도 너무 예쁘고 좋았어요ㅜㅜ다음엔 꼭 남자친구랑 가고 싶어요^^,,,,방탄LOVE~!"
+                                android:textColor="#707070"
+                                android:textSize="12dp" />
 
-                        <!--리뷰 별점-->
-                        <LinearLayout
-                            android:id="@+id/spot_view_more_act_review_box_star_ll"
-                            android:layout_width="wrap_content"
-                            android:layout_height="15dp"
-                            android:layout_below="@+id/spot_view_more_act_review_box_explain_tv"
-                            android:layout_marginLeft="23dp"
-                            android:layout_marginTop="23dp"
-                            android:gravity="center"
-                            android:orientation="horizontal"></LinearLayout>
+                            <!--리뷰사진-->
+                            <ImageView
+                                android:id="@+id/spot_view_more_act_review_box_picture_iv"
+                                android:layout_width="72dp"
+                                android:layout_height="72dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="23dp"
+                                android:layout_marginTop="30dp"
+                                android:src="@color/colorAccent" />
 
-                        <TextView
-                            android:id="@+id/spot_view_more_act_review_box_writer_date_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/spot_view_more_act_review_box_star_ll"
-                            android:layout_marginBottom="32dp"
-                            android:layout_marginLeft="23dp"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
-                            android:text="BTSlove · 2018-08-31"
-                            android:textColor="#C0C0C0"
-                            android:textSize="9dp" />
+                            <!--리뷰 별점-->
+                            <LinearLayout
+                                android:id="@+id/spot_view_more_act_review_box_star_ll"
+                                android:layout_width="wrap_content"
+                                android:layout_height="15dp"
+                                android:layout_below="@+id/spot_view_more_act_review_box_explain_tv"
+                                android:layout_marginLeft="23dp"
+                                android:layout_marginTop="23dp"
+                                android:gravity="center"
+                                android:orientation="horizontal"></LinearLayout>
+
+                            <TextView
+                                android:id="@+id/spot_view_more_act_review_box_writer_date_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/spot_view_more_act_review_box_star_ll"
+                                android:layout_marginBottom="32dp"
+                                android:layout_marginLeft="23dp"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/nanumsquareotf_regular_normal"
+                                android:text="BTSlove · 2018-08-31"
+                                android:textColor="#C0C0C0"
+                                android:textSize="9dp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/spot_view_more_act_review_no_result_rl"
+                            android:layout_width="match_parent"
+                            android:layout_height="198dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="작성된 리뷰가 없습니다. \n 첫 리뷰를 작성해주세요 :)"
+                                android:textSize="20dp"
+                                android:gravity="center"
+                                android:textColor="#757575"
+                                android:fontFamily="@font/nanumsquareotf_bold_normal"/>
+                        </RelativeLayout>
+
+
+
                     </RelativeLayout>
 
                     <!--리뷰쓰기 btn-->
@@ -547,10 +576,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="54dp"
                         android:layout_below="@+id/spot_view_more_act_review_box_btn"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginTop="38dp"
+                        android:layout_marginTop="37dp"
                         android:background="@drawable/spot_view_more_acr_write_review_box_shape">
 
                         <RelativeLayout

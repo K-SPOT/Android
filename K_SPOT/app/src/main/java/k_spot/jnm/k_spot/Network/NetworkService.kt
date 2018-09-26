@@ -123,7 +123,7 @@ interface NetworkService {
             @Part("review_score") review_score : Double
     ) : Call<PostSpotReviewWriteResponse>
 
-    //채널 구독하기
+    //스팟 스크랩하기
     @FormUrlEncoded
     @POST("spot/scrap")
     fun postSpotSubscripeResponse(
@@ -132,7 +132,7 @@ interface NetworkService {
             @Field("spot_id") spot_id: Int
     ): Call<PostChannelSubscripeResponse>
 
-    //채널 구독 취소
+    //스팟 스크랩 ㅟ소하기
     @DELETE("spot/scrap/{spot_id}")
     fun deleteSpotSubscripeResponse(
             @Header("flag") flag: Int?,

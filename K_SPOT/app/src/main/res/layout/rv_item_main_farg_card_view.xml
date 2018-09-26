@@ -9,8 +9,8 @@
         android:id="@+id/main_frag_rv_item_card_view"
         android:layout_width="252dp"
         android:layout_height="261dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="1dp"
         card:cardCornerRadius="20dp">
 
         <RelativeLayout
@@ -18,11 +18,11 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/main_frag_rv_item_card_view_title_tv"
+                android:id="@+id/main_frag_rv_item_card_view_place_tv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="셀러브리티를 만나는
-가장 새롭게 놀라운 경험"
+                android:layout_height="35dp"
+                android:layout_marginRight="32dp"
+                android:text="셀러브리티를 만나는 \n 가장 새롭게 놀라운 경험"
                 android:textColor="#414141"
                 android:textSize="15dp"
                 android:fontFamily="@font/nanumsquareotf_extra_bold_normal"
@@ -31,13 +31,14 @@
                 />
 
             <TextView
-                android:id="@+id/main_frag_rv_item_card_view_place_tv"
+                android:id="@+id/main_frag_rv_item_card_view_title_tv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
                 android:text="SMTOWN 코엑스아티움"
                 android:textColor="#5E5E5E"
                 android:textSize="13dp"
-                android:layout_below="@+id/main_frag_rv_item_card_view_title_tv"
+                android:layout_marginRight="32dp"
+                android:layout_below="@+id/main_frag_rv_item_card_view_place_tv"
                 android:fontFamily="@font/nanumsquareotf_regular_normal"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="8dp"/>
@@ -46,10 +47,10 @@
                 android:id="@+id/main_frag_rv_item_card_view_place_iv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/main_frag_rv_item_card_view_place_tv"
-                android:layout_marginTop="28dp"
+                android:layout_below="@+id/main_frag_rv_item_card_view_title_tv"
+                android:layout_marginTop="25dp"
                 android:src="@color/colorAccent"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY" android:layout_alignParentBottom="true"/>
 
 
         </RelativeLayout>
