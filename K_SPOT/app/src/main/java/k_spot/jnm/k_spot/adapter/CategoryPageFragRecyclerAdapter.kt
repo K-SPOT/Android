@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.Get.ChannelListData
+import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.CategoryDetailActivity
+import org.jetbrains.anko.startActivity
 
 class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList<ChannelListData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -43,6 +46,10 @@ class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList
         }else{
             holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
         }
+
+        holder.category_list_all_btn.setOnClickListener {
+            ctx.startActivity<CategoryDetailActivity>("channel_id" to categoryPageItems[position].channel_id)
+        }
     }
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -52,5 +59,7 @@ class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList
         var category_list_sub_num : TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscriber_num_tv)
         var category_list_post_num : TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_post_num_tv)
         var category_list_sub_btn_image : ImageView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscribe_iv)
+        var category_list_all_btn : RelativeLayout = itemView!!.findViewById(R.id.category_list_fragment_rv_item_rl)
+
     }
 }
