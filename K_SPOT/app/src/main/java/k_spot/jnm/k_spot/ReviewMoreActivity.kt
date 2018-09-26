@@ -59,7 +59,6 @@ class ReviewMoreActivity : AppCompatActivity() {
                     ReviewMoreData = ArrayList()
                     ReviewMoreData = response!!.body()!!.data!!.reviews
 
-                    Log.v("123123",ReviewMoreData[0].name)
 
 
                     review_more_act_review_num_tv.text = SpotViewReviewMoreData.spot_review.review_cnt.toString()
