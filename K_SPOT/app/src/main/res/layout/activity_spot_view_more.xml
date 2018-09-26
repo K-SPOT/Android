@@ -545,14 +545,69 @@
                 </RelativeLayout>
                 
                 <!--지도 뷰-->
-                <View
+                <RelativeLayout
                     android:id="@+id/spot_view_more_act_map_view"
                     android:layout_width="match_parent"
                     android:layout_height="117dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/google_back_map_img"
                     android:layout_below="@+id/spot_view_more_act_review_info_rl"
                     android:layout_marginTop="41dp"
-                    ></View>
+                    >
+                    <RelativeLayout
+                        android:background="@drawable/spot_view_more_google_map_all_btn_shape"
+                        android:layout_marginVertical="18dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <RelativeLayout
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:id="@+id/spot_view_more_google_map_box"
+                                android:layout_marginLeft="16dp"
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:src="@drawable/map_page_spot_icon"
+                                    android:layout_width="14dp"
+                                    android:layout_height="19dp" />
+                                <TextView
+                                    android:id="@+id/tv_spot_view_more_address"
+                                    android:layout_marginLeft="6dp"
+                                    android:text="주소"
+                                    android:textColor="#323232"
+                                    android:fontFamily="@font/nanumsquareotf_bold"
+                                    android:textSize="12dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                            <TextView
+                                android:text="구글맵으로 길찾기"
+                                android:layout_marginLeft="36dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_below="@+id/spot_view_more_google_map_box"
+                                android:textColor="#C0C0C0"
+                                android:fontFamily="@font/nanumsquareotf_light"
+                                android:textSize="9dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/btn_spot_view_more_google_map_btn"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="16dp"
+                            android:src="@drawable/category_map_right_icon"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
                 
                 <!--오픈/마감 시간-->
                 <RelativeLayout

@@ -40,17 +40,17 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
     lateinit var spotViewMoreActAutoScrollAdapter: SpotViewMoreActAutoScrollAdapter
     lateinit var networkService: NetworkService
-    lateinit var spotViewMoreData : ArrayList<SpotViewMoreData>
+    lateinit var spotViewMoreData: ArrayList<SpotViewMoreData>
 
     lateinit var channelSpotViewMoreData: ChannelSpotViewMoreData
 
 
-    lateinit var reviewSpotViewMoreData : ArrayList<ReviewSpotViewMoreData>
+    lateinit var reviewSpotViewMoreData: ArrayList<ReviewSpotViewMoreData>
 
     lateinit var viewPagerImg: ArrayList<String>
 
     lateinit var channelRecyclerViewData: ArrayList<ChannelRecyclerViewData>
-    lateinit var viewPagerSpotViewMoreActData : ArrayList<ViewPagerSpotViewMoreActData>
+    lateinit var viewPagerSpotViewMoreActData: ArrayList<ViewPagerSpotViewMoreActData>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +65,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
         channelRecyclerViewData = ArrayList()
         viewPagerSpotViewMoreActData = ArrayList()
         spotViewMoreActAutoScrollAdapter = SpotViewMoreActAutoScrollAdapter(applicationContext, viewPagerSpotViewMoreActData)
-        channelSpotViewMoreData = ChannelSpotViewMoreData(ArrayList(), ArrayList(),ArrayList(),ArrayList())
+        channelSpotViewMoreData = ChannelSpotViewMoreData(ArrayList(), ArrayList(), ArrayList(), ArrayList())
         viewPagerImg = ArrayList()
 
         // 상태바 투명하게 하는 코드
@@ -77,7 +77,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
     }
 
 
-    fun getSpotViewMore(spot_id : Int) {
+    fun getSpotViewMore(spot_id: Int) {
 
         networkService = ApplicationController.instance.networkService
         val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
@@ -94,27 +94,27 @@ class SpotViewMoreActivity : AppCompatActivity() {
                     reviewSpotViewMoreData = response!!.body()!!.data!![0].reviews
                     viewPagerImg = response!!.body()!!.data!![0].img
                     var j = 0
-                    while(j < viewPagerImg.size){
+                    while (j < viewPagerImg.size) {
                         viewPagerSpotViewMoreActData.add(ViewPagerSpotViewMoreActData(viewPagerImg[j]))
-                        j ++
+                        j++
                     }
 
-                    if(viewPagerSpotViewMoreActData.size > 0){
+                    if (viewPagerSpotViewMoreActData.size > 0) {
                         makeSpotViewMoreActViewPager(viewPagerSpotViewMoreActData)
                     }
 
 
                     var i = 0
-                    while(i<channelSpotViewMoreData.channel_id.size){
-                        channelRecyclerViewData.add(ChannelRecyclerViewData(channelSpotViewMoreData.channel_id[i],channelSpotViewMoreData.channel_name[i]
-                        , channelSpotViewMoreData.thumbnail_img[i],channelSpotViewMoreData.is_subscription[i]))
+                    while (i < channelSpotViewMoreData.channel_id.size) {
+                        channelRecyclerViewData.add(ChannelRecyclerViewData(channelSpotViewMoreData.channel_id[i], channelSpotViewMoreData.channel_name[i]
+                                , channelSpotViewMoreData.thumbnail_img[i], channelSpotViewMoreData.is_subscription[i]))
                         i++
                     }
 
-                    if (channelRecyclerViewData.size != 0){
+                    if (channelRecyclerViewData.size != 0) {
                         makeSpotViewMoreActCardView(channelRecyclerViewData)
                         spot_view_more_act_relative_celev_num_tv.text = channelRecyclerViewData.size.toString()
-                    }else{
+                    } else {
                         spot_view_more_act_relative_celev_rl.visibility = View.GONE
                         spot_view_more_act_relative_celev_num_tv.text = "0"
                     }
@@ -124,7 +124,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
 
 
-                    if(spotViewMoreData.size != 0){
+                    if (spotViewMoreData.size != 0) {
                         makeBigReviewStar(spotViewMoreData[0].review_score)
                         spot_view_more_act_spot_title_tv.text = spotViewMoreData[0].name
 
@@ -132,6 +132,8 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
                         // ## 구글 맵으로 넘어가기
                         spot_view_more_act_spot_address_tv.text = spotViewMoreData[0].address
+                        //구글 맵 버튼
+                        tv_spot_view_more_address.text = spotViewMoreData[0].address
 
                         spot_view_more_act_spot_station_name_tv.text = spotViewMoreData[0].station
 
@@ -154,21 +156,21 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
                         var scrapFlag = spotViewMoreData[0].is_scrap
                         // 스크랩 안 됐을 시 하얀색으로
-                        if(scrapFlag == 0) {
+                        if (scrapFlag == 0) {
                             spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
                             //## 스크랩 통신 필요
                             scrapFlag = 1
-                        }else{
+                        } else {
                             spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
                             scrapFlag = 0
                         }
 
-                    }else {
+                    } else {
                         makeBigReviewStar(0.0)
                     }
 
 
-                    if(reviewSpotViewMoreData.size != 0){
+                    if (reviewSpotViewMoreData.size != 0) {
                         makeSmallReviewStar(reviewSpotViewMoreData[0].review_score)
                         spot_view_more_act_review_box_title_tv.text = reviewSpotViewMoreData[0].title
                         spot_view_more_act_review_box_explain_tv.text = reviewSpotViewMoreData[0].content
@@ -176,11 +178,11 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
                         if (reviewSpotViewMoreData[0].img.length > 0) {
                             Glide.with(applicationContext).load(reviewSpotViewMoreData[0].img).into(spot_view_more_act_review_box_picture_iv)
-                        }else{
+                        } else {
                             // ## Noimage 넣어야됌
                             spot_view_more_act_review_box_picture_iv.setImageResource(R.drawable.category_unscrap_btn_gray)
                         }
-                    }else {
+                    } else {
                         makeSmallReviewStar(0.0)
                         spot_view_more_act_review_box_title_tv.text = ""
                         spot_view_more_act_review_box_explain_tv.text = ""
@@ -189,27 +191,23 @@ class SpotViewMoreActivity : AppCompatActivity() {
                     }
 
 
-
-
-
-
-
                 }
             }
 
         })
     }
 
-    private fun requestSpotSubscription(spot_id : Int){
-        val networkService : NetworkService = ApplicationController.instance.networkService
+    private fun requestSpotSubscription(spot_id: Int) {
+        val networkService: NetworkService = ApplicationController.instance.networkService
         val postSpotSubscripeResponse = networkService.postSpotSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), spot_id)
-        postSpotSubscripeResponse.enqueue(object : Callback<PostChannelSubscripeResponse>{
+        postSpotSubscripeResponse.enqueue(object : Callback<PostChannelSubscripeResponse> {
             override fun onFailure(call: Call<PostChannelSubscripeResponse>?, t: Throwable?) {
                 Log.e("스크랩 실패", t.toString())
             }
+
             override fun onResponse(call: Call<PostChannelSubscripeResponse>?, response: Response<PostChannelSubscripeResponse>?) {
                 response?.let {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         toast("스크랩 완료")
                     }
                 }
@@ -217,8 +215,8 @@ class SpotViewMoreActivity : AppCompatActivity() {
         })
     }
 
-    private fun deleteSpotSubscription(spot_id : Int){
-        val networkService : NetworkService = ApplicationController.instance.networkService
+    private fun deleteSpotSubscription(spot_id: Int) {
+        val networkService: NetworkService = ApplicationController.instance.networkService
         val deleteSpotSubscripeResponse = networkService.deleteSpotSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), spot_id)
         deleteSpotSubscripeResponse.enqueue(object : Callback<DeleteChannelScripteResponse> {
             override fun onFailure(call: Call<DeleteChannelScripteResponse>?, t: Throwable?) {
@@ -227,7 +225,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<DeleteChannelScripteResponse>?, response: Response<DeleteChannelScripteResponse>?) {
                 response?.let {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         toast("스크랩 취소")
                     }
                 }
@@ -237,7 +235,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
 
     // ViewPager 생성 function
-    fun makeSpotViewMoreActViewPager(viewPagerSpotViewMoreActData : ArrayList<ViewPagerSpotViewMoreActData> ) {
+    fun makeSpotViewMoreActViewPager(viewPagerSpotViewMoreActData: ArrayList<ViewPagerSpotViewMoreActData>) {
 
         // Auto Slider Adapter 적용
         spotViewMoreActAutoScrollAdapter = SpotViewMoreActAutoScrollAdapter(applicationContext, viewPagerSpotViewMoreActData)
@@ -468,7 +466,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
                     spot_view_more_act_scrap_iv.setColorFilter(Color.parseColor("#5E5E5E"))
                     spot_view_more_act_scrap_num_tv.setTextColor(Color.parseColor("#5E5E5E"))
                     spot_view_more_act_top_bar_bottom_line.visibility = View.VISIBLE
-                }else{
+                } else {
                     window.statusBarColor = Color.TRANSPARENT
                     spot_view_more_act_top_bar_rl.setBackgroundColor(Color.parseColor("#00000000"))
                     spot_view_more_act_back_iv.setColorFilter(Color.parseColor("#FFFFFF"))
@@ -487,14 +485,14 @@ class SpotViewMoreActivity : AppCompatActivity() {
         spot_view_more_act_scrap_btn.setOnClickListener {
 
             // 스크랩 안 됐을 시 하얀색으로
-            if(spotViewMoreData[0].is_scrap == 0) {
+            if (spotViewMoreData[0].is_scrap == 0) {
                 spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
                 requestSpotSubscription(spotViewMoreData[0].spot_id)
                 Log.v("spotViewMoreData[0].spot_id", spotViewMoreData[0].spot_id.toString())
                 //## 스크랩 통신 필요
                 spotViewMoreData[0].is_scrap = 1
                 spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt + 1).toString()
-            }else{
+            } else {
                 Log.v("spotViewMoreData[0].spot_id", spotViewMoreData[0].spot_id.toString())
                 spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
                 deleteSpotSubscription(spotViewMoreData[0].spot_id)
@@ -526,12 +524,34 @@ class SpotViewMoreActivity : AppCompatActivity() {
         }
 
         spot_view_more_act_phone_num_btn.setOnClickListener {
-            var tel = "tel:"+spotViewMoreData[0].contact
+            var tel = "tel:" + spotViewMoreData[0].contact
             var intent = Intent("android.intent.action.DIAL", Uri.parse(tel))
             startActivity(intent)
 
         }
 
+
+        btn_spot_view_more_google_map_btn.setOnClickListener {
+            //            val spotUri = Uri.parse("geo:37.7749,-122.4194?z=zoom")
+//            val intent = Intent(Intent.ACTION_VIEW, spotUri)
+//            intent.setPackage("com.google.android.apps.maps")
+//            startActivity(intent)
+            val address = spot_view_more_act_spot_address_tv.text.toString()
+            val spotUri =
+                    Uri.parse("https://www.google.com/maps/search/?api=1&query=$address&zoom=23" )
+            val intent = Intent(Intent.ACTION_VIEW, spotUri)
+            intent.setPackage("com.google.android.apps.maps")
+            startActivity(intent)
+        }
+
+        spot_view_more_act_spot_address_tv.setOnClickListener {
+            val address = spot_view_more_act_spot_address_tv.text.toString()
+            val spotUri =
+                    Uri.parse("https://www.google.com/maps/search/?api=1&query=$address&zoom=23" )
+            val intent = Intent(Intent.ACTION_VIEW, spotUri)
+            //intent.setPackage("com.google.android.apps.maps")
+            startActivity(intent)
+        }
 
     }
 }
