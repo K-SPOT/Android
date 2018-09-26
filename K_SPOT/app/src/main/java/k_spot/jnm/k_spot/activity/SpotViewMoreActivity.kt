@@ -3,6 +3,7 @@ package k_spot.jnm.k_spot.activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -135,15 +136,36 @@ class SpotViewMoreActivity : AppCompatActivity() {
                         //구글 맵 버튼
                         tv_spot_view_more_address.text = spotViewMoreData[0].address
 
+                        //지하철 노선 관련
                         spot_view_more_act_spot_station_name_tv.text = spotViewMoreData[0].station
+                        spot_view_more_act_spot_left_station_tv.text = spotViewMoreData[0].prev_station
+                        spot_view_more_act_spot_right_station_tv.text = spotViewMoreData[0].next_station
+                        spot_view_more_act_spot_station_number_tv.text = spotViewMoreData[0].line_number
+                        //지하철 노선 색
+                        var stationColor : String = when (spotViewMoreData[0].line_number) {
+                            "1" -> "#254DE7"
+                            "2" -> "#43CA39"
+                            "3" -> "#FF8A31"
+                            "4" -> "#259BE7"
+                            "5" -> "#8C41B8"
+                            "6" -> "#9A5114"
+                            "7" -> "#606C01"
+                            "8" -> "#E41D6C"
+                            "9" -> "#BA9B20"
+                            else -> {
+                                "#40D39F"
+                            }
+                        }
+                        (line_spot_view_more_subway_box.background as GradientDrawable).setStroke(dpToPx(3), Color.parseColor(stationColor))
+                        line_spot_view_more_subway_straight.setBackgroundColor(Color.parseColor(stationColor))
+                        (spot_view_more_act_spot_station_number_round.background as GradientDrawable).setColor(Color.parseColor(stationColor))
+
 
                         spot_view_more_act_spot_review_num_tv.text = spotViewMoreData[0].review_score.toString()
 
                         spot_view_more_act_review_num_tv.text = spotViewMoreData[0].review_cnt.toString()
 
-                        spot_view_more_act_spot_left_station_tv.text = spotViewMoreData[0].prev_station
 
-                        spot_view_more_act_spot_right_station_tv.text = spotViewMoreData[0].next_station
 
                         spot_view_more_act_open_time_tv.text = spotViewMoreData[0].open_time
 
@@ -197,6 +219,12 @@ class SpotViewMoreActivity : AppCompatActivity() {
         })
     }
 
+    fun dpToPx(dp: Int): Int {
+        val density = this.resources
+                .displayMetrics
+                .density
+        return Math.round(dp.toFloat() * density)
+    }
     private fun requestSpotSubscription(spot_id: Int) {
         val networkService: NetworkService = ApplicationController.instance.networkService
         val postSpotSubscripeResponse = networkService.postSpotSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), spot_id)
