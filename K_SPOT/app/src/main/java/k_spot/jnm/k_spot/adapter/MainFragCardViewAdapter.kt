@@ -3,7 +3,6 @@ package k_spot.jnm.k_spot.adapter
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +16,12 @@ import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
 import org.jetbrains.anko.startActivity
 
 
-class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<Main>, val spotOrEventFlag : Int) : RecyclerView.Adapter<MainFragCardViewAdapter.ViewHolder>() {
+class MainFragCardViewAdapter(val ctx: Context, val myDataset: ArrayList<Main>, val spotOrEventFlag: Int) : RecyclerView.Adapter<MainFragCardViewAdapter.ViewHolder>() {
 
     lateinit var mDataset: ArrayList<Main>
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         mDataset = myDataset
         val v = LayoutInflater.from(parent.context)
                 .inflate(R.layout.rv_item_main_farg_card_view, parent, false)
@@ -37,9 +36,9 @@ class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<Main>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dp = ctx.resources.displayMetrics.density
-        val rootLayoutParams : RelativeLayout.LayoutParams = holder.rl.layoutParams as RelativeLayout.LayoutParams
+        val rootLayoutParams: RelativeLayout.LayoutParams = holder.rl.layoutParams as RelativeLayout.LayoutParams
         if (position == 0) {
-            rootLayoutParams.leftMargin = (24*dp).toInt()
+            rootLayoutParams.leftMargin = (24 * dp).toInt()
         }
 
         // - get element from your dataset at this position
@@ -48,19 +47,20 @@ class MainFragCardViewAdapter(val ctx : Context, val myDataset : ArrayList<Main>
         holder.mTextView2.setText(mDataset[position].description)
         Glide.with(ctx).load(mDataset[position].img).into(holder.mImageView)
 
-        if (spotOrEventFlag == 0 )
-        holder.rl.setOnClickListener {
-            ctx.startActivity<SpotViewMoreActivity>("spot_id" to mDataset[position].spot_id.toInt())
-        }else {
-            // ## 이벤트 상세보기로 이동해야됨
-            Log.v("123123", myDataset[position].spot_id.toString())
+        if (spotOrEventFlag == 0)
+            holder.rl.setOnClickListener {
+                ctx.startActivity<SpotViewMoreActivity>("spot_id" to mDataset[position].spot_id.toInt())
+            } else {
+            holder.rl.setOnClickListener {
+                ctx.startActivity<SpotViewMoreActivity>("spot_id" to mDataset[position].spot_id.toInt())
+            }
         }
     }
 
-    inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        val rl : CardView = itemView.findViewById(R.id.main_frag_rv_item_card_view) as CardView
-        val mImageView : ImageView = itemView.findViewById(R.id.main_frag_rv_item_card_view_place_iv) as ImageView
-        val mTextView2 : TextView = itemView.findViewById(R.id.main_frag_rv_item_card_view_place_tv) as TextView
-        val mTextView : TextView = itemView.findViewById(R.id.main_frag_rv_item_card_view_title_tv) as TextView
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val rl: CardView = itemView.findViewById(R.id.main_frag_rv_item_card_view) as CardView
+        val mImageView: ImageView = itemView.findViewById(R.id.main_frag_rv_item_card_view_place_iv) as ImageView
+        val mTextView2: TextView = itemView.findViewById(R.id.main_frag_rv_item_card_view_place_tv) as TextView
+        val mTextView: TextView = itemView.findViewById(R.id.main_frag_rv_item_card_view_title_tv) as TextView
     }
 }

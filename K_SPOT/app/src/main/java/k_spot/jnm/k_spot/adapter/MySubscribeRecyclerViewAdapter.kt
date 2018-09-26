@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -25,6 +26,11 @@ class MySubscribeRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList
     override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        val dp = ctx.resources.displayMetrics.density
+        val rootLayoutParams : RelativeLayout.LayoutParams = holder.rl2.layoutParams as RelativeLayout.LayoutParams
+        if (position == dataList.size - 1) {
+            rootLayoutParams.rightMargin = (16*dp).toInt()
+        }
 
         val requestOptions = RequestOptions().transforms(CenterCrop(), RoundedCorners(30))
         Glide.with(ctx).load(dataList[position].background_img).apply(requestOptions).into(holder.img_btn)
@@ -42,5 +48,7 @@ class MySubscribeRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList
         val img_btn : ImageView = itemView.findViewById(R.id.my_page_frag_rv_item_img_btn) as ImageView
         val engTitle : TextView = itemView.findViewById(R.id.my_page_frag_rv_item_english_tv) as TextView
         val korTitle : TextView = itemView.findViewById(R.id.my_page_frag_rv_item_hangeul_tv) as TextView
+        val rl2 : RelativeLayout = itemView.findViewById(R.id.my_page_frag_rv_item_rl) as RelativeLayout
+
     }
 }
