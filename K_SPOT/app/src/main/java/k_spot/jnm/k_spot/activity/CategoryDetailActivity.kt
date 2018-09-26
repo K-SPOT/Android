@@ -58,7 +58,9 @@ class CategoryDetailActivity : AppCompatActivity() {
         setStatusBarColor()
 
 
-        channel_id = intent.getIntExtra("channel_id", 1)
+        channel_id = intent.getStringExtra("channel_id").toInt()
+
+
         //인텐트 받기
         requestDataList(channel_id)
 

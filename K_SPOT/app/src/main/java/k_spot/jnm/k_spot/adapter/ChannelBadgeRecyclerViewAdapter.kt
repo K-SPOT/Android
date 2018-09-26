@@ -27,6 +27,7 @@ class ChannelBadgeRecyclerViewAdapter(val ctx : Context, val dataList : ChannelD
 
         holder.img.setOnClickListener {
             ctx.startActivity<CategoryDetailActivity>("channel_id" to dataList.channel_id[position])
+            Log.e("채널 아이디는?", dataList.channel_id[position])
         }
     }
 
