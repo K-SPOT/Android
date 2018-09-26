@@ -15,7 +15,7 @@ data class ChannelInfoData(
         val id: Int,
         val background_img: String,
         val thumbnail_img: String,
-        val subscription_cnt: Int,
+        var subscription_cnt: Int,
         var subscription: Int,
         val name: String,
         val company: String

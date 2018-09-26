@@ -8,15 +8,16 @@ import android.view.View
 import android.view.WindowManager
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
-import k_spot.jnm.k_spot.Get.*
+import k_spot.jnm.k_spot.Get.ChannelInfoData
+import k_spot.jnm.k_spot.Get.GetCategoryDetailResponse
+import k_spot.jnm.k_spot.Get.PlaceOrEventRelativeData
+import k_spot.jnm.k_spot.Get.PlaceRecommendData
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.PlaceRecommendRecyclerViewAdapter
 import k_spot.jnm.k_spot.adapter.RelativePlaceOrEventRecyclerViewAdapter
-import k_spot.jnm.k_spot.data.RecommendSpotData
-import k_spot.jnm.k_spot.data.RelativeSpotData
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_detailed_entertainer_page.*
 import org.jetbrains.anko.startActivity
@@ -115,6 +116,9 @@ class CategoryDetailActivity : AppCompatActivity() {
                         channelInfoData.subscription = 1
                         btn_category_detail_subscrip.setImageResource(R.drawable.category_detail_sub_btn)
                         toast("구독")
+                        channelInfoData.subscription_cnt = channelInfoData.subscription_cnt + 1
+                        tv_category_detail_subscripe_cnt.text = String.format("%,d", channelInfoData.subscription_cnt)
+
                     }
                 }
             }
@@ -135,6 +139,8 @@ class CategoryDetailActivity : AppCompatActivity() {
                         channelInfoData.subscription = 0
                         btn_category_detail_subscrip.setImageResource(R.drawable.category_detail_unsub_btn)
                         toast("구독 취소")
+                        channelInfoData.subscription_cnt = channelInfoData.subscription_cnt - 1
+                        tv_category_detail_subscripe_cnt.text = String.format("%,d", channelInfoData.subscription_cnt)
                     }
                 }
             }
@@ -172,6 +178,9 @@ class CategoryDetailActivity : AppCompatActivity() {
 
         btn_category_detail_subscrip.setOnClickListener {
             setSubscriptionBtnClickListener()
+        }
+        iv_category_detail_back_btn.setOnClickListener {
+            finish()
         }
     }
 
