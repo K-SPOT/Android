@@ -101,9 +101,21 @@ class MapPageFragment : Fragment() {
         btn_map_page_search.setOnClickListener {
             startActivity<SearchActivity>()
         }
+
+        setTranslateLanguage()
     }
 
 
+    private fun setTranslateLanguage(){
+        btn_map_page_translation.setOnClickListener {
+            if (SharedPreferenceController.getFlag(context!!) == "0"){
+                SharedPreferenceController.setFlag(context!!, "1")
+            } else {
+                SharedPreferenceController.setFlag(context!!, "0")
+            }
+            Log.e("지금 flag" , SharedPreferenceController.getFlag(context!!))
+        }
+    }
 
 
     //시간나면 애니메이션 처리
@@ -354,7 +366,6 @@ class MapPageFragment : Fragment() {
                         } else {
                             spotDataListFromGPS.addAll(responseSpot.body()!!.data)
                         }
-                        tv_map_page_title.text = "$address_gu"
                         tv_map_page_subtitle.text = "$address_gu K-spot"
                         setRecyclerViewAdapter()
                     }
@@ -384,7 +395,6 @@ class MapPageFragment : Fragment() {
                         } else {
                             spotDataListFromGPS.addAll(responseSpot.body()!!.data)
                         }
-                        tv_map_page_title.text = title
                         tv_map_page_subtitle.text = "$title K-spot"
                         setRecyclerViewAdapter()
                     }
@@ -507,6 +517,12 @@ class MapPageFragment : Fragment() {
             requestSpotDataFromSpot("관악구")
         }
     }
+
+    private fun setTranslateMapTextBtn(){
+
+    }
+
+
 }
 
 

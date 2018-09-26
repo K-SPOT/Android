@@ -20,12 +20,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/tv_map_page_title"
                 android:layout_centerInParent="true"
                 android:textColor="#000000"
                 android:fontFamily="@font/nanumsquareotf_bold"
                 android:textSize="18dp"
-                android:text="강남구"
+                android:text="K-spot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <ImageView
