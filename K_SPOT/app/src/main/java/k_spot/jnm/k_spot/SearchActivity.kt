@@ -14,6 +14,7 @@ import k_spot.jnm.k_spot.Get.GetSearchViewResponse
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.activity.CategoryDetailActivity
+import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
 import k_spot.jnm.k_spot.activity.ViewMoreActivity
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_search.*
@@ -67,28 +68,28 @@ class SearchActivity : AppCompatActivity() {
         search_act_search_recommend_celeb_rl.setOnClickListener {
             if(celebrity.size >= 1){
                 var channel_id = celebrity[0].channel_id
-                startActivity<CategoryDetailActivity>("channel_id" to channel_id)
+                startActivity<CategoryDetailActivity>("channel_id" to channel_id.toString())
             }
         }
 
         search_act_search_recommend_celeb_rl2.setOnClickListener {
             if(celebrity.size >= 2){
                 var channel_id = celebrity[1].channel_id
-                startActivity<CategoryDetailActivity>("channel_id" to channel_id)
+                startActivity<CategoryDetailActivity>("channel_id" to channel_id.toString())
             }
         }
 
         search_act_search_recommend_broadcast_rl.setOnClickListener {
             if(broadcast.size >= 1){
                 var channel_id = broadcast[0].channel_id
-                startActivity<CategoryDetailActivity>("channel_id" to channel_id)
+                startActivity<CategoryDetailActivity>("channel_id" to channel_id.toString())
             }
         }
 
         search_act_search_recommend_broadcast_rl2.setOnClickListener {
             if(broadcast.size >= 2){
                 var channel_id = broadcast[1].channel_id
-                startActivity<CategoryDetailActivity>("channel_id" to channel_id)
+                startActivity<CategoryDetailActivity>("channel_id" to channel_id.toString())
 
             }
         }
@@ -96,23 +97,21 @@ class SearchActivity : AppCompatActivity() {
         search_act_search_recommend_broadcast_rl3.setOnClickListener {
             if(broadcast.size >= 3){
                 var channel_id = broadcast[2].channel_id
-                startActivity<CategoryDetailActivity>("channel_id" to channel_id)
+                startActivity<CategoryDetailActivity>("channel_id" to channel_id.toString())
             }
         }
 
         search_act_search_recommend_event_rl.setOnClickListener {
             if(event.size >= 1){
-                var channel_id = event[2].spot_id
-                var is_event = 1
-                startActivity<ViewMoreActivity>("channel_id" to channel_id, "is_evnet" to is_event.toInt())
+                var spot_id = event[0].spot_id
+                startActivity<SpotViewMoreActivity>("spot_id" to spot_id)
             }
         }
 
         search_act_search_recommend_event_rl2.setOnClickListener {
             if(event.size >= 2){
-                var channel_id = event[1].spot_id
-                var is_event = 1
-                startActivity<ViewMoreActivity>("channel_id" to channel_id, "is_evnet" to is_event.toInt())
+                var spot_id = event[1].spot_id
+                startActivity<ViewMoreActivity>("spot_id" to spot_id)
             }
         }
 
