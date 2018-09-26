@@ -22,6 +22,7 @@ import k_spot.jnm.k_spot.Get.GetMapPageSpotDataResponse
 import k_spot.jnm.k_spot.Get.MapPageSpotData
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.SearchActivity
 import k_spot.jnm.k_spot.activity.MainActivity
 import k_spot.jnm.k_spot.activity.MapDetailActivity
 import k_spot.jnm.k_spot.adapter.MapPageRecyclerViewAdapter
@@ -95,6 +96,10 @@ class MapPageFragment : Fragment() {
             startLocationPermissionRequest()
         } else {
             getLastLocation()
+        }
+
+        btn_map_page_search.setOnClickListener {
+            startActivity<SearchActivity>()
         }
     }
 

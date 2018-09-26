@@ -13,6 +13,8 @@ import k_spot.jnm.k_spot.Get.EventSearchViewData
 import k_spot.jnm.k_spot.Get.GetSearchViewResponse
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
+import k_spot.jnm.k_spot.activity.CategoryDetailActivity
+import k_spot.jnm.k_spot.activity.ViewMoreActivity
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.startActivity
@@ -64,43 +66,53 @@ class SearchActivity : AppCompatActivity() {
 
         search_act_search_recommend_celeb_rl.setOnClickListener {
             if(celebrity.size >= 1){
-                var word = celebrity[0].channel_id
+                var channel_id = celebrity[0].channel_id
+                startActivity<CategoryDetailActivity>("channel_id" to channel_id)
             }
         }
 
         search_act_search_recommend_celeb_rl2.setOnClickListener {
             if(celebrity.size >= 2){
-                var word = celebrity[1].channel_id
+                var channel_id = celebrity[1].channel_id
+                startActivity<CategoryDetailActivity>("channel_id" to channel_id)
             }
         }
 
         search_act_search_recommend_broadcast_rl.setOnClickListener {
             if(broadcast.size >= 1){
-                var word = broadcast[0].channel_id
+                var channel_id = broadcast[0].channel_id
+                startActivity<CategoryDetailActivity>("channel_id" to channel_id)
             }
         }
 
         search_act_search_recommend_broadcast_rl2.setOnClickListener {
             if(broadcast.size >= 2){
-                var word = broadcast[1].channel_id
+                var channel_id = broadcast[1].channel_id
+                startActivity<CategoryDetailActivity>("channel_id" to channel_id)
+
             }
         }
 
         search_act_search_recommend_broadcast_rl3.setOnClickListener {
             if(broadcast.size >= 3){
-                var word = broadcast[2].channel_id
+                var channel_id = broadcast[2].channel_id
+                startActivity<CategoryDetailActivity>("channel_id" to channel_id)
             }
         }
 
         search_act_search_recommend_event_rl.setOnClickListener {
             if(event.size >= 1){
-                var word = broadcast[2].channel_id
+                var channel_id = event[2].spot_id
+                var is_event = 1
+                startActivity<ViewMoreActivity>("channel_id" to channel_id, "is_evnet" to is_event.toInt())
             }
         }
 
         search_act_search_recommend_event_rl2.setOnClickListener {
             if(event.size >= 2){
-                var word = event[1].spot_id
+                var channel_id = event[1].spot_id
+                var is_event = 1
+                startActivity<ViewMoreActivity>("channel_id" to channel_id, "is_evnet" to is_event.toInt())
             }
         }
 
@@ -209,15 +221,63 @@ class SearchActivity : AppCompatActivity() {
                     celebrity = response!!.body()!!.data!!.celebrity
                     event = response!!.body()!!.data!!.event
 
-                    search_act_search_recommend_celeb_tv1.text = celebrity[0].name
-                    search_act_search_recommend_celeb_tv2.text = celebrity[1].name
+                    when (celebrity.size) {
+                        0 -> {
+                            search_act_search_recommend_celeb_tv1.visibility = View.GONE
+                            search_act_search_recommend_celeb_tv2.visibility = View.GONE
+                        }
+                        1 -> {
+                            search_act_search_recommend_celeb_tv1.text = celebrity[0].name
+                            search_act_search_recommend_celeb_tv2.visibility = View.GONE
+                        }
 
-                    search_act_search_recommend_broadcast_tv1.text = broadcast[0].name
-                    search_act_search_recommend_broadcast_tv2.text = broadcast[1].name
-                    search_act_search_recommend_broadcast_tv3.text = broadcast[2].name
+                        2 -> {
+                            search_act_search_recommend_celeb_tv1.text = celebrity[0].name
+                            search_act_search_recommend_celeb_tv2.text = celebrity[1].name
+                        }
+                    }
 
-                    search_act_search_recommend_event_tv1.text = event[0].name
-                    search_act_search_recommend_event_tv2.text = event[1].name
+                    when (broadcast.size) {
+                        0 -> {
+                            search_act_search_recommend_broadcast_tv2.visibility = View.GONE
+                            search_act_search_recommend_broadcast_tv2.visibility = View.GONE
+                            search_act_search_recommend_broadcast_tv3.visibility = View.GONE
+                        }
+                        1 -> {
+                            search_act_search_recommend_broadcast_tv1.text = broadcast[0].name
+                            search_act_search_recommend_broadcast_tv2.visibility = View.GONE
+                            search_act_search_recommend_broadcast_tv3.visibility = View.GONE
+                        }
+
+                        2 -> {
+                            search_act_search_recommend_broadcast_tv1.text = broadcast[0].name
+                            search_act_search_recommend_broadcast_tv2.text = broadcast[1].name
+                            search_act_search_recommend_broadcast_tv3.visibility = View.GONE
+                        }
+
+                        3 -> {
+                            search_act_search_recommend_broadcast_tv1.text = broadcast[0].name
+                            search_act_search_recommend_broadcast_tv2.text = broadcast[1].name
+                            search_act_search_recommend_broadcast_tv3.text = broadcast[2].name
+                        }
+                    }
+
+
+                    when (event.size) {
+                        0 -> {
+                            search_act_search_recommend_event_tv1.visibility = View.GONE
+                            search_act_search_recommend_event_tv2.visibility = View.GONE
+                        }
+                        1 -> {
+                            search_act_search_recommend_event_tv1.text = event[0].name
+                            search_act_search_recommend_event_tv2.visibility = View.GONE
+                        }
+
+                        2-> {
+                            search_act_search_recommend_event_tv1.text = event[0].name
+                            search_act_search_recommend_event_tv2.text = event[1].name
+                        }
+                    }
                 }
             }
 
