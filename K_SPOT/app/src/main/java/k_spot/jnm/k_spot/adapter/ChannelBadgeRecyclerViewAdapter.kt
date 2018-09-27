@@ -23,7 +23,6 @@ class ChannelBadgeRecyclerViewAdapter(val ctx : Context, val dataList : ChannelD
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         Glide.with(ctx).load(dataList.thumbnail_img[position]).into(holder.img)
-        Log.e("리사이클 내 리사이클 ", dataList.thumbnail_img[position])
 
         holder.img.setOnClickListener {
             ctx.startActivity<CategoryDetailActivity>("channel_id" to dataList.channel_id[position])

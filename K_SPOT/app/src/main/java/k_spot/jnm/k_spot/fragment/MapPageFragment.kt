@@ -27,6 +27,7 @@ import k_spot.jnm.k_spot.activity.MainActivity
 import k_spot.jnm.k_spot.activity.MapDetailActivity
 import k_spot.jnm.k_spot.adapter.MapPageRecyclerViewAdapter
 import k_spot.jnm.k_spot.data.FilterOptionData
+import k_spot.jnm.k_spot.data.SpotLanguageName
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_map_page.*
 import org.jetbrains.anko.support.v4.startActivity
@@ -39,12 +40,15 @@ import retrofit2.Response
 class MapPageFragment : Fragment() {
     private val MAP_ACTIVITY_CODE = 1000
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 7778
+
     private val locationManager: LocationManager by lazy {
         context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
+
     private val mapPageRecyclerViewAdapter: MapPageRecyclerViewAdapter by lazy {
         MapPageRecyclerViewAdapter(context!!, spotDataListFromGPS)
     }
+
     private val spotDataListFromGPS: ArrayList<MapPageSpotData> by lazy {
         ArrayList<MapPageSpotData>()
     }
@@ -65,6 +69,40 @@ class MapPageFragment : Fragment() {
     }
     private var currentDistanceOptionIndex: Int = 0
 
+    private lateinit var currentSpotName: String
+
+    private val spotName: ArrayList<SpotLanguageName> by lazy {
+        arrayListOf(
+                SpotLanguageName("내 주변", "Around me"),
+                SpotLanguageName("강서구", "gangseogu"),
+                SpotLanguageName("양천구", "yangcheongu"),
+                SpotLanguageName("구로구", "gurogu"),
+                SpotLanguageName("영등포구", "yeongdeungpogu"),
+                SpotLanguageName("금천구", "geumcheongu"),
+                SpotLanguageName("관악구", "gwanakgu"),
+                SpotLanguageName("동작구", "dongjakgu"),
+                SpotLanguageName("용산구", "yongsangu"),
+                SpotLanguageName("마포구", "mapogu"),
+                SpotLanguageName("서대문구", "seodaemungu"),
+                SpotLanguageName("강남구", "gangnamgu"),
+                SpotLanguageName("서초구", "seochogu"),
+                SpotLanguageName("중구", "junggu"),
+                SpotLanguageName("은평구", "eunpyeonggu"),
+                SpotLanguageName("종로구", "jongrogu"),
+                SpotLanguageName("성북구", "seongbukgu"),
+                SpotLanguageName("강북구", "gangbukgu"),
+                SpotLanguageName("도봉구", "dobonggu"),
+                SpotLanguageName("노원구", "nowongu"),
+                SpotLanguageName("중랑구", "jungranggu"),
+                SpotLanguageName("동대문구", "dongdaemungu"),
+                SpotLanguageName("성동구", "seongdonggu"),
+                SpotLanguageName("광진구", "gwangjingu"),
+                SpotLanguageName("송파구", "songpagu"),
+                SpotLanguageName("강동구", "gangdonggu")
+
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -79,7 +117,19 @@ class MapPageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setRecyclerViewAdapter()
+        setTranslateLanguage()
+        //번역관련
+        if (SharedPreferenceController.getFlag(context!!) == "0") {
+            currentSpotName = "강남구"
+        } else {
+            currentSpotName = "gangnamgu"
+        }
 
+        setTranslateMapTextBtn()
+        setTranslateFilterSource()
+        setTranslateText()
+
+        //
         setFilterBtnVisible()
         setFilterOption()
         filterOptionListener()
@@ -90,7 +140,8 @@ class MapPageFragment : Fragment() {
             startActivityForResult<MapDetailActivity>(MAP_ACTIVITY_CODE)
         }
 
-        requestSpotDataFromSpot("강남구")
+        //일단 초기지역 후 -> 내 위치
+        requestSpotDataFromSpot(currentSpotName)
 
         if (!checkPermissions()) {
             startLocationPermissionRequest()
@@ -106,14 +157,24 @@ class MapPageFragment : Fragment() {
     }
 
 
-    private fun setTranslateLanguage(){
+    private fun setTranslateLanguage() {
         btn_map_page_translation.setOnClickListener {
-            if (SharedPreferenceController.getFlag(context!!) == "0"){
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
                 SharedPreferenceController.setFlag(context!!, "1")
             } else {
                 SharedPreferenceController.setFlag(context!!, "0")
             }
-            Log.e("지금 flag" , SharedPreferenceController.getFlag(context!!))
+            currentSpotName = findTranslateWord()
+            setTranslateMapTextBtn()
+            setTranslateFilterSource()
+            setTranslateText()
+
+            //통신도 다시해주기
+            if (currentSpotName == "내 주변" || currentSpotName == "Around me"){
+                requestSpotDataFromGPS(currentSpotName)
+            } else {
+                requestSpotDataFromSpot(currentSpotName)
+            }
         }
     }
 
@@ -142,11 +203,20 @@ class MapPageFragment : Fragment() {
             }
         }
         //거리
-        when (filterOption.distance) {
-            1.0 -> tv_map_page_filter_distance.text = "1.0Km까지 설정"
-            0.5 -> tv_map_page_filter_distance.text = "0.5Km까지 설정"
-            else -> tv_map_page_filter_distance.text = "0.3Km까지 설정"
+        if (SharedPreferenceController.getFlag(context!!) == "0") {
+            when (filterOption.distance) {
+                1.0 -> tv_map_page_filter_distance.text = "1.0Km까지 설정"
+                0.5 -> tv_map_page_filter_distance.text = "0.5Km까지 설정"
+                else -> tv_map_page_filter_distance.text = "0.3Km까지 설정"
+            }
+        } else {
+            when (filterOption.distance) {
+                1.0 -> tv_map_page_filter_distance.text = "Set up to 1.0km"
+                0.5 -> tv_map_page_filter_distance.text = "Set up to 0.5km"
+                else -> tv_map_page_filter_distance.text = "Set up to 0.3km"
+            }
         }
+
         //레스토랑
         when (filterOption.is_food) {
             1 -> {
@@ -200,7 +270,11 @@ class MapPageFragment : Fragment() {
             } else {
                 currentDistanceOptionIndex++
             }
-            tv_map_page_filter_distance.text = "${distanceArrayList[currentDistanceOptionIndex]}Km까지 설정"
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                tv_map_page_filter_distance.text = "${distanceArrayList[currentDistanceOptionIndex]}Km까지 설정"
+            } else {
+                tv_map_page_filter_distance.text = "Set up to ${distanceArrayList[currentDistanceOptionIndex]}km"
+            }
             filterOptionTemp.distance = distanceArrayList[currentDistanceOptionIndex]
         }
         btn_map_page_filter_distance_right.setOnClickListener {
@@ -209,7 +283,11 @@ class MapPageFragment : Fragment() {
             } else {
                 currentDistanceOptionIndex--
             }
-            tv_map_page_filter_distance.text = "${distanceArrayList[currentDistanceOptionIndex]}Km까지 설정"
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                tv_map_page_filter_distance.text = "${distanceArrayList[currentDistanceOptionIndex]}Km까지 설정"
+            } else {
+                tv_map_page_filter_distance.text = "Set up to ${distanceArrayList[currentDistanceOptionIndex]}km"
+            }
             filterOptionTemp.distance = distanceArrayList[currentDistanceOptionIndex]
         }
 
@@ -227,7 +305,11 @@ class MapPageFragment : Fragment() {
 
         btn_map_page_filter_is_restaurant.setOnClickListener {
             if (filterOptionTemp.is_food == 1) {
-                btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_restaurant_btn_gray)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_restaurant_btn_gray)
+                } else {
+                    btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_food_icon_en)
+                }
                 filterOptionTemp.is_food = 0
             } else {
                 btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_restaurant_btn_green)
@@ -237,7 +319,11 @@ class MapPageFragment : Fragment() {
 
         btn_map_page_filter_is_cafe.setOnClickListener {
             if (filterOptionTemp.is_cafe == 1) {
-                btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_btn_gray)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_btn_gray)
+                } else {
+                    btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_icon_en)
+                }
                 filterOptionTemp.is_cafe = 0
             } else {
                 btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_btn_green)
@@ -247,7 +333,13 @@ class MapPageFragment : Fragment() {
 
         btn_map_page_filter_is_hot_place.setOnClickListener {
             if (filterOptionTemp.is_sights == 1) {
-                btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotplace_btn_gray)
+
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotplace_btn_gray)
+                } else {
+                    btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotsight_icon_en)
+                }
+
                 filterOptionTemp.is_sights = 0
             } else {
                 btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotplace_btn_green)
@@ -257,7 +349,11 @@ class MapPageFragment : Fragment() {
 
         btn_map_page_filter_is_event.setOnClickListener {
             if (filterOptionTemp.is_event == 1) {
-                btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_btn_gray)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_btn_gray)
+                } else {
+                    btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_icon_en)
+                }
                 filterOptionTemp.is_event = 0
             } else {
                 btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_btn_green)
@@ -267,7 +363,12 @@ class MapPageFragment : Fragment() {
 
         btn_map_page_filter_is_etc.setOnClickListener {
             if (filterOptionTemp.is_etc == 1) {
-                btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_btn_gray)
+
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_btn_gray)
+                } else {
+                    btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_icon_en)
+                }
                 filterOptionTemp.is_etc = 0
             } else {
                 btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_btn_green)
@@ -287,8 +388,13 @@ class MapPageFragment : Fragment() {
             }
 
             btn_map_page_close_filtering.callOnClick()
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                toast("필터가 적용되었습니다.\n원하는 위치를 선택해주세요.")
+            } else {
+                toast("filter is applied.\nplease choose a spot")
+            }
 
-            toast("필터가 적용되었습니다.")
+
         }
 
         btn_map_page_close_filtering.setOnClickListener {
@@ -338,7 +444,13 @@ class MapPageFragment : Fragment() {
                         filterOption.latitude = it.result.latitude
                         filterOption.longitude = it.result.longitude
 
-                        requestSpotDataFromGPS("내 주변")
+                        if (SharedPreferenceController.getFlag(context!!) == "0") {
+                            currentSpotName = "내 주변"
+                        } else {
+                            currentSpotName = "Around me"
+                        }
+                        requestSpotDataFromGPS(currentSpotName)
+
                     }
                 }
             }
@@ -349,7 +461,7 @@ class MapPageFragment : Fragment() {
 
     private fun requestSpotDataFromSpot(address_gu: String) {
         val networkService = ApplicationController.instance.networkService
-        val getMapPageResponseFromSpot = networkService.getMapPageResponseFromSpot(0, SharedPreferenceController.getAuthorization(context!!),
+        val getMapPageResponseFromSpot = networkService.getMapPageResponseFromSpot(SharedPreferenceController.getFlag(context!!).toInt(), SharedPreferenceController.getAuthorization(context!!),
                 address_gu, filterOption.order_option, filterOption.is_food, filterOption.is_cafe, filterOption.is_sights, filterOption.is_event, filterOption.is_etc)
         getMapPageResponseFromSpot.enqueue(object : Callback<GetMapPageSpotDataResponse> {
             override fun onFailure(call: Call<GetMapPageSpotDataResponse>?, t: Throwable?) {
@@ -378,7 +490,7 @@ class MapPageFragment : Fragment() {
 
     private fun requestSpotDataFromGPS(title: String) {
         val networkService = ApplicationController.instance.networkService
-        val getMapPageDataFromGPSResponse = networkService.getMapPageDataFromGPSResponse(0, SharedPreferenceController.getAuthorization(context!!),
+        val getMapPageDataFromGPSResponse = networkService.getMapPageDataFromGPSResponse(SharedPreferenceController.getFlag(context!!).toInt(), SharedPreferenceController.getAuthorization(context!!),
                 filterOption.distance, filterOption.latitude, filterOption.longitude, filterOption.is_food, filterOption.is_cafe, filterOption.is_sights, filterOption.is_event, filterOption.is_etc)
         getMapPageDataFromGPSResponse.enqueue(object : Callback<GetMapPageSpotDataResponse> {
             override fun onFailure(call: Call<GetMapPageSpotDataResponse>?, t: Throwable?) {
@@ -390,7 +502,6 @@ class MapPageFragment : Fragment() {
                     if (responseSpot.isSuccessful) {
                         if (spotDataListFromGPS.isNotEmpty()) {
                             spotDataListFromGPS.clear()
-                            //(rv_map_page_my_around_k_spot.adapter as MapPageRecyclerViewAdapter).clearDataList()
                             spotDataListFromGPS.addAll(responseSpot.body()!!.data)
                         } else {
                             spotDataListFromGPS.addAll(responseSpot.body()!!.data)
@@ -407,6 +518,17 @@ class MapPageFragment : Fragment() {
     private fun setRecyclerViewAdapter() {
         rv_map_page_my_around_k_spot.layoutManager = LinearLayoutManager(context)
         rv_map_page_my_around_k_spot.adapter = mapPageRecyclerViewAdapter
+
+        if (spotDataListFromGPS.size >= 1){
+            cardview_map_page_no_data_message.visibility = View.GONE
+        } else {
+            cardview_map_page_no_data_message.visibility = View.VISIBLE
+        }
+        if (SharedPreferenceController.getFlag(context!!) == "0"){
+            tv_map_page_no_data_message.text = "데이터가 없습니다 ㅠㅠ"
+        } else {
+            tv_map_page_no_data_message.text = "no data"
+        }
     }
 
     private fun checkPermissions() =
@@ -420,11 +542,16 @@ class MapPageFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == MAP_ACTIVITY_CODE){
-            if (resultCode == RESULT_OK){
+        if (requestCode == MAP_ACTIVITY_CODE) {
+            if (resultCode == RESULT_OK) {
                 filterOption.latitude = data!!.getDoubleExtra("latitude", 37.498146)
                 filterOption.longitude = data!!.getDoubleExtra("longitude", 127.027653)
-                requestSpotDataFromGPS("내 주변")
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    currentSpotName = "내 주변"
+                } else {
+                    currentSpotName = "Around me"
+                }
+                requestSpotDataFromGPS(currentSpotName)
             }
         }
     }
@@ -440,85 +567,306 @@ class MapPageFragment : Fragment() {
 
     }
 
+
     private fun setMapAddressGuClickListener() {
         btn_map_page_spot_gangseo.setOnClickListener {
-            requestSpotDataFromSpot("강서구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "강서구"
+            } else {
+                currentSpotName = "gangseogu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_yangcheon.setOnClickListener {
-            requestSpotDataFromSpot("양천구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "양천구"
+            } else {
+                currentSpotName = "yangcheongu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_gulo.setOnClickListener {
-            requestSpotDataFromSpot("구로구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "구로구"
+            } else {
+                currentSpotName = "gurogu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_yeongdeungpo.setOnClickListener {
-            requestSpotDataFromSpot("영등포구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "영등포구"
+            } else {
+                currentSpotName = "yeongdeungpogu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_geumcheon.setOnClickListener {
-            requestSpotDataFromSpot("금천구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "금천구"
+            } else {
+                currentSpotName = "geumcheongu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_dongjag.setOnClickListener {
-            requestSpotDataFromSpot("동작구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "동작구"
+            } else {
+                currentSpotName = "dongjakgu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_seocho.setOnClickListener {
-            requestSpotDataFromSpot("서초구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "서초구"
+            } else {
+                currentSpotName = "seochogu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_gangnam.setOnClickListener {
-            requestSpotDataFromSpot("강남구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "강남구"
+            } else {
+                currentSpotName = "gangnamgu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_songpa.setOnClickListener {
-            requestSpotDataFromSpot("송파구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "송파구"
+            } else {
+                currentSpotName = "songpagu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_gangdong.setOnClickListener {
-            requestSpotDataFromSpot("강동구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "강동구"
+            } else {
+                currentSpotName = "gangdonggu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_mapo.setOnClickListener {
-            requestSpotDataFromSpot("마포구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "마포구"
+            } else {
+                currentSpotName = "mapogu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_yongsan.setOnClickListener {
-            requestSpotDataFromSpot("용산구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "용산구"
+            } else {
+                currentSpotName = "yongsangu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_seongdong.setOnClickListener {
-            requestSpotDataFromSpot("성동구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "성동구"
+            } else {
+                currentSpotName = "seongdonggu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_gwangjin.setOnClickListener {
-            requestSpotDataFromSpot("광진구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "광진구"
+            } else {
+                currentSpotName = "gwangjingu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_junggu.setOnClickListener {
-            requestSpotDataFromSpot("중구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "중구"
+            } else {
+                currentSpotName = "junggu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_seodaemun.setOnClickListener {
-            requestSpotDataFromSpot("서대문구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "서대문구"
+            } else {
+                currentSpotName = "seodaemungu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_eunpyeong.setOnClickListener {
-            requestSpotDataFromSpot("은평구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "은평구"
+            } else {
+                currentSpotName = "eunpyeonggu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_jonglo.setOnClickListener {
-            requestSpotDataFromSpot("종로구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "종로구"
+            } else {
+                currentSpotName = "jongrogu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_seongbug.setOnClickListener {
-            requestSpotDataFromSpot("성북구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "성북구"
+            } else {
+                currentSpotName = "seongbukgu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_dongdaemun.setOnClickListener {
-            requestSpotDataFromSpot("동대문구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "동대문구"
+            } else {
+                currentSpotName = "dongdaemungu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_junglang.setOnClickListener {
-            requestSpotDataFromSpot("중랑구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "중랑구"
+            } else {
+                currentSpotName = "jungranggu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_gangbug.setOnClickListener {
-            requestSpotDataFromSpot("강북구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "강북구"
+            } else {
+                currentSpotName = "gangbukgu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_dobong.setOnClickListener {
-            requestSpotDataFromSpot("도봉구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "도봉구"
+            } else {
+                currentSpotName = "dobonggu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_nowon.setOnClickListener {
-            requestSpotDataFromSpot("노원구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "노원구"
+            } else {
+                currentSpotName = "nowongu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
         btn_map_page_spot_gwanag.setOnClickListener {
-            requestSpotDataFromSpot("관악구")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                currentSpotName = "관악구"
+            } else {
+                currentSpotName = "gwanakgu"
+            }
+            requestSpotDataFromSpot(currentSpotName)
         }
     }
 
-    private fun setTranslateMapTextBtn(){
+    private fun setTranslateFilterSource() {
+        if (SharedPreferenceController.getFlag(context!!) == "0") {
+            btn_map_page_open_filtering.setImageResource(R.drawable.filter_floating_btn)
+            tv_map_page_filter_is_popular.text = "인기순"
+            tv_map_page_filter_is_new.text = "최신순"
+            tv_map_page_filter_distance.text = "${distanceArrayList[currentDistanceOptionIndex]}Km까지 설정"
+        } else {
+            btn_map_page_open_filtering.setImageResource(R.drawable.filter_floating_btn_en)
+            tv_map_page_filter_is_popular.text = "popularity"
+            tv_map_page_filter_is_new.text = "recent"
+            tv_map_page_filter_distance.text = "Set up to ${distanceArrayList[currentDistanceOptionIndex]}km"
+        }
+    }
+
+    private fun setTranslateText() {
+        if (SharedPreferenceController.getFlag(context!!) == "0") {
+            tv_map_page_message_select_location.text = "보고싶은 지역을 선택해주세요"
+            tv_map_page_filter_apply_btn.text = "확인"
+
+        } else {
+            tv_map_page_message_select_location.text = "Please select the area you want to see"
+            tv_map_page_filter_apply_btn.text = "Check"
+
+        }
+        tv_map_page_subtitle.text = "$currentSpotName K-spot"
+    }
+
+    private fun findTranslateWord() : String{
+        val spotLanguageName = spotName.find {
+            if (SharedPreferenceController.getFlag(context!!) == "1") {
+                it.ko == currentSpotName
+            } else {
+                it.en == currentSpotName
+            }
+        }
+        if (SharedPreferenceController.getFlag(context!!) == "1") {
+            return spotLanguageName!!.en
+        } else {
+            return spotLanguageName!!.ko
+        }
+    }
+
+    private fun setTranslateMapTextBtn() {
+        if (SharedPreferenceController.getFlag(context!!) == "1") {
+            btn_map_page_spot_gangseo.setImageResource(R.drawable.gangseo_en)
+            btn_map_page_spot_yangcheon.setImageResource(R.drawable.yangcheon_en)
+            btn_map_page_spot_gulo.setImageResource(R.drawable.gulo_en)
+            btn_map_page_spot_yeongdeungpo.setImageResource(R.drawable.yeongdeungpo_en)
+            btn_map_page_spot_geumcheon.setImageResource(R.drawable.geumcheon_en)
+            btn_map_page_spot_dongjag.setImageResource(R.drawable.dongjag_en)
+            btn_map_page_spot_seocho.setImageResource(R.drawable.seocho_en)
+            btn_map_page_spot_gangnam.setImageResource(R.drawable.gangnam_en)
+            btn_map_page_spot_songpa.setImageResource(R.drawable.songpa_en)
+            btn_map_page_spot_gangdong.setImageResource(R.drawable.gangdong_en)
+            btn_map_page_spot_mapo.setImageResource(R.drawable.mapo_en)
+            btn_map_page_spot_yongsan.setImageResource(R.drawable.yongsan_en)
+            btn_map_page_spot_seongdong.setImageResource(R.drawable.seongdong_en)
+            btn_map_page_spot_gwangjin.setImageResource(R.drawable.gwangjin_en)
+            btn_map_page_spot_junggu.setImageResource(R.drawable.junggu_en)
+            btn_map_page_spot_seodaemun.setImageResource(R.drawable.seodaemun_en)
+            btn_map_page_spot_eunpyeong.setImageResource(R.drawable.eunpyeong_en)
+            btn_map_page_spot_jonglo.setImageResource(R.drawable.jonglo_en)
+            btn_map_page_spot_seongbug.setImageResource(R.drawable.seongdong_en)
+            btn_map_page_spot_dongdaemun.setImageResource(R.drawable.dongdaemun_en)
+            btn_map_page_spot_junglang.setImageResource(R.drawable.junglang_en)
+            btn_map_page_spot_gangbug.setImageResource(R.drawable.gangbug_en)
+            btn_map_page_spot_dobong.setImageResource(R.drawable.dobong_en)
+            btn_map_page_spot_nowon.setImageResource(R.drawable.nowon_en)
+            btn_map_page_spot_gwanag.setImageResource(R.drawable.gwanag_en)
+        } else {
+            btn_map_page_spot_gangseo.setImageResource(R.drawable.gangseo)
+            btn_map_page_spot_yangcheon.setImageResource(R.drawable.yangcheon)
+            btn_map_page_spot_gulo.setImageResource(R.drawable.gulo)
+            btn_map_page_spot_yeongdeungpo.setImageResource(R.drawable.yeongdeungpo)
+            btn_map_page_spot_geumcheon.setImageResource(R.drawable.geumcheon)
+            btn_map_page_spot_dongjag.setImageResource(R.drawable.dongjag)
+            btn_map_page_spot_seocho.setImageResource(R.drawable.seocho)
+            btn_map_page_spot_gangnam.setImageResource(R.drawable.gangnam)
+            btn_map_page_spot_songpa.setImageResource(R.drawable.songpa)
+            btn_map_page_spot_gangdong.setImageResource(R.drawable.gangdong)
+            btn_map_page_spot_mapo.setImageResource(R.drawable.mapo)
+            btn_map_page_spot_yongsan.setImageResource(R.drawable.yongsan)
+            btn_map_page_spot_seongdong.setImageResource(R.drawable.seongdong)
+            btn_map_page_spot_gwangjin.setImageResource(R.drawable.gwangjin)
+            btn_map_page_spot_junggu.setImageResource(R.drawable.junggu)
+            btn_map_page_spot_seodaemun.setImageResource(R.drawable.seodaemun)
+            btn_map_page_spot_eunpyeong.setImageResource(R.drawable.eunpyeong)
+            btn_map_page_spot_jonglo.setImageResource(R.drawable.jonglo)
+            btn_map_page_spot_seongbug.setImageResource(R.drawable.seongdong)
+            btn_map_page_spot_dongdaemun.setImageResource(R.drawable.dongdaemun)
+            btn_map_page_spot_junglang.setImageResource(R.drawable.junglang)
+            btn_map_page_spot_gangbug.setImageResource(R.drawable.gangbug)
+            btn_map_page_spot_dobong.setImageResource(R.drawable.dobong)
+            btn_map_page_spot_nowon.setImageResource(R.drawable.nowon)
+            btn_map_page_spot_gwanag.setImageResource(R.drawable.gwanag)
+        }
 
     }
 

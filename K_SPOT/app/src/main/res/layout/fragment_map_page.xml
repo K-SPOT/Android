@@ -46,7 +46,8 @@
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/ns_map_page_scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="56dp">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -98,10 +99,10 @@
                             android:src="@drawable/yangcheon"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView"
                             app:layout_constraintEnd_toEndOf="@+id/imageView"
-                            app:layout_constraintHorizontal_bias="0.151"
+                            app:layout_constraintHorizontal_bias="0.144"
                             app:layout_constraintStart_toStartOf="@+id/imageView"
                             app:layout_constraintTop_toTopOf="@+id/imageView"
-                            app:layout_constraintVertical_bias="0.709" />
+                            app:layout_constraintVertical_bias="0.71" />
 
                         <ImageView
                             android:id="@+id/btn_map_page_spot_gulo"
@@ -130,10 +131,10 @@
                             android:src="@drawable/yeongdeungpo"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView"
                             app:layout_constraintEnd_toEndOf="@+id/imageView"
-                            app:layout_constraintHorizontal_bias="0.314"
+                            app:layout_constraintHorizontal_bias="0.31"
                             app:layout_constraintStart_toStartOf="@+id/imageView"
                             app:layout_constraintTop_toTopOf="@+id/imageView"
-                            app:layout_constraintVertical_bias="0.709" />
+                            app:layout_constraintVertical_bias="0.697" />
 
                         <ImageView
                             android:id="@+id/btn_map_page_spot_geumcheon"
@@ -185,10 +186,10 @@
                             android:src="@drawable/gangnam"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView"
                             app:layout_constraintEnd_toEndOf="@+id/imageView"
-                            app:layout_constraintHorizontal_bias="0.706"
+                            app:layout_constraintHorizontal_bias="0.725"
                             app:layout_constraintStart_toStartOf="@+id/imageView"
                             app:layout_constraintTop_toTopOf="@+id/imageView"
-                            app:layout_constraintVertical_bias="0.79" />
+                            app:layout_constraintVertical_bias="0.793" />
 
                         <ImageView
                             android:id="@+id/btn_map_page_spot_songpa"
@@ -209,10 +210,10 @@
                             android:src="@drawable/gangdong"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView"
                             app:layout_constraintEnd_toEndOf="@+id/imageView"
-                            app:layout_constraintHorizontal_bias="0.941"
+                            app:layout_constraintHorizontal_bias="0.967"
                             app:layout_constraintStart_toStartOf="@+id/imageView"
                             app:layout_constraintTop_toTopOf="@+id/imageView"
-                            app:layout_constraintVertical_bias="0.576" />
+                            app:layout_constraintVertical_bias="0.563" />
 
                         <ImageView
                             android:id="@+id/btn_map_page_spot_mapo"
@@ -368,7 +369,7 @@
                             app:layout_constraintHorizontal_bias="0.653"
                             app:layout_constraintStart_toStartOf="@+id/imageView"
                             app:layout_constraintTop_toTopOf="@+id/imageView"
-                            app:layout_constraintVertical_bias="0.168" />
+                            app:layout_constraintVertical_bias="0.17" />
 
                         <ImageView
                             android:id="@+id/btn_map_page_spot_nowon"
@@ -377,10 +378,10 @@
                             android:src="@drawable/nowon"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView"
                             app:layout_constraintEnd_toEndOf="@+id/imageView"
-                            app:layout_constraintHorizontal_bias="0.75"
+                            app:layout_constraintHorizontal_bias="0.77"
                             app:layout_constraintStart_toStartOf="@+id/imageView"
                             app:layout_constraintTop_toTopOf="@+id/imageView"
-                            app:layout_constraintVertical_bias="0.205" />
+                            app:layout_constraintVertical_bias="0.25" />
 
                         <ImageView
                             android:id="@+id/btn_map_page_spot_gwanag"
@@ -396,6 +397,7 @@
 
                     </android.support.constraint.ConstraintLayout>
                     <TextView
+                        android:id="@+id/tv_map_page_message_select_location"
                         android:layout_marginTop="24dp"
                         android:fontFamily="@font/nanumsquareotf_regular"
                         android:text="보고싶은 지역을 선택해주세요"
@@ -439,8 +441,31 @@
                         android:layout_height="wrap_content"
                         android:clipToPadding="false"
                         android:nestedScrollingEnabled="false">
-
                     </android.support.v7.widget.RecyclerView>
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cardview_map_page_no_data_message"
+                        android:visibility="gone"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginTop="12dp"
+                        app:cardCornerRadius="17dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:id="@+id/tv_map_page_no_data_message"
+                                android:layout_centerInParent="true"
+                                android:text="K-spot이 없습니다 :("
+                                android:textColor="#707070"
+                                android:textSize="13dp"
+                                android:fontFamily="@font/nanumsquareotf_regular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
                 </LinearLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
@@ -618,6 +643,7 @@
             android:layout_width="match_parent"
             android:layout_height="70dp">
             <TextView
+                android:id="@+id/tv_map_page_filter_apply_btn"
                 android:layout_centerInParent="true"
                 android:text="확인"
                 android:textColor="#FFFFFF"

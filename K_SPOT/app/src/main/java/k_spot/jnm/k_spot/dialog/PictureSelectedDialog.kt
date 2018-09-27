@@ -19,7 +19,7 @@ class PictureSelectedDialog(val ctx: Context) : Dialog(ctx){
 
     private fun setOptionClickListener(){
         btn_edit_picture_option_dialog_album.setOnClickListener {
-            (ctx as UserInfoEditActivity).setSeletedPictureOption()
+            (ctx as UserInfoEditActivity).requestReadExternalStoragePermission()
             dismiss()
         }
 

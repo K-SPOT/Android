@@ -195,10 +195,11 @@ class UserInfoEditActivity : AppCompatActivity() {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE -> {
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    val intent = Intent(Intent.ACTION_PICK)
-                    intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
-                    intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                    startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
+//                    val intent = Intent(Intent.ACTION_PICK)
+//                    intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
+//                    intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+//                    startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
+                    setSeletedPictureOption()
                 } else {
                     requestReadExternalStoragePermission()
                 }
@@ -207,12 +208,14 @@ class UserInfoEditActivity : AppCompatActivity() {
         }
     }
 
-    private fun requestReadExternalStoragePermission() {
+    fun requestReadExternalStoragePermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE)
             }
+        } else {
+            setSeletedPictureOption()
         }
     }
 
