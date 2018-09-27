@@ -18,9 +18,11 @@ import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.SearchActivity
+import k_spot.jnm.k_spot.activity.MainActivity
 import k_spot.jnm.k_spot.adapter.MainFragCardViewAdapter
 import k_spot.jnm.k_spot.adapter.MainFragViewPagerImageSliderAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
+import kotlinx.android.synthetic.main.fragment_main_page.*
 import kotlinx.android.synthetic.main.fragment_main_page.view.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
@@ -60,6 +62,29 @@ class MainPageFragment : Fragment() {
 
         return view
     }
+    private fun onClickChangeLanguageBtn(){
+        (activity as MainActivity).changeMainActivityLanguage()
+    }
+
+    fun translateMainPageLanguage(){
+        translateMainPage()
+        requestMainPageResonse()
+    }
+
+    fun translateMainPage(){
+        if (SharedPreferenceController.getFlag(context!!) == "0"){
+            main_page_fragment_recycler1_tv1.text = "이번주 올라온"
+            main_page_fragment_recycler1_tv2.text = "따끈따끈한 추천 PLACE"
+            main_page_fragment_recycler2_tv1.text = "인기 장소 "
+            main_page_fragment_recycler3_tv1.text = "이번 주 "
+        } else {
+            main_page_fragment_recycler1_tv1.text = "This week,"
+            main_page_fragment_recycler1_tv2.text = "we recommend this PLACE"
+            main_page_fragment_recycler2_tv1.text = "Hot place "
+            main_page_fragment_recycler3_tv1.text = "NEW EVENT "
+        }
+    }
+
 
     fun setOnClickListener(view : View) {
         view.main_page_fragment_search_btn.setOnClickListener {
@@ -149,7 +174,7 @@ class MainPageFragment : Fragment() {
 
     }
 
-    fun makeCardView(view: View, recyclerView: RecyclerView, dataSet : ArrayList<Main>, spotOrEvent: Int) {
+    fun makeCardView(recyclerView: RecyclerView, dataSet : ArrayList<Main>, spotOrEvent: Int) {
         val mRecyclerView = recyclerView
 //        val mRecyclerView = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
         mRecyclerView.setHasFixedSize(true)
@@ -165,14 +190,59 @@ class MainPageFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        toast("메인 페이지")
+
+        translateMainPage()
+
+        main_page_fragment_translation_btn.setOnClickListener {
+            onClickChangeLanguageBtn()
+        }
+
     }
 
     fun getMainFragResonse(view: View) {
 
         networkService = ApplicationController.instance.networkService
         val authorization: String = SharedPreferenceController.getAuthorization(context = this!!.context!!)
-        val getMainFragResponse = networkService.getMainFrag(0, authorization)
+        val getMainFragResponse = networkService.getMainFrag(SharedPreferenceController.getFlag(context!!).toInt(), authorization)
+        getMainFragResponse.enqueue(object : Callback<GetMainFragResponse> {
+            override fun onFailure(call: Call<GetMainFragResponse>?, t: Throwable?) {
+            }
+
+            override fun onResponse(call: Call<GetMainFragResponse>?, response: Response<GetMainFragResponse>?) {
+                if (response!!.isSuccessful) {
+                    mainFragViewPagerItem = response!!.body()!!.data!!.theme
+
+                    mainFragRecommendSpotRecyclerItem = response!!.body()!!.data!!.main_recommand_spot
+                    mainFragBestPlaceItem = response!!.body()!!.data!!.main_best_place
+                    mainFragEventItem = response!!.body()!!.data!!.main_best_event
+
+                    val mRecyclerView1 = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
+                    // 첫 번째 CardView 생성 function
+                    makeCardView(mRecyclerView1, mainFragRecommendSpotRecyclerItem, 0)
+
+                    val mRecyclerView2 = view.findViewById(R.id.main_page_fragment_rv2) as RecyclerView
+
+                    makeCardView(mRecyclerView2, mainFragRecommendSpotRecyclerItem, 0)
+
+                    val mRecyclerView3 = view.findViewById(R.id.main_page_fragment_rv3) as RecyclerView
+
+                    makeCardView(mRecyclerView3, mainFragEventItem, 1)
+                    makeViewPager(view ,mainFragViewPagerItem)
+                    // Auto Scroll
+                    MainFragViewPagerImageSliderAdapter!!.notifyDataSetChanged()
+                    view.main_page_fragment_viewpager!!.setInterval(5000)
+                    view.main_page_fragment_viewpager!!.startAutoScroll(1000)
+
+                }
+            }
+
+        })
+    }
+
+    fun requestMainPageResonse() {
+        networkService = ApplicationController.instance.networkService
+        val authorization: String = SharedPreferenceController.getAuthorization(context = this!!.context!!)
+        val getMainFragResponse = networkService.getMainFrag(SharedPreferenceController.getFlag(context!!).toInt(), authorization)
         getMainFragResponse.enqueue(object : Callback<GetMainFragResponse> {
             override fun onFailure(call: Call<GetMainFragResponse>?, t: Throwable?) {
             }
@@ -186,29 +256,23 @@ class MainPageFragment : Fragment() {
                     mainFragBestPlaceItem = response!!.body()!!.data!!.main_best_place
                     mainFragEventItem = response!!.body()!!.data!!.main_best_event
 
-                    val mRecyclerView1 = view.findViewById(R.id.main_page_fragment_rv1) as RecyclerView
                     // 첫 번째 CardView 생성 function
-                    makeCardView(view, mRecyclerView1, mainFragRecommendSpotRecyclerItem, 0)
+                    makeCardView(main_page_fragment_rv1, mainFragRecommendSpotRecyclerItem, 0)
 
-                    val mRecyclerView2 = view.findViewById(R.id.main_page_fragment_rv2) as RecyclerView
+                    makeCardView(main_page_fragment_rv2, mainFragRecommendSpotRecyclerItem, 0)
 
-                    makeCardView(view, mRecyclerView2, mainFragRecommendSpotRecyclerItem, 0)
-
-                    val mRecyclerView3 = view.findViewById(R.id.main_page_fragment_rv3) as RecyclerView
-
-                    makeCardView(view, mRecyclerView3, mainFragEventItem, 1)
-                    makeViewPager(view ,mainFragViewPagerItem)
+                    makeCardView(main_page_fragment_rv3, mainFragEventItem, 1)
+                    makeViewPager(view!! ,mainFragViewPagerItem)
                     // Auto Scroll
                     MainFragViewPagerImageSliderAdapter!!.notifyDataSetChanged()
-                    view.main_page_fragment_viewpager!!.setInterval(5000)
-                    view.main_page_fragment_viewpager!!.startAutoScroll(1000)
+                    view!!.main_page_fragment_viewpager!!.setInterval(5000)
+                    view!!.main_page_fragment_viewpager!!.startAutoScroll(1000)
 
                 }
             }
 
         })
     }
-
 
 
 }

@@ -27,6 +27,7 @@
 
         <!--탑 바 마이페이지-->
         <TextView
+            android:id="@+id/tv_my_page_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="마이페이지"
@@ -71,6 +72,7 @@
                 android:fontFamily="@font/nanumsquareotf_bold_normal"/>
 
             <TextView
+                android:id="@+id/tv_my_page_hello_01_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/my_page_frag_my_name_tv"
@@ -80,6 +82,7 @@
                 android:fontFamily="@font/nanumsquareotf_bold_normal"/>
 
             <TextView
+                android:id="@+id/tv_my_page_hello_02_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="안녕하세요!"
@@ -100,6 +103,7 @@
             android:layout_marginRight="8dp">
 
             <ImageView
+                android:id="@+id/iv_my_page_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -132,6 +136,7 @@
             android:layout_height="54dp">
 
             <TextView
+                android:id="@+id/tv_my_page_my_subscript_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="내 구독"
@@ -150,6 +155,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dp">
                 <TextView
+                    android:id="@+id/tv_my_page_more_my_subscript"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="더보기"
@@ -177,6 +183,7 @@
         android:layout_below="@+id/my_page_frag_my_subscribe_box">
 
         <TextView
+            android:id="@+id/tv_my_page_scrab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="스크랩"
@@ -210,6 +217,7 @@
         android:layout_below="@+id/my_page_frag_scrab_bar_btn">
 
         <TextView
+            android:id="@+id/tv_my_page_edit_information"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="회원정보 수정"
