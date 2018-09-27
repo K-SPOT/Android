@@ -12,7 +12,7 @@ data class SpotViewMoreData (
         var spot_id: Int,
         val img: ArrayList<String>,
         val name: String,
-        val description: String,
+        var description: String,
         val address: String,
         val review_score: Double,
         val review_cnt: Int,

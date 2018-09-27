@@ -41,10 +41,12 @@ class MainFragCardViewAdapter(val ctx: Context, val myDataset: ArrayList<Main>, 
             rootLayoutParams.leftMargin = (16 * dp).toInt()
         }
 
+
         if(position == (mDataset.size - 1)){
             rootLayoutParams.rightMargin = (31 * dp).toInt()
         }
 
+        mDataset[position].description = mDataset[position].description.replace("\\n", "\n")
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTextView.setText(mDataset[position].name)

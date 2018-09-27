@@ -92,6 +92,7 @@ class MyPageFragment : Fragment() {
         }
 
         my_page_frag_logout_btn.setOnClickListener {
+            SharedPreferenceController.clearSPC(this!!.context!!)
             onClickLogout()
         }
 

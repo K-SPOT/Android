@@ -16,6 +16,8 @@
             android:src="@color/colorAccent"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
+
+            android:scaleType="fitXY"
             />
 
         <TextView
@@ -92,7 +94,7 @@
                 android:id="@+id/search_result_act_rv_item_subscribe_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/category_list_sub_btn"
+                android:src="@drawable/category_list_unsub_btn"
                 android:layout_margin="6dp"
                 />
         </RelativeLayout>

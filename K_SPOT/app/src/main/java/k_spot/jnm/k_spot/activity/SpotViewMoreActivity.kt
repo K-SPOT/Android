@@ -128,7 +128,8 @@ class SpotViewMoreActivity : AppCompatActivity() {
                     if (spotViewMoreData.size != 0) {
                         makeBigReviewStar(spotViewMoreData[0].review_score)
                         spot_view_more_act_spot_title_tv.text = spotViewMoreData[0].name
-
+                        spotViewMoreData[0].description = spotViewMoreData[0].description.replace("\\n", "\n")
+                        spotViewMoreData[0].description = spotViewMoreData[0].description.replace("\n", "")
                         spot_view_more_act_spot_semi_info_tv.text = spotViewMoreData[0].description
 
                         // ## 구글 맵으로 넘어가기
@@ -519,11 +520,9 @@ class SpotViewMoreActivity : AppCompatActivity() {
             if (spotViewMoreData[0].is_scrap == 0) {
                 spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
                 requestSpotSubscription(spotViewMoreData[0].spot_id)
-                Log.v("spotViewMoreData[0].spot_id", spotViewMoreData[0].spot_id.toString())
                 spotViewMoreData[0].is_scrap = 1
                 spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt + 1).toString()
             } else {
-                Log.v("spotViewMoreData[0].spot_id", spotViewMoreData[0].spot_id.toString())
                 spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
                 deleteSpotSubscription(spotViewMoreData[0].spot_id)
                 spotViewMoreData[0].is_scrap = 0

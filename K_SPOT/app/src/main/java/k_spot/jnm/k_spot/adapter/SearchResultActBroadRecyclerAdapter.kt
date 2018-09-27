@@ -49,9 +49,9 @@ class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayLi
 
         var flag: Int = searchBroadItems[position]!!.subscription
         if(searchBroadItems[position]!!.subscription == 0){
-            holder.result_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
-        }else{
             holder.result_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
+        }else{
+            holder.result_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
         }
 
         holder.result_sub_btn_btn.setOnClickListener {
