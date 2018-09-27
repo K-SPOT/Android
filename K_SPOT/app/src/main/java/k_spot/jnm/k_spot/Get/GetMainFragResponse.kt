@@ -15,7 +15,7 @@ data class MainFragData (
 data class Main (
         val spot_id: Long,
         val name: String,
-        val description: String,
+        var description: String,
         val img: String
 )
 
