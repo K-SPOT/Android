@@ -74,7 +74,7 @@ class ReviewWriteActivity : AppCompatActivity() {
         var description = RequestBody.create(MediaType.parse("text/plain"), review_write_act_content_posting_et.text.toString())
 
         val postSpotReviewWriteResponse = networkService.postSpotReviewWriteResponse(0, SharedPreferenceController.getAuthorization(applicationContext),
-                33, title, description, image, 3.5)
+                spot_id, title, description, image, review_write_act_star_tv.text.toString().toDouble())
         postSpotReviewWriteResponse.enqueue(object : Callback<PostSpotReviewWriteResponse> {
             override fun onFailure(call: Call<PostSpotReviewWriteResponse>?, t: Throwable?) {
                 Log.e("리뷰작성 실패", t.toString())
@@ -87,7 +87,6 @@ class ReviewWriteActivity : AppCompatActivity() {
                 }
             }
         })
-        Log.e("리뷰 ", "사건3")
     }
 
     // Content EditText의 수 바꾸기
@@ -393,7 +392,8 @@ class ReviewWriteActivity : AppCompatActivity() {
 
         // 이미지 바꾸기
         review_write_act_upload_pic_btn.setOnClickListener {
-            changeImage()
+            requestReadExternalStoragePermission()
+
         }
 
         // View에 그림 보여주기
@@ -483,6 +483,8 @@ class ReviewWriteActivity : AppCompatActivity() {
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE)
             }
+        } else {
+            changeImage()
         }
     }
 

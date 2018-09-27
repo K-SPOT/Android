@@ -13,3 +13,8 @@ data class FilterOptionData(
 )
 
 
+data class SpotLanguageName(
+        val ko : String,
+        val en : String
+)
+

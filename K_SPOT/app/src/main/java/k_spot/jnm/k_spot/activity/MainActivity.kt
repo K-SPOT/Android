@@ -11,6 +11,7 @@ import android.view.WindowManager
 import android.widget.RelativeLayout
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.MainBottomTabAdapter
+import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
 
@@ -134,7 +135,12 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         } else {
             backPressedTime = tempTime
-            longToast("한번 더 뒤로가기를 누르면 종료됩니다.")
+            if (SharedPreferenceController.getFlag(this) == "0"){
+                longToast("한번 더 뒤로가기를 누르면 종료됩니다.")
+            } else {
+                longToast("one more back -> shut down")
+            }
+
         }
     }
 
