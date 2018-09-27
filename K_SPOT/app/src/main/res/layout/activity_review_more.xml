@@ -67,7 +67,7 @@
                     android:text="리뷰"
                     android:textColor="#323232"
                     android:textSize="24dp"
-                    android:fontFamily="@font/nanumsquareotf_bold_normal"
+                    android:fontFamily="@font/nanumsquareotf_bold"
                     android:layout_centerVertical="true"/>
 
                 <TextView
@@ -78,7 +78,7 @@
                     android:text="30,256개"
                     android:textColor="#323232"
                     android:textSize="18dp"
-                    android:fontFamily="@font/nanumsquareotf_light_normal"
+                    android:fontFamily="@font/nanumsquareotf_light"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     />
@@ -109,7 +109,7 @@
                     android:layout_marginLeft="8dp"
                     android:textSize="20dp"
                     android:textColor="#323232"
-                    android:fontFamily="@font/nanumsquareotf_bold_normal"/>
+                    android:fontFamily="@font/nanumsquareotf_bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -119,7 +119,7 @@
                     android:layout_centerVertical="true"
                     android:textSize="20dp"
                     android:textColor="#E0E0E0"
-                    android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+                    android:fontFamily="@font/nanumsquareotf_regular"/>
             </RelativeLayout>
 
             <View

@@ -35,7 +35,7 @@
                 android:text="방탄소년단"
                 android:textColor="#323232"
                 android:textSize="9dp"
-                android:fontFamily="@font/nanumsquareotf_bold_normal"
+                android:fontFamily="@font/nanumsquareotf_bold"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="9dp"/>
 

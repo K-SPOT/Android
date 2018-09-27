@@ -10,6 +10,9 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.ChannelListData
 import k_spot.jnm.k_spot.Network.ApplicationController
@@ -24,9 +27,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList<ChannelListData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class CategoryPageFragRecyclerAdapter(private var categoryPageItems: ArrayList<ChannelListData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val mainView : View = LayoutInflater.from(parent!!.context).inflate(R.layout.rv_item_category_list_frag, parent, false)
+        val mainView: View = LayoutInflater.from(parent!!.context).inflate(R.layout.rv_item_category_list_frag, parent, false)
         return CategoryPageFragRecyclerAdapter.Holder(mainView)
     }
 
@@ -35,13 +38,13 @@ class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var holder : Holder = holder as Holder
+        var holder: Holder = holder as Holder
 
-        holder.category_list_index.text = (position+1).toString()
+        holder.category_list_index.text = (position + 1).toString()
 
-        // 통신 시 주석 제거
+        val requestOptions = RequestOptions().transforms(CenterCrop(), RoundedCorners(dpToPx(2)))
         Glide.with(ctx)
-                .load(categoryPageItems[position].thumbnail_img)
+                .load(categoryPageItems[position].thumbnail_img).apply(requestOptions)
                 .into(holder.category_list_image)
 
         holder.category_list_name.text = categoryPageItems[position].name
@@ -51,63 +54,101 @@ class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList
         holder.category_list_post_num.text = categoryPageItems[position].spot_cnt.toString()
 
         // 구독된 경우
-        if(categoryPageItems[position].subscription == 0){
-            holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
-        }else{
-            holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
+        if (categoryPageItems[position].subscription == 0) {
+            if (SharedPreferenceController.getFlag(ctx) == "0") {
+                holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
+            } else {
+                holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn_en)
+            }
+        } else {
+            if (SharedPreferenceController.getFlag(ctx) == "0") {
+                holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
+            } else {
+                holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn_en)
+            }
         }
 
         var subFlag = categoryPageItems[position].subscription
 
         holder.category_list_sub_btn.setOnClickListener {
-            if(subFlag == 0) {
-                holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
+            if (subFlag == 0) {
+                if (SharedPreferenceController.getFlag(ctx) == "0") {
+                    holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
+                } else {
+                    holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn_en)
+                }
                 requestChannelSubscription(categoryPageItems[position].channel_id)
-                subFlag = 1
-            }else {
-                holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
+                categoryPageItems[position].subscription = 1
+            } else {
+                if (SharedPreferenceController.getFlag(ctx) == "0") {
+                    holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
+                } else {
+                    holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn_en)
+                }
                 deleteChannelSubscription(categoryPageItems[position].channel_id)
-                subFlag = 0
+                categoryPageItems[position].subscription = 0
             }
         }
 
+
+        if (SharedPreferenceController.getFlag(ctx) == "0") {
+            holder.subscribe_cnt_text.text = "구독자 "
+            holder.board_cnt_text.text = "게시물 "
+        } else {
+            holder.subscribe_cnt_text.text = "subscriber "
+            holder.board_cnt_text.text = "post "
+        }
         holder.category_list_all_btn.setOnClickListener {
             ctx.startActivity<CategoryDetailActivity>("channel_id" to categoryPageItems[position].channel_id.toString())
         }
     }
 
-    class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var category_list_index : TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_num_tv)
-        var category_list_image : ImageView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_image_iv)
-        var category_list_name : TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_name_tv)
-        var category_list_sub_num : TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscriber_num_tv)
-        var category_list_post_num : TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_post_num_tv)
-        var category_list_sub_btn_image : ImageView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscribe_iv)
-        var category_list_all_btn : RelativeLayout = itemView!!.findViewById(R.id.category_list_fragment_rv_item_rl)
-        var category_list_sub_btn : RelativeLayout = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscribe_btn)
-
+    fun dpToPx(dp: Int): Int {
+        val density = ctx.resources
+                .displayMetrics
+                .density
+        return Math.round(dp.toFloat() * density)
     }
 
-    private fun requestChannelSubscription(channel_id : Int){
-        val networkService : NetworkService = ApplicationController.instance.networkService
-        val postChannelSubscripeResponse = networkService.postChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(ctx), channel_id)
+    class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var category_list_index: TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_num_tv)
+        var category_list_image: ImageView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_image_iv)
+        var category_list_name: TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_name_tv)
+        var category_list_sub_num: TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscriber_num_tv)
+        var category_list_post_num: TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_post_num_tv)
+        var category_list_sub_btn_image: ImageView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscribe_iv)
+        var category_list_all_btn: RelativeLayout = itemView!!.findViewById(R.id.category_list_fragment_rv_item_rl)
+        var category_list_sub_btn: RelativeLayout = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscribe_btn)
+
+        val subscribe_cnt_text: TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscriber_tv) as TextView
+        val board_cnt_text: TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_post_tv) as TextView
+    }
+
+    private fun requestChannelSubscription(channel_id: Int) {
+        val networkService: NetworkService = ApplicationController.instance.networkService
+        val postChannelSubscripeResponse = networkService.postChannelSubscripeResponse(SharedPreferenceController.getFlag(ctx).toInt(), SharedPreferenceController.getAuthorization(ctx), channel_id)
         postChannelSubscripeResponse.enqueue(object : Callback<PostChannelSubscripeResponse> {
             override fun onFailure(call: Call<PostChannelSubscripeResponse>?, t: Throwable?) {
                 Log.e("구독하기 실패", t.toString())
             }
+
             override fun onResponse(call: Call<PostChannelSubscripeResponse>?, response: Response<PostChannelSubscripeResponse>?) {
                 response?.let {
-                    if (response.isSuccessful){
-                        ctx.toast("구독")
+                    if (response.isSuccessful) {
+                        if (SharedPreferenceController.getFlag(ctx) == "0") {
+                            ctx.toast("구독")
+                        } else {
+                            ctx.toast("Subscribe")
+                        }
                     }
                 }
             }
         })
     }
 
-    private fun deleteChannelSubscription(channel_id : Int){
-        val networkService : NetworkService = ApplicationController.instance.networkService
-        val deleteChannelScripteResponse = networkService.deleteChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(ctx), channel_id)
+    private fun deleteChannelSubscription(channel_id: Int) {
+        val networkService: NetworkService = ApplicationController.instance.networkService
+        val deleteChannelScripteResponse = networkService.deleteChannelSubscripeResponse(SharedPreferenceController.getFlag(ctx).toInt(), SharedPreferenceController.getAuthorization(ctx), channel_id)
         deleteChannelScripteResponse.enqueue(object : Callback<DeleteChannelScripteResponse> {
             override fun onFailure(call: Call<DeleteChannelScripteResponse>?, t: Throwable?) {
                 Log.e("구독 취소 하기 실패", t.toString())
@@ -115,8 +156,12 @@ class CategoryPageFragRecyclerAdapter (private var categoryPageItems : ArrayList
 
             override fun onResponse(call: Call<DeleteChannelScripteResponse>?, response: Response<DeleteChannelScripteResponse>?) {
                 response?.let {
-                    if (response.isSuccessful){
-                        ctx.toast("구독 취소")
+                    if (response.isSuccessful) {
+                        if (SharedPreferenceController.getFlag(ctx) == "0") {
+                            ctx.toast("구독 취소")
+                        } else {
+                            ctx.toast("Subscribe Cancel")
+                        }
                     }
                 }
             }

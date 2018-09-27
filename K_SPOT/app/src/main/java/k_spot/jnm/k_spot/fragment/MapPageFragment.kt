@@ -215,51 +215,97 @@ class MapPageFragment : Fragment() {
             }
         }
 
+        setInitFilterImage()
+    }
+    private fun setInitFilterImage(){
         //레스토랑
         when (filterOption.is_food) {
             1 -> {
-                btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_restaurant_btn_green)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_restaurant_btn_green)
+                } else {
+                    btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_food_icon_green_en)
+                }
             }
             0 -> {
-                btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_restaurant_btn_gray)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_restaurant_btn_gray)
+                } else {
+                    btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_food_icon_en)
+                }
+
             }
         }
         //카페
         when (filterOption.is_cafe) {
             1 -> {
-                btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_btn_green)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_btn_green)
+                } else {
+                    btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_icon_green_en)
+                }
             }
             0 -> {
-                btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_btn_gray)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_btn_gray)
+                } else {
+                    btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_icon_en)
+                }
             }
         }
         //핫 플레이스
         when (filterOption.is_sights) {
             1 -> {
-                btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotplace_btn_green)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotplace_btn_green)
+                } else {
+                    btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotsight_icon_green_en)
+                }
             }
             0 -> {
-                btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotplace_btn_gray)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotplace_btn_gray)
+                } else {
+                    btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotsight_icon_en)
+                }
+
             }
         }
         //이벤트
         when (filterOption.is_event) {
             1 -> {
-                btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_btn_green)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_btn_green)
+                } else {
+                    btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_icon_green_en)
+                }
             }
             0 -> {
-                btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_btn_gray)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_btn_gray)
+                } else {
+                    btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_icon_en)
+                }
             }
         }
         when (filterOption.is_etc) {
             1 -> {
-                btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_btn_green)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_btn_green)
+                } else {
+                    btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_icon_green_en)
+                }
             }
             0 -> {
-                btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_btn_gray)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_btn_gray)
+                } else {
+                    btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_icon_en)
+                }
             }
         }
     }
+
 
     private fun filterOptionListener() {
         btn_map_page_filter_distance_left.setOnClickListener {
@@ -310,7 +356,11 @@ class MapPageFragment : Fragment() {
                 }
                 filterOptionTemp.is_food = 0
             } else {
-                btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_restaurant_btn_green)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_restaurant_btn_green)
+                } else {
+                    btn_map_page_filter_is_restaurant.setImageResource(R.drawable.filter_food_icon_green_en)
+                }
                 filterOptionTemp.is_food = 1
             }
         }
@@ -324,7 +374,11 @@ class MapPageFragment : Fragment() {
                 }
                 filterOptionTemp.is_cafe = 0
             } else {
-                btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_btn_green)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_btn_green)
+                } else {
+                    btn_map_page_filter_is_cafe.setImageResource(R.drawable.filter_cafe_icon_green_en)
+                }
                 filterOptionTemp.is_cafe = 1
             }
         }
@@ -340,7 +394,12 @@ class MapPageFragment : Fragment() {
 
                 filterOptionTemp.is_sights = 0
             } else {
-                btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotplace_btn_green)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotplace_btn_green)
+                } else {
+                    btn_map_page_filter_is_hot_place.setImageResource(R.drawable.filter_hotsight_icon_green_en)
+                }
+
                 filterOptionTemp.is_sights = 1
             }
         }
@@ -354,7 +413,11 @@ class MapPageFragment : Fragment() {
                 }
                 filterOptionTemp.is_event = 0
             } else {
-                btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_btn_green)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_btn_green)
+                } else {
+                    btn_map_page_filter_is_event.setImageResource(R.drawable.filter_event_icon_green_en)
+                }
                 filterOptionTemp.is_event = 1
             }
         }
@@ -369,7 +432,11 @@ class MapPageFragment : Fragment() {
                 }
                 filterOptionTemp.is_etc = 0
             } else {
-                btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_btn_green)
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_btn_green)
+                } else {
+                    btn_map_page_filter_is_etc.setImageResource(R.drawable.filter_etc_icon_green_en)
+                }
                 filterOptionTemp.is_etc = 1
             }
         }
@@ -781,6 +848,7 @@ class MapPageFragment : Fragment() {
             tv_map_page_filter_is_new.text = "recent"
             tv_map_page_filter_distance.text = "Set up to ${distanceArrayList[currentDistanceOptionIndex]}km"
         }
+        setInitFilterImage()
     }
 
     private fun setTranslateText() {

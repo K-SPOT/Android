@@ -32,7 +32,7 @@ class RelativePlaceOrEventRecyclerViewAdapter(val ctx : Context, val dataList : 
         holder.address.text = dataList[position].address_gu + " · " + dataList[position].station
         holder.likeCnt.text = dataList[position].scrap_cnt.toString()
 
-        val requestOptions = RequestOptions().transforms(CenterCrop(), RoundedCorners(12))
+        val requestOptions = RequestOptions().transforms(CenterCrop(), RoundedCorners(dpToPx(12)))
         Glide.with(ctx).load(dataList[position].img).apply(requestOptions).into(holder.img)
 
         holder.whole_btn.setOnClickListener {
@@ -40,7 +40,12 @@ class RelativePlaceOrEventRecyclerViewAdapter(val ctx : Context, val dataList : 
         }
 
     }
-
+    fun dpToPx(dp: Int): Int {
+        val density = ctx.resources
+                .displayMetrics
+                .density
+        return Math.round(dp.toFloat() * density)
+    }
     inner class Holder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val img : ImageView = itemView.findViewById(R.id.rv_item_categoty_detail_relative_spot_img) as ImageView
         val title : TextView = itemView.findViewById(R.id.rv_item_categoty_detail_relative_spot_title) as TextView

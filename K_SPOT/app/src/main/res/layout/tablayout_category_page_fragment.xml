@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:fontFamily="@font/nanumsquareotf_bold_normal"
+            android:fontFamily="@font/nanumsquareotf_bold"
             android:text="연예인"
             android:textColor="#40D39F"
             android:textSize="16dp" />
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:fontFamily="@font/nanumsquareotf_bold_normal"
+            android:fontFamily="@font/nanumsquareotf_bold"
             android:text="방송"
             android:textColor="#414141"
             android:textSize="16dp" />

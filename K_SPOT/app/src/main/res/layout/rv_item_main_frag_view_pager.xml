@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="안녕! \n오늘은"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             android:textColor="#5E5E5E"
             android:textSize="22dp"
             />
@@ -28,7 +28,7 @@
             android:layout_below="@+id/main_frag_rv_item_tv1"
             android:text="어디를 가볼까?"
             android:textColor="#5E5E5E"
-            android:fontFamily="@font/nanumsquareotf_bold_normal"
+            android:fontFamily="@font/nanumsquareotf_bold"
             android:textSize="22dp"
             />
     </RelativeLayout>

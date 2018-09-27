@@ -38,7 +38,7 @@
         android:text="무엇을 찾으시나요?"
         android:textSize="22dp"
         android:textColor="#5E5E5E"
-        android:fontFamily="@font/nanumsquareotf_bold_normal"
+        android:fontFamily="@font/nanumsquareotf_bold"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="55dp"/>
 
@@ -62,7 +62,7 @@
             android:textColorHint="#C5C5C5"
             android:textColor="#000000"
             android:textSize="15dp"
-            android:fontFamily="@font/nanumsquareotf_bold_normal"
+            android:fontFamily="@font/nanumsquareotf_bold"
             android:layout_centerVertical="true"
             />
 
@@ -86,7 +86,7 @@
         android:text="연예인"
         android:textColor="#5E5E5E"
         android:textSize="14dp"
-        android:fontFamily="@font/nanumsquareotf_bold_normal"
+        android:fontFamily="@font/nanumsquareotf_bold"
         android:layout_below="@+id/search_act_search_edit_text_rl"
         android:layout_marginTop="45dp"
         android:layout_marginLeft="16dp"/>
@@ -111,7 +111,7 @@
             android:layout_marginRight="13dp"
             android:textColor="#757575"
             android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+            android:fontFamily="@font/nanumsquareotf_regular"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -135,7 +135,7 @@
             android:layout_marginRight="13dp"
             android:textColor="#757575"
             android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             />
     </RelativeLayout>
 
@@ -156,7 +156,7 @@
         android:text="방송"
         android:textColor="#5E5E5E"
         android:textSize="14dp"
-        android:fontFamily="@font/nanumsquareotf_bold_normal"
+        android:fontFamily="@font/nanumsquareotf_bold"
         android:layout_below="@+id/search_act_search_recommend_celeb_rl"
         android:layout_marginTop="29dp"
         android:layout_marginLeft="16dp"/>
@@ -181,7 +181,7 @@
             android:layout_marginRight="13dp"
             android:textColor="#757575"
             android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+            android:fontFamily="@font/nanumsquareotf_regular"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -205,7 +205,7 @@
             android:layout_marginRight="13dp"
             android:textColor="#757575"
             android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             />
     </RelativeLayout>
 
@@ -230,7 +230,7 @@
             android:layout_marginRight="13dp"
             android:textColor="#757575"
             android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             />
     </RelativeLayout>
 
@@ -253,7 +253,7 @@
         android:textColor="#5E5E5E"
         android:textSize="14dp"
         android:layout_marginLeft="16dp"
-        android:fontFamily="@font/nanumsquareotf_bold_normal"
+        android:fontFamily="@font/nanumsquareotf_bold"
         android:layout_below="@+id/search_act_search_recommend_broadcast_rl"
         android:layout_marginTop="29dp"/>
 
@@ -277,7 +277,7 @@
             android:layout_marginRight="13dp"
             android:textColor="#757575"
             android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+            android:fontFamily="@font/nanumsquareotf_regular"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -302,7 +302,7 @@
             android:layout_marginRight="13dp"
             android:textColor="#757575"
             android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             />
     </RelativeLayout>
 
@@ -330,7 +330,7 @@
             android:text="검색하기"
             android:textSize="19dp"
             android:textColor="#FFFFFF"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             android:layout_centerInParent="true"/>
 
     </RelativeLayout>

@@ -39,9 +39,19 @@ class ViewMoreActivity : AppCompatActivity() {
         setStatusBarTransparent()
 
         if (intent.getIntExtra("is_event", 0) == 0){
-            tv_view_more_act_title.text = "장소"
+            if (SharedPreferenceController.getFlag(this) == "0"){
+                tv_view_more_act_title.text = "장소"
+            } else {
+                tv_view_more_act_title.text = "SPOT"
+            }
+
         } else if (intent.getIntExtra("is_event", 0) == 1){
-            tv_view_more_act_title.text = "이벤트"
+
+            if (SharedPreferenceController.getFlag(this) == "0"){
+                tv_view_more_act_title.text = "이벤트"
+            } else {
+                tv_view_more_act_title.text = "EVENT"
+            }
         }
 
         setOnClickListener()
@@ -60,7 +70,7 @@ class ViewMoreActivity : AppCompatActivity() {
 
     private fun requestViewMore(channel_id : Int, is_event : Int){
         val networkService : NetworkService = ApplicationController.instance.networkService
-        val getChannelViewMoreResponse = networkService.getChannelViewMoreResponse(0, SharedPreferenceController.getAuthorization(this), channel_id, is_event)
+        val getChannelViewMoreResponse = networkService.getChannelViewMoreResponse(SharedPreferenceController.getFlag(this).toInt(), SharedPreferenceController.getAuthorization(this), channel_id, is_event)
         getChannelViewMoreResponse.enqueue(object : Callback<GetChannelViewMoreResponse> {
             override fun onFailure(call: Call<GetChannelViewMoreResponse>?, t: Throwable?) {
                 Log.e("카테고리 더보기 페이지 실패", t.toString())

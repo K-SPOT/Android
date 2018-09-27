@@ -57,6 +57,8 @@ class UserInfoEditActivity : AppCompatActivity() {
 
         setUserInfoView(initName, intent.getStringExtra("image"))
 
+        changeLanguage()
+
     }
 
     private fun setUserInfoView(name: String, image_url: String) {
@@ -137,7 +139,7 @@ class UserInfoEditActivity : AppCompatActivity() {
 
         if (mImage != null) {
             val networkService = ApplicationController.instance.networkService
-            val postUserInfoResponse = networkService.postUserInfoResponse(0, SharedPreferenceController.getAuthorization(this),
+            val postUserInfoResponse = networkService.postUserInfoResponse(SharedPreferenceController.getFlag(this).toInt(), SharedPreferenceController.getAuthorization(this),
                     mImage, userName)
             postUserInfoResponse.enqueue(object : Callback<PostUserInfoResponse> {
                 override fun onFailure(call: Call<PostUserInfoResponse>?, t: Throwable?) {
@@ -148,7 +150,12 @@ class UserInfoEditActivity : AppCompatActivity() {
                     response?.let {
                         if (response.isSuccessful) {
                             newName = name
-                            toast("변경 완료")
+                            if (SharedPreferenceController.getFlag(this@UserInfoEditActivity) == "0"){
+                                toast("완료")
+                            } else {
+                                toast("complete")
+                            }
+
 
                             val intent = Intent()
                             intent.putExtra("name", newName)
@@ -163,7 +170,7 @@ class UserInfoEditActivity : AppCompatActivity() {
             })
         } else if (mImage == null && name != initName) {
             val networkService = ApplicationController.instance.networkService
-            val postUserInfoResponse = networkService.postUserInfoResponse(0, SharedPreferenceController.getAuthorization(this),
+            val postUserInfoResponse = networkService.postUserInfoResponse(SharedPreferenceController.getFlag(this).toInt(), SharedPreferenceController.getAuthorization(this),
                     null, userName)
             postUserInfoResponse.enqueue(object : Callback<PostUserInfoResponse> {
                 override fun onFailure(call: Call<PostUserInfoResponse>?, t: Throwable?) {
@@ -174,8 +181,11 @@ class UserInfoEditActivity : AppCompatActivity() {
                     response?.let {
                         if (response.isSuccessful) {
                             newName = name
-                            toast("닉네임 변경 완료")
-
+                            if (SharedPreferenceController.getFlag(this@UserInfoEditActivity) == "0"){
+                                toast("완료")
+                            } else {
+                                toast("complete")
+                            }
                             val intent = Intent()
                             intent.putExtra("name", newName)
                             setResult(Activity.RESULT_OK, intent)
@@ -266,6 +276,18 @@ class UserInfoEditActivity : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 window.statusBarColor = Color.parseColor("#fffafafa")
             }
+        }
+    }
+
+    private fun changeLanguage(){
+        if(SharedPreferenceController.getFlag(this) == "0"){
+            tv_user_info_edit_title.text = "회원정보 수정"
+            btn_user_info_edit_complete.text = "완료"
+            tv_nickname.text = "닉네임"
+        } else {
+            tv_user_info_edit_title.text = "Edit Profile"
+            btn_user_info_edit_complete.text = "complete"
+            tv_nickname.text = "Nickname"
         }
     }
 

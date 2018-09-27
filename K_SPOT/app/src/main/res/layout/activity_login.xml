@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="36dp"
-        android:fontFamily="@font/nanumsquareotf_regular_normal"
+        android:fontFamily="@font/nanumsquareotf_regular"
         android:text="안녕하세요!"
         android:textColor="#323232"
         android:textSize="25dp" />
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="3dp"
-        android:fontFamily="@font/nanumsquareotf_bold_normal"
+        android:fontFamily="@font/nanumsquareotf_bold"
         android:text="로그인을 해주세요 :)"
         android:textColor="#323232"
         android:textSize="25dp" />
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:text="건너뛰기>"
             android:textSize="18dp"
-            android:fontFamily="@font/nanumsquareotf_bold_normal"
+            android:fontFamily="@font/nanumsquareotf_bold"
             android:textColor="#40D39F"
             android:layout_margin="8dp"/>
 

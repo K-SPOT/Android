@@ -15,6 +15,6 @@ data class ChannelListData (
         val subscription_cnt: Int,
         val spot_cnt: Int,
         val thumbnail_img: String,
-        val subscription: Int,
+        var subscription: Int,
         val name: String
 )

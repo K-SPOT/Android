@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
+                android:id="@+id/tv_edit_picture_option_dialog_album"
                 android:layout_centerInParent="true"
                 android:text="앨범에서 사진 선택"
                 android:layout_width="wrap_content"
@@ -32,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
+                android:id="@+id/tv_edit_picture_option_dialog_default"
                 android:layout_centerInParent="true"
                 android:text="기본 이미지 선택"
                 android:layout_width="wrap_content"
@@ -50,6 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
+                android:id="@+id/tv_edit_picture_option_dialog_cancel"
                 android:layout_centerInParent="true"
                 android:text="취소"
                 android:layout_width="wrap_content"

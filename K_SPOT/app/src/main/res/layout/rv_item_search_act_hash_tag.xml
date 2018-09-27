@@ -26,7 +26,7 @@
                 android:layout_marginRight="13dp"
                 android:textColor="#757575"
                 android:textSize="12dp"
-                android:fontFamily="@font/nanumsquareotf_regular_normal"
+                android:fontFamily="@font/nanumsquareotf_regular"
                 />
         </RelativeLayout>
     </RelativeLayout>

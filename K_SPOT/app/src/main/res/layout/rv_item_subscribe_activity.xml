@@ -21,7 +21,7 @@
         android:layout_marginLeft="16dp"
         android:textSize="15dp"
         android:textColor="#757575"
-        android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+        android:fontFamily="@font/nanumsquareotf_regular"/>
 
     <ImageView
         android:visibility="invisible"

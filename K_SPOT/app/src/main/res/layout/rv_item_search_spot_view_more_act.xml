@@ -23,7 +23,7 @@
         android:layout_marginLeft="16dp"
         android:textSize="16dp"
         android:textColor="#323232"
-        android:fontFamily="@font/nanumsquareotf_bold_normal"
+        android:fontFamily="@font/nanumsquareotf_bold"
         />
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_marginTop="7dp"
         android:textColor="#707070"
         android:textSize="13dp"
-        android:fontFamily="@font/nanumsquareotf_regular_normal"
+        android:fontFamily="@font/nanumsquareotf_regular"
         />
 
     <RelativeLayout
@@ -64,7 +64,7 @@
             android:text="용산구 · 숙대입구역"
             android:layout_toRightOf="@+id/search_spot_view_more_act_rv_item_address_iv"
             android:layout_marginLeft="5dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             android:textSize="12dp"
             android:textColor="#C0C0C0"
             android:layout_centerVertical="true"/>
@@ -92,7 +92,7 @@
             android:text="1,175"
             android:layout_toRightOf="@+id/search_spot_view_more_act_rv_item_sub_iv"
             android:layout_marginLeft="5dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             android:textSize="12dp"
             android:textColor="#C0C0C0"
             android:layout_centerVertical="true"/>

@@ -44,7 +44,6 @@ class ViewMoreRecyclerViewAdapter(val ctx : Context, val moreDataList : ArrayLis
         holder.cardBtn.setOnClickListener {
             ctx.startActivity<SpotViewMoreActivity>("spot_id" to moreDataList[position].spot_id)
         }
-
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
