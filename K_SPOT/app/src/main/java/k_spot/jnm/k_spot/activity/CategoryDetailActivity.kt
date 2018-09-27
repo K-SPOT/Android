@@ -66,10 +66,16 @@ class CategoryDetailActivity : AppCompatActivity() {
         requestDataList(channel_id)
 
     }
+    private fun changeLanguage(){
+        if (SharedPreferenceController.getFlag(this) == "0"){
+            btn_category_detail_subscrip.setImageResource(R.drawable.search_page_unsub_btn)
+        }
+
+    }
 
     private fun requestDataList(channel_id : Int){
         val networkService : NetworkService = ApplicationController.instance.networkService
-        val getCategoryDetailResponse = networkService.getCategotyDetailResponse(0,SharedPreferenceController.getAuthorization(this), channel_id)
+        val getCategoryDetailResponse = networkService.getCategotyDetailResponse(SharedPreferenceController.getFlag(this).toInt(),SharedPreferenceController.getAuthorization(this), channel_id)
         getCategoryDetailResponse.enqueue(object : Callback<GetCategoryDetailResponse>{
             override fun onFailure(call: Call<GetCategoryDetailResponse>?, t: Throwable?) {
                 Log.e("카테고리 상세보기 페이지", t.toString())
@@ -105,7 +111,7 @@ class CategoryDetailActivity : AppCompatActivity() {
 
     private fun requestChannelSubscription(channel_id : Int){
         val networkService : NetworkService = ApplicationController.instance.networkService
-        val postChannelSubscripeResponse = networkService.postChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), channel_id)
+        val postChannelSubscripeResponse = networkService.postChannelSubscripeResponse(SharedPreferenceController.getFlag(this).toInt(), SharedPreferenceController.getAuthorization(this), channel_id)
         postChannelSubscripeResponse.enqueue(object : Callback<PostChannelSubscripeResponse>{
             override fun onFailure(call: Call<PostChannelSubscripeResponse>?, t: Throwable?) {
                 Log.e("구독하기 실패", t.toString())
@@ -114,8 +120,14 @@ class CategoryDetailActivity : AppCompatActivity() {
                 response?.let {
                     if (response.isSuccessful){
                         channelInfoData.subscription = 1
-                        btn_category_detail_subscrip.setImageResource(R.drawable.category_detail_sub_btn)
-                        toast("구독")
+
+                        if (SharedPreferenceController.getFlag(this@CategoryDetailActivity) == "0"){
+                            btn_category_detail_subscrip.setImageResource(R.drawable.category_detail_sub_btn)
+                            toast("구독")
+                        } else {
+                            btn_category_detail_subscrip.setImageResource(R.drawable.star_page_sub_btn_en)
+                            toast("Subscribe Complete")
+                        }
                         channelInfoData.subscription_cnt = channelInfoData.subscription_cnt + 1
                         tv_category_detail_subscripe_cnt.text = String.format("%,d", channelInfoData.subscription_cnt)
 
@@ -127,7 +139,7 @@ class CategoryDetailActivity : AppCompatActivity() {
 
     private fun deleteChannelSubscription(channel_id : Int){
         val networkService : NetworkService = ApplicationController.instance.networkService
-        val deleteChannelScripteResponse = networkService.deleteChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), channel_id)
+        val deleteChannelScripteResponse = networkService.deleteChannelSubscripeResponse(SharedPreferenceController.getFlag(this).toInt(), SharedPreferenceController.getAuthorization(this), channel_id)
         deleteChannelScripteResponse.enqueue(object : Callback<DeleteChannelScripteResponse> {
             override fun onFailure(call: Call<DeleteChannelScripteResponse>?, t: Throwable?) {
                 Log.e("구독 취소 하기 실패", t.toString())
@@ -137,8 +149,15 @@ class CategoryDetailActivity : AppCompatActivity() {
                 response?.let {
                     if (response.isSuccessful){
                         channelInfoData.subscription = 0
-                        btn_category_detail_subscrip.setImageResource(R.drawable.category_detail_unsub_btn)
-                        toast("구독 취소")
+
+                        if (SharedPreferenceController.getFlag(this@CategoryDetailActivity) == "0"){
+                            btn_category_detail_subscrip.setImageResource(R.drawable.category_detail_unsub_btn)
+                            toast("구독 취소")
+                        } else {
+                            btn_category_detail_subscrip.setImageResource(R.drawable.star_page_unsub_btn_en)
+                            toast("Subscribe Cancel")
+                        }
+
                         channelInfoData.subscription_cnt = channelInfoData.subscription_cnt - 1
                         tv_category_detail_subscripe_cnt.text = String.format("%,d", channelInfoData.subscription_cnt)
                     }
@@ -155,25 +174,44 @@ class CategoryDetailActivity : AppCompatActivity() {
         Glide.with(this).load(channelInfoData.background_img).into(iv_category_detail_top_img)
         tv_category_detail_subscripe_cnt.text = String.format("%,d", channelInfoData.subscription_cnt)
 
-        tv_category_detail_recommend_spot_title.text = "${channelInfoData.name}'s 추천 장소"
+//        tv_category_detail_recommend_spot_title.text = "${channelInfoData.name}'s 추천 장소"
 
         //추후 구독 색상변경 바꾸기
-        if (channelInfoData.subscription == 0){
-            btn_category_detail_subscrip.setImageResource(R.drawable.category_detail_unsub_btn)
+        if (SharedPreferenceController.getFlag(this) == "0"){
+            if (channelInfoData.subscription == 0){
+                btn_category_detail_subscrip.setImageResource(R.drawable.category_detail_unsub_btn)
+            } else {
+                btn_category_detail_subscrip.setImageResource(R.drawable.category_detail_sub_btn)
+            }
+            tv_category_detail_recommend_spot_title.text = "${channelInfoData.name}'s 추천 장소"
+            tv_category_detail_recommend_spot_title_comment.text = "사람들이 많이 찾는 장소를 확인해 보세요!"
+            tv_category_detail_relative_spot_title.text = "관련된 장소"
+            btn_category_detail_spot_more_btn.text = "더보기"
+            tv_category_detail_event_more_title.text = "관련된 이벤트"
+            btn_category_detail_event_more_btn.text = "더보기"
         } else {
-            btn_category_detail_subscrip.setImageResource(R.drawable.category_detail_sub_btn)
+            if (channelInfoData.subscription == 0){
+                btn_category_detail_subscrip.setImageResource(R.drawable.star_page_unsub_btn_en)
+            } else {
+                btn_category_detail_subscrip.setImageResource(R.drawable.star_page_sub_btn_en)
+            }
+
+            tv_category_detail_recommend_spot_title.text = "${channelInfoData.name}’s recommended place"
+            tv_category_detail_recommend_spot_title_comment.text = "Check out the places people are looking for!"
+            tv_category_detail_relative_spot_title.text = "related place"
+            btn_category_detail_spot_more_btn.text = "MORE"
+            tv_category_detail_event_more_title.text = "related event"
+            btn_category_detail_event_more_btn.text = "MORE"
         }
     }
 
     private fun setInitClickListener(){
         btn_category_detail_spot_more_btn.setOnClickListener {
             startActivity<ViewMoreActivity>("channel_id" to channel_id, "is_event" to 0)
-            toast("관련 스팟 더보기")
         }
 
         btn_category_detail_event_more_btn.setOnClickListener {
             startActivity<ViewMoreActivity>("channel_id" to channel_id, "is_event" to 1)
-            toast("이벤트 더보기")
         }
 
         btn_category_detail_subscrip.setOnClickListener {

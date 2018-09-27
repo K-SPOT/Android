@@ -5,37 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="89dp">
 
-    <TextView
-        android:id="@+id/category_list_fragment_rv_item_num_tv"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:text="133"
-        android:fontFamily="@font/nanumsquareotf_regular_normal"
-        android:textSize="14dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="24dp"
-        android:textColor="#414141"
-        />
 
+    <RelativeLayout
+        android:id="@+id/category_list_fragment_rv_item_num_box"
+        android:layout_width="26dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp">
+        <TextView
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:id="@+id/category_list_fragment_rv_item_num_tv"
+            android:layout_width="26dp"
+            android:layout_height="20dp"
+            android:text="111"
+            android:fontFamily="@font/nanumsquareotf_regular"
+            android:textSize="14dp"
+            android:textColor="#414141"
+            />
+    </RelativeLayout>
     <ImageView
         android:id="@+id/category_list_fragment_rv_item_image_iv"
         android:layout_width="100dp"
         android:layout_height="65dp"
-        android:layout_toRightOf="@+id/category_list_fragment_rv_item_num_tv"
+        android:layout_toRightOf="@+id/category_list_fragment_rv_item_num_box"
         android:layout_centerVertical="true"
-        android:src="@color/colorAccent"
-        android:scaleType="fitXY"
-        android:layout_marginLeft="12dp"/>
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="8dp"/>
+    <!--android:background="@drawable/categoty_entertainer_image_box"-->
 
     <TextView
         android:id="@+id/category_list_fragment_rv_item_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="방탄소년단"
-        android:fontFamily="@font/nanumsquareotf_bold_normal"
+        android:fontFamily="@font/nanumsquareotf_bold"
         android:textSize="15dp"
         android:layout_toRightOf="@+id/category_list_fragment_rv_item_image_iv"
-        android:layout_marginLeft="19dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="19dp"
         android:textColor="#5E5E5E"/>
 
@@ -44,11 +51,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="구독자 "
-        android:fontFamily="@font/nanumsquareotf_regular_normal"
+        android:fontFamily="@font/nanumsquareotf_regular"
         android:textSize="10dp"
         android:layout_toRightOf="@+id/category_list_fragment_rv_item_image_iv"
         android:layout_below="@+id/category_list_fragment_rv_item_name_tv"
-        android:layout_marginLeft="19dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="13dp"
         android:textColor="#C5C5C5"/>
 
@@ -57,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="25만"
-        android:fontFamily="@font/nanumsquareotf_regular_normal"
+        android:fontFamily="@font/nanumsquareotf_regular"
         android:textSize="10dp"
         android:layout_toRightOf="@+id/category_list_fragment_rv_item_subscriber_tv"
         android:layout_below="@+id/category_list_fragment_rv_item_name_tv"
@@ -69,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="게시물 "
-        android:fontFamily="@font/nanumsquareotf_regular_normal"
+        android:fontFamily="@font/nanumsquareotf_regular"
         android:textSize="10dp"
         android:layout_toRightOf="@+id/category_list_fragment_rv_item_subscriber_num_tv"
         android:layout_below="@+id/category_list_fragment_rv_item_name_tv"
@@ -82,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="20개"
-        android:fontFamily="@font/nanumsquareotf_regular_normal"
+        android:fontFamily="@font/nanumsquareotf_regular"
         android:textSize="10dp"
         android:layout_toRightOf="@+id/category_list_fragment_rv_item_post_tv"
         android:layout_below="@+id/category_list_fragment_rv_item_name_tv"

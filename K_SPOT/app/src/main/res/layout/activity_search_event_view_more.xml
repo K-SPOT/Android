@@ -43,7 +43,7 @@
                 android:text="방탄 검색결과"
                 android:textSize="15dp"
                 android:textColor="#5E5E5E"
-                android:fontFamily="@font/nanumsquareotf_bold_normal"
+                android:fontFamily="@font/nanumsquareotf_bold"
                 />
         </RelativeLayout>
 

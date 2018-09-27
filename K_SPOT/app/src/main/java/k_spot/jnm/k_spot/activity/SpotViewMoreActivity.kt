@@ -17,6 +17,8 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.*
@@ -30,6 +32,8 @@ import k_spot.jnm.k_spot.adapter.SpotViewMoreActAutoScrollAdapter
 import k_spot.jnm.k_spot.adapter.SpotViewMoreActCardViewAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_spot_view_more.*
+import org.jetbrains.anko.centerInParent
+import org.jetbrains.anko.horizontalMargin
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -143,7 +147,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
                         spot_view_more_act_spot_right_station_tv.text = spotViewMoreData[0].next_station
                         spot_view_more_act_spot_station_number_tv.text = spotViewMoreData[0].line_number
                         //지하철 노선 색
-                        var stationColor : String = when (spotViewMoreData[0].line_number) {
+                        var stationColor: String = when (spotViewMoreData[0].line_number) {
                             "1" -> "#254DE7"
                             "2" -> "#43CA39"
                             "3" -> "#FF8A31"
@@ -153,13 +157,30 @@ class SpotViewMoreActivity : AppCompatActivity() {
                             "7" -> "#606C01"
                             "8" -> "#E41D6C"
                             "9" -> "#BA9B20"
+                            "분당" -> "#FFCC00"
+                            "신분당" -> "#E30000"
+                            "경의중앙" -> "#00F0B8"
                             else -> {
                                 "#40D39F"
                             }
                         }
                         (line_spot_view_more_subway_box.background as GradientDrawable).setStroke(dpToPx(3), Color.parseColor(stationColor))
                         line_spot_view_more_subway_straight.setBackgroundColor(Color.parseColor(stationColor))
-                        (spot_view_more_act_spot_station_number_round.background as GradientDrawable).setColor(Color.parseColor(stationColor))
+                        when (spotViewMoreData[0].line_number) {
+                            "분당", "신분당", "경의중앙" -> {
+                                spot_view_more_act_spot_station_number_round.setBackgroundResource(R.drawable.subway_line_name_long_shape)
+                                (spot_view_more_act_spot_station_number_round as RelativeLayout).layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT
+
+                                val layoutParams : RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
+                                layoutParams.setMargins(dpToPx(5),0,dpToPx(5),0)
+                                layoutParams.centerInParent()
+                                spot_view_more_act_spot_station_number_tv.layoutParams = layoutParams
+
+                                (spot_view_more_act_spot_station_number_round.background as GradientDrawable).setColor(Color.parseColor(stationColor))
+                            }
+                            else -> (spot_view_more_act_spot_station_number_round.background as GradientDrawable).setColor(Color.parseColor(stationColor))
+                        }
+
 
 
                         spot_view_more_act_spot_review_num_tv.text = spotViewMoreData[0].review_score.toString()
@@ -229,6 +250,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
                 .density
         return Math.round(dp.toFloat() * density)
     }
+
     private fun requestSpotSubscription(spot_id: Int) {
         val networkService: NetworkService = ApplicationController.instance.networkService
         val postSpotSubscripeResponse = networkService.postSpotSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), spot_id)
@@ -536,7 +558,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
         spot_view_more_act_spot_address_rl.setOnClickListener {
             val address = spot_view_more_act_spot_address_tv.text.toString()
             val spotUri =
-                    Uri.parse("https://www.google.com/maps/search/?api=1&query=$address&zoom=23" )
+                    Uri.parse("https://www.google.com/maps/search/?api=1&query=$address&zoom=23")
             val intent = Intent(Intent.ACTION_VIEW, spotUri)
             intent.setPackage("com.google.android.apps.maps")
             startActivity(intent)
@@ -571,7 +593,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
 //            startActivity(intent)
             val address = spot_view_more_act_spot_address_tv.text.toString()
             val spotUri =
-                    Uri.parse("https://www.google.com/maps/search/?api=1&query=$address&zoom=23" )
+                    Uri.parse("https://www.google.com/maps/search/?api=1&query=$address&zoom=23")
             val intent = Intent(Intent.ACTION_VIEW, spotUri)
             intent.setPackage("com.google.android.apps.maps")
             startActivity(intent)
@@ -580,7 +602,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
         spot_view_more_act_spot_address_tv.setOnClickListener {
             val address = spot_view_more_act_spot_address_tv.text.toString()
             val spotUri =
-                    Uri.parse("https://www.google.com/maps/search/?api=1&query=$address&zoom=23" )
+                    Uri.parse("https://www.google.com/maps/search/?api=1&query=$address&zoom=23")
             val intent = Intent(Intent.ACTION_VIEW, spotUri)
             //intent.setPackage("com.google.android.apps.maps")
             startActivity(intent)

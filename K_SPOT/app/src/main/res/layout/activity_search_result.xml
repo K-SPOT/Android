@@ -37,7 +37,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
-                        android:fontFamily="@font/nanumsquareotf_bold_normal"
+                        android:fontFamily="@font/nanumsquareotf_bold"
                         android:text="연예인 / 방송"
                         android:textColor="#5E5E5E"
                         android:textSize="16dp" />
@@ -55,7 +55,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
-                            android:fontFamily="@font/nanumsquareotf_bold_normal"
+                            android:fontFamily="@font/nanumsquareotf_bold"
                             android:text="더보기"
                             android:textColor="#40D39F"
                             android:textSize="13dp" />
@@ -99,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
-                        android:fontFamily="@font/nanumsquareotf_bold_normal"
+                        android:fontFamily="@font/nanumsquareotf_bold"
                         android:text="장소"
                         android:textColor="#5E5E5E"
                         android:textSize="16dp" />
@@ -117,7 +117,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
-                            android:fontFamily="@font/nanumsquareotf_bold_normal"
+                            android:fontFamily="@font/nanumsquareotf_bold"
                             android:text="더보기"
                             android:textColor="#40D39F"
                             android:textSize="13dp" />
@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
-                        android:fontFamily="@font/nanumsquareotf_bold_normal"
+                        android:fontFamily="@font/nanumsquareotf_bold"
                         android:text="이벤트"
                         android:textColor="#5E5E5E"
                         android:textSize="16dp" />
@@ -177,7 +177,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
-                            android:fontFamily="@font/nanumsquareotf_bold_normal"
+                            android:fontFamily="@font/nanumsquareotf_bold"
                             android:text="더보기"
                             android:textColor="#40D39F"
                             android:textSize="13dp" />
@@ -217,7 +217,7 @@
             android:layout_centerInParent="true"
             android:textSize="30dp"
             android:textColor="@color/searchgray"
-            android:fontFamily="@font/nanumsquareotf_bold_normal"/>
+            android:fontFamily="@font/nanumsquareotf_bold"/>
     </RelativeLayout>
 
     <!--상단탭-->
@@ -259,7 +259,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_toRightOf="@+id/search_result_act_result_iv"
-                android:fontFamily="@font/nanumsquareotf_bold_normal"
+                android:fontFamily="@font/nanumsquareotf_bold"
                 android:text=""
                 android:textColor="#5E5E5E"
                 android:textSize="15dp" />

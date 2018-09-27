@@ -33,7 +33,7 @@
             android:text="마이페이지"
             android:textSize="18dp"
             android:textColor="#000000"
-            android:fontFamily="@font/nanumsquareotf_bold_normal"
+            android:fontFamily="@font/nanumsquareotf_bold"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
@@ -69,7 +69,7 @@
                 android:text="큐티문어"
                 android:textColor="#414141"
                 android:textSize="16dp"
-                android:fontFamily="@font/nanumsquareotf_bold_normal"/>
+                android:fontFamily="@font/nanumsquareotf_bold"/>
 
             <TextView
                 android:id="@+id/tv_my_page_hello_01_text"
@@ -79,7 +79,7 @@
                 android:text=" 고객님,"
                 android:textColor="#414141"
                 android:textSize="16dp"
-                android:fontFamily="@font/nanumsquareotf_bold_normal"/>
+                android:fontFamily="@font/nanumsquareotf_bold"/>
 
             <TextView
                 android:id="@+id/tv_my_page_hello_02_text"
@@ -89,7 +89,7 @@
                 android:layout_below="@+id/my_page_frag_my_name_tv"
                 android:textSize="16dp"
                 android:textColor="#414141"
-                android:fontFamily="@font/nanumsquareotf_regular_normal"
+                android:fontFamily="@font/nanumsquareotf_regular"
                 android:layout_marginTop="3dp"/>
         </RelativeLayout>
         
@@ -143,7 +143,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="#414141"
                 android:textSize="16dp"
-                android:fontFamily="@font/nanumsquareotf_bold_normal"
+                android:fontFamily="@font/nanumsquareotf_bold"
                 android:layout_marginLeft="16dp"/>
 
             <!--내 구독 더보기 btn-->
@@ -161,7 +161,7 @@
                     android:text="더보기"
                     android:textSize="15dp"
                     android:textColor="#40D39F"
-                    android:fontFamily="@font/nanumsquareotf_regular_normal"
+                    android:fontFamily="@font/nanumsquareotf_regular"
                     android:layout_margin="8dp"/>
             </RelativeLayout>
         </RelativeLayout>
@@ -191,7 +191,7 @@
             android:textSize="16dp"
             android:layout_marginLeft="16dp"
             android:layout_centerVertical="true"
-            android:fontFamily="@font/nanumsquareotf_bold_normal"/>
+            android:fontFamily="@font/nanumsquareotf_bold"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -225,7 +225,7 @@
             android:textSize="16dp"
             android:layout_marginLeft="16dp"
             android:layout_centerVertical="true"
-            android:fontFamily="@font/nanumsquareotf_bold_normal"/>
+            android:fontFamily="@font/nanumsquareotf_bold"/>
 
         <ImageView
             android:layout_width="wrap_content"

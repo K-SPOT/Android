@@ -28,7 +28,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textSize="15dp"
-                android:fontFamily="@font/nanumsquareotf_extra_bold_normal"
+                android:fontFamily="@font/nanumsquareotf_extra_bold"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="20dp"
                 />
@@ -42,7 +42,7 @@
                 android:textSize="13dp"
                 android:layout_marginRight="32dp"
                 android:layout_below="@+id/main_frag_rv_item_card_view_place_tv"
-                android:fontFamily="@font/nanumsquareotf_regular_normal"
+                android:fontFamily="@font/nanumsquareotf_regular"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="8dp"/>
 

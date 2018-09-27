@@ -51,7 +51,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
+                            android:fontFamily="@font/nanumsquareotf_regular"
                             android:text="1"
                             android:textColor="#FFFFFF"
                             android:textSize="12dp" />
@@ -62,7 +62,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
                             android:layout_toRightOf="@+id/spot_view_more_act_viewpager_now_page_num_tv"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
+                            android:fontFamily="@font/nanumsquareotf_regular"
                             android:text="/"
                             android:textColor="#FFFFFF"
                             android:textSize="12dp" />
@@ -73,7 +73,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
                             android:layout_toRightOf="@+id/spot_view_more_act_viewpager_temp_tv"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
+                            android:fontFamily="@font/nanumsquareotf_regular"
                             android:text="20"
                             android:textColor="#FFFFFF"
                             android:textSize="12dp" />
@@ -102,7 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:fontFamily="@font/nanumsquareotf_bold_normal"
+                            android:fontFamily="@font/nanumsquareotf_bold"
                             android:text="서울남산타워"
                             android:textColor="#323232"
                             android:textSize="21dp" />
@@ -124,7 +124,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="4dp"
                             android:layout_toRightOf="@+id/spot_view_more_act_spot_star_iv"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
+                            android:fontFamily="@font/nanumsquareotf_regular"
                             android:text="4.6"
                             android:textColor="#C0C0C0"
                             android:textSize="11dp" />
@@ -138,7 +138,7 @@
                         android:layout_below="@+id/spot_view_more_act_spot_title_rl"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="16dp"
-                        android:fontFamily="@font/nanumsquareotf_regular_normal"
+                        android:fontFamily="@font/nanumsquareotf_regular"
                         android:text="서울의 야경을 한 번에 볼 수 있는 랜드마크"
                         android:textSize="11dp" />
 
@@ -165,7 +165,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="6dp"
                             android:layout_toRightOf="@+id/spot_view_more_act_spot_address_icon_iv"
-                            android:fontFamily="@font/nanumsquareotf_bold_normal"
+                            android:fontFamily="@font/nanumsquareotf_bold"
                             android:text="용산구 남산공원길 105"
                             android:textColor="#707070"
                             android:textSize="11dp" />
@@ -227,6 +227,7 @@
                                             android:id="@+id/spot_view_more_act_spot_station_number_tv"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
+                                            android:gravity="center"
                                             android:layout_centerInParent="true"
                                             android:fontFamily="@font/nanumsquareotf_bold"
                                             android:text="4"
@@ -240,7 +241,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerInParent="true"
-                                        android:fontFamily="@font/nanumsquareotf_bold_normal"
+                                        android:fontFamily="@font/nanumsquareotf_bold"
                                         android:text="동대문 역사 공원"
                                         android:textColor="#323232"
                                         android:textSize="12dp" />
@@ -273,7 +274,7 @@
                             android:layout_marginEnd="293dp"
                             android:layout_marginStart="26dp"
                             android:layout_marginTop="48dp"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
+                            android:fontFamily="@font/nanumsquareotf_regular"
                             android:text="회현역"
                             android:textColor="#323232"
                             android:textSize="12dp"
@@ -291,7 +292,7 @@
                             android:layout_marginEnd="26dp"
                             android:layout_marginStart="293dp"
                             android:layout_marginTop="48dp"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
+                            android:fontFamily="@font/nanumsquareotf_regular"
                             android:text="회현"
                             android:textColor="#323232"
                             android:textSize="12dp"
@@ -326,7 +327,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="32dp"
-                        android:fontFamily="@font/nanumsquareotf_bold_normal"
+                        android:fontFamily="@font/nanumsquareotf_bold"
                         android:text="관련 연예인/방송"
                         android:textColor="#323232"
                         android:textSize="15dp" />
@@ -339,7 +340,7 @@
                         android:layout_marginLeft="18dp"
                         android:layout_marginTop="33dp"
                         android:layout_toRightOf="@+id/spot_view_more_act_relative_celev_info_tv"
-                        android:fontFamily="@font/nanumsquareotf_light_normal"
+                        android:fontFamily="@font/nanumsquareotf_light"
                         android:text="0개"
                         android:textColor="#323232"
                         android:textSize="15dp" />
@@ -383,7 +384,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/nanumsquareotf_bold_normal"
+                            android:fontFamily="@font/nanumsquareotf_bold"
                             android:text="리뷰"
                             android:textColor="#323232"
                             android:textSize="15dp" />
@@ -396,7 +397,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="12dp"
                             android:layout_toRightOf="@+id/spot_view_more_act_review_info_tv"
-                            android:fontFamily="@font/nanumsquareotf_light_normal"
+                            android:fontFamily="@font/nanumsquareotf_light"
                             android:text="0개"
                             android:textColor="#323232"
                             android:textSize="15dp" />
@@ -414,7 +415,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="8dp"
-                                android:fontFamily="@font/nanumsquareotf_bold_normal"
+                                android:fontFamily="@font/nanumsquareotf_bold"
                                 android:text="모두보기"
                                 android:textColor="#40D39F"
                                 android:textSize="14dp" />
@@ -448,7 +449,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="8dp"
                             android:layout_toRightOf="@+id/spot_view_more_act_review_star_ll"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
+                            android:fontFamily="@font/nanumsquareotf_regular"
                             android:text="0.0"
                             android:textColor="#323232"
                             android:textSize="18dp" />
@@ -459,7 +460,7 @@
                             android:layout_centerVertical="true"
 
                             android:layout_toRightOf="@+id/spot_view_more_act_review_star_num_tv"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
+                            android:fontFamily="@font/nanumsquareotf_regular"
                             android:text="/5"
                             android:textColor="#E0E0E0"
                             android:textSize="18dp" />
@@ -492,7 +493,7 @@
                                 android:layout_marginLeft="23dp"
                                 android:layout_marginTop="30dp"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/nanumsquareotf_bold_normal"
+                                android:fontFamily="@font/nanumsquareotf_bold"
                                 android:maxLines="1"
                                 android:text="밤에 야경보러 갔는데ㅇㅇㅇ"
                                 android:textColor="#323232"
@@ -509,7 +510,7 @@
                                 android:layout_marginLeft="23dp"
                                 android:layout_marginTop="10dp"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/nanumsquareotf_regular_normal"
+                                android:fontFamily="@font/nanumsquareotf_regular"
                                 android:maxLines="4"
                                 android:text="전망도 너무 예쁘고 좋았어요ㅜㅜ다음엔 꼭 남자친구랑 가고 싶어요^^,,,,방탄LOVE~!ㄷㅂㅈㄱㅂㅈㄷㄱㅂㅈㄷㄱㅂㅈㄷㄱㅂㅈㄷㄱㅈㄷㅂㄱ"
                                 android:textColor="#707070"
@@ -543,7 +544,7 @@
                                 android:layout_marginBottom="32dp"
                                 android:layout_marginLeft="23dp"
                                 android:layout_alignParentBottom="true"
-                                android:fontFamily="@font/nanumsquareotf_regular_normal"
+                                android:fontFamily="@font/nanumsquareotf_regular"
                                 android:text="BTSlove · 2018-08-31"
                                 android:textColor="#C0C0C0"
                                 android:textSize="9dp" />
@@ -564,7 +565,7 @@
                                 android:textSize="20dp"
                                 android:gravity="center"
                                 android:textColor="#C0C0C0"
-                                android:fontFamily="@font/nanumsquareotf_bold_normal"/>
+                                android:fontFamily="@font/nanumsquareotf_bold"/>
                         </RelativeLayout>
 
 
@@ -599,7 +600,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
                                 android:layout_toRightOf="@+id/spot_view_more_act_review_write_btn"
-                                android:fontFamily="@font/nanumsquareotf_regular_normal"
+                                android:fontFamily="@font/nanumsquareotf_regular"
                                 android:text="리뷰쓰기"
                                 android:textColor="#40D39F"
                                 android:textSize="15dp" />
@@ -696,7 +697,7 @@
                         android:id="@+id/spot_view_more_act_open_close_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/nanumsquareotf_bold_normal"
+                        android:fontFamily="@font/nanumsquareotf_bold"
                         android:text="오픈/마감 시간"
                         android:textColor="#323232"
                         android:textSize="15dp" />
@@ -718,7 +719,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/nanumsquareotf_regular_normal"
+                                android:fontFamily="@font/nanumsquareotf_regular"
                                 android:text="오픈"
                                 android:textColor="#C0C0C0"
                                 android:textSize="12dp" />
@@ -751,7 +752,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/nanumsquareotf_regular_normal"
+                                android:fontFamily="@font/nanumsquareotf_regular"
                                 android:text="마감"
                                 android:textColor="#C0C0C0"
                                 android:textSize="12dp" />
@@ -802,7 +803,7 @@
                             android:layout_centerInParent="true"
                             android:layout_marginLeft="5dp"
                             android:layout_toRightOf="@+id/spot_view_more_act_phone_num_iv"
-                            android:fontFamily="@font/nanumsquareotf_regular_normal"
+                            android:fontFamily="@font/nanumsquareotf_regular"
                             android:text="010-1234-5678"
                             android:textColor="#323232"
                             android:textSize="16dp" />
@@ -834,7 +835,7 @@
                         android:layout_below="@+id/spot_view_more_act_move_top_iv"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="@font/nanumsquareotf_regular_normal"
+                        android:fontFamily="@font/nanumsquareotf_regular"
                         android:text="TOP"
                         android:textColor="#C0C0C0"
                         android:textSize="12dp" />
@@ -901,7 +902,7 @@
             android:layout_marginRight="2dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/spot_view_more_act_scrap_btn"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             android:textColor="#FFFFFF"
             android:text="23,341"
             android:textSize="14dp" />

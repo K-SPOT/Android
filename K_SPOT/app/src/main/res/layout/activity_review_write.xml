@@ -56,7 +56,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/nanumsquareotf_bold_normal"
+                android:fontFamily="@font/nanumsquareotf_bold"
                 android:text="완료"
                 android:textColor="#40D39F"
                 android:textSize="18dp" />
@@ -83,7 +83,7 @@
             android:hint="제목을 입력하세요 :)"
             android:textSize="19dp"
             android:textColorHint="#E0E0E0"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+            android:fontFamily="@font/nanumsquareotf_regular"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="0.25dp"
@@ -236,7 +236,7 @@
             android:text="0.0"
             android:textColor="#000000"
             android:textSize="20dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+            android:fontFamily="@font/nanumsquareotf_regular"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -246,7 +246,7 @@
             android:text="/5"
             android:textColor="#E0E0E0"
             android:textSize="20dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"/>
+            android:fontFamily="@font/nanumsquareotf_regular"/>
 
 
         <View
@@ -282,7 +282,7 @@
                 android:maxLength="1000"
                 android:paddingBottom="55dp"
                 android:scrollHorizontally="false"
-                android:fontFamily="@font/nanumsquareotf_light_normal"
+                android:fontFamily="@font/nanumsquareotf_light"
                 android:textColorHint="#E0E0E0"
                 android:textSize="14dp" />
 
@@ -334,7 +334,7 @@
                 android:text="0"
                 android:textColor="#000000"
                 android:textSize="14dp"
-                android:fontFamily="@font/nanumsquareotf_light_normal"
+                android:fontFamily="@font/nanumsquareotf_light"
                 />
 
             <TextView
@@ -344,7 +344,7 @@
                 android:layout_toRightOf="@+id/review_write_act_display_editText_num_tv"
                 android:textColor="#C0C0C0"
                 android:textSize="14dp"
-                android:fontFamily="@font/nanumsquareotf_light_normal"
+                android:fontFamily="@font/nanumsquareotf_light"
                 />
         </RelativeLayout>
 

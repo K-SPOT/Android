@@ -45,7 +45,7 @@
                         android:layout_marginLeft="97dp">
                         <TextView
                             android:id="@+id/tv_category_detail_title_name"
-                            android:text="카테고리 디테일"
+                            android:text="-"
                             android:fontFamily="@font/nanumsquareotf_bold"
                             android:textSize="20dp"
                             android:textColor="#000000"
@@ -69,7 +69,7 @@
                         android:layout_marginRight="16dp"
                         android:layout_below="@+id/tv_category_detail_title_name_ll">
                         <TextView
-                            android:text="빅히트 엔터테인먼트"
+                            android:text="-"
                             android:id="@+id/tv_category_detail_company_name"
                             android:textSize="12dp"
                             android:fontFamily="@font/nanumsquareotf_regular"
@@ -143,6 +143,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:id="@+id/tv_category_detail_recommend_spot_title_comment"
                     android:fontFamily="@font/nanumsquareotf_light"
                     android:text="사람들이 많이 찾는 장소를 확인해 보세요!"
                     android:textColor="#707070"
@@ -175,6 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="11dp">
                     <TextView
+                        android:id="@+id/tv_category_detail_relative_spot_title"
                         android:text="관련된 장소"
                         android:textColor="#323232"
                         android:textSize="18dp"
@@ -218,6 +220,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="11dp">
                     <TextView
+                        android:id="@+id/tv_category_detail_event_more_title"
                         android:text="관련된 이벤트"
                         android:textColor="#323232"
                         android:textSize="18dp"

@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:fontFamily="@font/nanumsquareotf_bold_normal"
+                    android:fontFamily="@font/nanumsquareotf_bold"
                     android:text="BLACK PINK"
                     android:textColor="#FFFFFF"
                     android:textSize="13dp" />

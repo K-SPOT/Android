@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/nanumsquareotf_bold_normal"
+        android:fontFamily="@font/nanumsquareotf_bold"
         android:text="밤에 야경보러 갔는데"
         android:textColor="#323232"
         android:textSize="18dp" />
@@ -25,7 +25,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/nanumsquareotf_regular_normal"
+        android:fontFamily="@font/nanumsquareotf_regular"
         android:text="전망도 너무 예쁘고 좋았어요ㅜㅜ 다음엔 꼭 남자친구랑 가고 싶어요^^,,,,방탄 LOVE~!"
         android:textColor="#707070"
         android:textSize="14dp" />
@@ -66,7 +66,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             android:text="BTSlove"
             android:textColor="#C0C0C0"
             android:textSize="12dp" />
@@ -80,7 +80,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/review_more_act_rv_item_writer_tv"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             android:text=" · "
             android:textColor="#C0C0C0"
             android:textSize="12dp" />
@@ -93,7 +93,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/review_more_act_rv_item_dot_tv"
-            android:fontFamily="@font/nanumsquareotf_regular_normal"
+            android:fontFamily="@font/nanumsquareotf_regular"
             android:text="2018-08-31"
             android:textColor="#C0C0C0"
             android:textSize="12dp" />
@@ -151,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:fontFamily="@font/nanumsquareotf_bold_normal"
+                    android:fontFamily="@font/nanumsquareotf_bold"
                     android:text="신고 사유를 선택해주세요"
                     android:textColor="#414141"
                     android:textSize="14dp" />
@@ -175,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:fontFamily="@font/nanumsquareotf_regular_normal"
+                    android:fontFamily="@font/nanumsquareotf_regular"
                     android:text="음란물"
                     android:textColor="#414141"
                     android:textSize="14dp" />
@@ -198,7 +198,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:fontFamily="@font/nanumsquareotf_regular_normal"
+                    android:fontFamily="@font/nanumsquareotf_regular"
                     android:text="사칭 및 사기"
                     android:textColor="#414141"
                     android:textSize="14dp" />
@@ -220,7 +220,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:fontFamily="@font/nanumsquareotf_regular_normal"
+                    android:fontFamily="@font/nanumsquareotf_regular"
                     android:text="허위사실유포"
                     android:textColor="#414141"
                     android:textSize="14dp" />
@@ -243,7 +243,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:fontFamily="@font/nanumsquareotf_regular_normal"
+                    android:fontFamily="@font/nanumsquareotf_regular"
                     android:text="상업적 광고 및 판매"
                     android:textColor="#414141"
                     android:textSize="14dp" />
@@ -266,7 +266,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:fontFamily="@font/nanumsquareotf_regular_normal"
+                    android:fontFamily="@font/nanumsquareotf_regular"
                     android:text="욕설 및 불쾌감을 주는 표현"
                     android:textColor="#414141"
                     android:textSize="14dp" />
@@ -290,7 +290,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:fontFamily="@font/nanumsquareotf_bold_normal"
+                    android:fontFamily="@font/nanumsquareotf_bold"
                     android:text="확인"
                     android:textColor="#40D39F"
                     android:textSize="14dp"
@@ -329,7 +329,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:fontFamily="@font/nanumsquareotf_bold_normal"
+                    android:fontFamily="@font/nanumsquareotf_bold"
                     android:text="신고가 완료되었습니다."
                     android:textColor="#414141"
                     android:textSize="14dp" />
@@ -351,7 +351,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:fontFamily="@font/nanumsquareotf_bold_normal"
+                    android:fontFamily="@font/nanumsquareotf_bold"
                     android:text="확인"
                     android:textColor="#40D39F"
                     android:textSize="14dp"
