@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/iv_main_bottom_tab_menu_main"
                 android:layout_centerInParent="true"
                 android:src="@drawable/main_bottom_tab_menu_main"
                 android:layout_width="wrap_content"
@@ -24,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/iv_main_bottom_tab_menu_category"
                 android:layout_centerInParent="true"
                 android:src="@drawable/main_bottom_tab_menu_category"
                 android:layout_width="wrap_content"
@@ -35,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/iv_main_bottom_tab_menu_map"
                 android:layout_centerInParent="true"
                 android:src="@drawable/main_bottom_tab_menu_map"
                 android:layout_width="wrap_content"
@@ -46,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/iv_main_bottom_tab_menu_my_page"
                 android:layout_centerInParent="true"
                 android:src="@drawable/main_bottom_tab_menu_mypage"
                 android:layout_width="wrap_content"

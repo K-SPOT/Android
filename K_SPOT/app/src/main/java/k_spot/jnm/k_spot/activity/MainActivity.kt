@@ -2,6 +2,7 @@ package k_spot.jnm.k_spot.activity
 
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,13 +13,19 @@ import android.widget.RelativeLayout
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.MainBottomTabAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
+import k_spot.jnm.k_spot.fragment.MainPageFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.bottom_tab_main.*
 import org.jetbrains.anko.longToast
 
 
 class MainActivity : AppCompatActivity() {
     private val FINISH_INTERVAL_TIME: Long = 2000
     private var backPressedTime: Long = 0
+
+    val mainBottomTabAdapter : MainBottomTabAdapter by lazy {
+        MainBottomTabAdapter(4, supportFragmentManager)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         // MainActivity에는 필요없으므로 주석처리
         setStatusBarTransparent()
 
-
+        changeBottomNaviView()
     }
 
     fun hideBottomPageTab(){
@@ -42,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun configureMainTabMenu() {
-        main_fragment_pager.adapter = MainBottomTabAdapter(4, supportFragmentManager)
+        main_fragment_pager.adapter = mainBottomTabAdapter
         main_fragment_pager.offscreenPageLimit = 4
         main_bottom_tab_layout.setupWithViewPager(main_fragment_pager)
 
@@ -53,6 +60,40 @@ class MainActivity : AppCompatActivity() {
         main_bottom_tab_layout.getTabAt(1)!!.customView = bottomTabView.findViewById(R.id.category_page_btn) as RelativeLayout
         main_bottom_tab_layout.getTabAt(2)!!.customView = bottomTabView.findViewById(R.id.map_page_btn) as RelativeLayout
         main_bottom_tab_layout.getTabAt(3)!!.customView = bottomTabView.findViewById(R.id.mypage_page_btn) as RelativeLayout
+    }
+
+    private fun changeBottomNaviView(){
+        if(SharedPreferenceController.getFlag(this) == "0"){
+            iv_main_bottom_tab_menu_main.setImageDrawable(resources.getDrawable(R.drawable.main_bottom_tab_menu_main))
+            iv_main_bottom_tab_menu_category.setImageDrawable(resources.getDrawable(R.drawable.main_bottom_tab_menu_category))
+            iv_main_bottom_tab_menu_map.setImageDrawable(resources.getDrawable(R.drawable.main_bottom_tab_menu_map))
+            iv_main_bottom_tab_menu_my_page.setImageDrawable(resources.getDrawable(R.drawable.main_bottom_tab_menu_mypage))
+        } else {
+            iv_main_bottom_tab_menu_main.setImageDrawable(resources.getDrawable(R.drawable.main_bottom_tab_menu_main_en))
+            iv_main_bottom_tab_menu_category.setImageDrawable(resources.getDrawable(R.drawable.main_bottom_tab_menu_category_en))
+            iv_main_bottom_tab_menu_map.setImageDrawable(resources.getDrawable(R.drawable.main_bottom_tab_menu_map_en))
+            iv_main_bottom_tab_menu_my_page.setImageDrawable(resources.getDrawable(R.drawable.main_bottom_tab_menu_mypage_en))
+        }
+    }
+
+    fun changeMainActivityLanguage(){
+        if (SharedPreferenceController.getFlag(this) == "0") {
+            SharedPreferenceController.setFlag(this, "1")
+        } else {
+            SharedPreferenceController.setFlag(this, "0")
+        }
+
+        changeBottomNaviView()
+        //메인 페이지
+        mainBottomTabAdapter.run {
+            mainPage.translateMainPageLanguage()
+            categoryPage.translateCategoryLanguage()
+            mapPage.translateMapPageLanguage()
+            myPage.translateMyPageLanguage()
+        }
+        //카테고리 페이지
+        //장소 페이지
+        //마이 페이지
     }
 
 

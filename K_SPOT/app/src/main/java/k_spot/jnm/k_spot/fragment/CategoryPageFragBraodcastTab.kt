@@ -16,6 +16,7 @@ import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.CategoryPageFragRecyclerAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_category_list_broadcast_tab.view.*
+import org.jetbrains.anko.support.v4.ctx
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,7 +41,7 @@ class CategoryPageFragBraodcastTab: Fragment() {
     private fun getCategoryList(ctx : Context, view : View) {
         networkService = ApplicationController.instance.networkService
         val authorization: String = SharedPreferenceController.getAuthorization(context = this!!.context!!)
-        val getCategoryListResponse = networkService.getCategoryList(0, authorization)
+        val getCategoryListResponse = networkService.getCategoryList(SharedPreferenceController.getFlag(context!!).toInt(), authorization)
         getCategoryListResponse.enqueue(object : Callback<GetCategoryListResponse> {
             override fun onFailure(call: Call<GetCategoryListResponse>?, t: Throwable?) {
 
@@ -59,6 +60,35 @@ class CategoryPageFragBraodcastTab: Fragment() {
                         categoryPageFragRecyclerAdapter = CategoryPageFragRecyclerAdapter(channelBroadcastList, ctx)
                         view.category_list_brodcast_fragment_tab_rv.layoutManager = LinearLayoutManager(ctx)
                         view.category_list_brodcast_fragment_tab_rv.adapter = categoryPageFragRecyclerAdapter
+
+                    }
+                }
+            }
+
+        })
+    }
+    fun requestCategoryList() {
+        networkService = ApplicationController.instance.networkService
+        val authorization: String = SharedPreferenceController.getAuthorization(context = this!!.context!!)
+        val getCategoryListResponse = networkService.getCategoryList(SharedPreferenceController.getFlag(context!!).toInt(), authorization)
+        getCategoryListResponse.enqueue(object : Callback<GetCategoryListResponse> {
+            override fun onFailure(call: Call<GetCategoryListResponse>?, t: Throwable?) {
+
+            }
+
+            override fun onResponse(call: Call<GetCategoryListResponse>?, response: Response<GetCategoryListResponse>?) {
+                if(response!!.isSuccessful){
+
+                    if(response!!.body()!!.data!!.channel_broadcast_list.size == 0) {
+                        Log.v("xx","Xxx")
+                    }else{
+                        channelBroadcastList = ArrayList()
+
+                        channelBroadcastList = response!!.body()!!.data!!.channel_broadcast_list
+
+                        categoryPageFragRecyclerAdapter = CategoryPageFragRecyclerAdapter(channelBroadcastList, context!!)
+                        view!!.category_list_brodcast_fragment_tab_rv.layoutManager = LinearLayoutManager(ctx)
+                        view!!.category_list_brodcast_fragment_tab_rv.adapter = categoryPageFragRecyclerAdapter
 
                     }
                 }

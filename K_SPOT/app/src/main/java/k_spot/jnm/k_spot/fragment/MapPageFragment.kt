@@ -159,25 +159,23 @@ class MapPageFragment : Fragment() {
 
     private fun setTranslateLanguage() {
         btn_map_page_translation.setOnClickListener {
-            if (SharedPreferenceController.getFlag(context!!) == "0") {
-                SharedPreferenceController.setFlag(context!!, "1")
-            } else {
-                SharedPreferenceController.setFlag(context!!, "0")
-            }
-            currentSpotName = findTranslateWord()
-            setTranslateMapTextBtn()
-            setTranslateFilterSource()
-            setTranslateText()
-
-            //통신도 다시해주기
-            if (currentSpotName == "내 주변" || currentSpotName == "Around me"){
-                requestSpotDataFromGPS(currentSpotName)
-            } else {
-                requestSpotDataFromSpot(currentSpotName)
-            }
+            (activity as MainActivity).changeMainActivityLanguage()
         }
     }
+    fun translateMapPageLanguage(){
+        currentSpotName = findTranslateWord()
 
+        setTranslateMapTextBtn()
+        setTranslateFilterSource()
+        setTranslateText()
+
+        //통신도 다시해주기
+        if (currentSpotName == "내 주변" || currentSpotName == "Around me"){
+            requestSpotDataFromGPS(currentSpotName)
+        } else {
+            requestSpotDataFromSpot(currentSpotName)
+        }
+    }
 
     //시간나면 애니메이션 처리
     private fun setFilterBtnVisible() {
@@ -799,6 +797,7 @@ class MapPageFragment : Fragment() {
     }
 
     private fun findTranslateWord() : String{
+        Log.e("currentSpotName 이름:" , currentSpotName.toString())
         val spotLanguageName = spotName.find {
             if (SharedPreferenceController.getFlag(context!!) == "1") {
                 it.ko == currentSpotName
@@ -806,10 +805,17 @@ class MapPageFragment : Fragment() {
                 it.en == currentSpotName
             }
         }
+        Log.e("스팟 이름:" , spotLanguageName.toString())
         if (SharedPreferenceController.getFlag(context!!) == "1") {
-            return spotLanguageName!!.en
+            spotLanguageName?.let {
+                return spotLanguageName!!.en
+            }
+            return "gangnamgu"
         } else {
-            return spotLanguageName!!.ko
+            spotLanguageName?.let {
+                return spotLanguageName!!.ko
+            }
+            return "강남구"
         }
     }
 

@@ -20,6 +20,7 @@ import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.SubscribeActivity
+import k_spot.jnm.k_spot.activity.MainActivity
 import k_spot.jnm.k_spot.activity.UserInfoEditActivity
 import k_spot.jnm.k_spot.activity.UserScrapListActivity
 import k_spot.jnm.k_spot.adapter.MySubscribeRecyclerViewAdapter
@@ -52,8 +53,39 @@ class MyPageFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         setOnClickListener()
+        changeMyPageLanguage()
 
+        my_page_frag_translate_btn.setOnClickListener {
+            (activity as MainActivity).changeMainActivityLanguage()
+        }
     }
+
+    fun translateMyPageLanguage(){
+        changeMyPageLanguage()
+    }
+
+    private fun changeMyPageLanguage(){
+        if (SharedPreferenceController.getFlag(context!!) == "0"){
+            tv_my_page_title_text.text = "마이페이지"
+            tv_my_page_hello_01_text.text = " 고객님,"
+            tv_my_page_hello_02_text.text = "안녕하세요!"
+            iv_my_page_logout.setImageResource(R.drawable.my_page_frag_logout_btn)
+            tv_my_page_my_subscript_title.text = "내 구독"
+            tv_my_page_more_my_subscript.text = "더보기"
+            tv_my_page_scrab.text = "스크랩"
+            tv_my_page_edit_information.text = "회원정보 수정"
+        } else {
+            tv_my_page_title_text.text = "MYPAGE"
+            tv_my_page_hello_01_text.text = ","
+            tv_my_page_hello_02_text.text = "Welcome!"
+            iv_my_page_logout.setImageResource(R.drawable.mypage_logout_icon_en)
+            tv_my_page_my_subscript_title.text = "My Subscribe"
+            tv_my_page_more_my_subscript.text = "MORE"
+            tv_my_page_scrab.text = "Scrap"
+            tv_my_page_edit_information.text = "Edit Profile"
+        }
+    }
+
 
     private fun setMySubscribeRecyclerView(ChannelMyPageData: ArrayList<ChannelMyPageData>) {
 
