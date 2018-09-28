@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.MainPageFragment">
+    tools:context=".fragment.MainPageFragment"
+    android:fitsSystemWindows="true">
 
     <!--Top Bar-->
     <RelativeLayout
@@ -126,30 +127,36 @@
                         android:fontFamily="@font/nanumsquareotf_regular"
                         />
 
-                    <TextView
-                        android:id="@+id/main_page_fragment_recycler1_tv2"
-                        android:layout_below="@+id/main_page_fragment_recycler1_tv1"
+                    <RelativeLayout
+                        android:id="@+id/main_page_fragment_recycler1_recyclerview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="따끈따끈한 추천 PLACE"
-                        android:textSize="18dp"
-                        android:textColor="#414141"
-                        android:layout_marginLeft="33dp"
-                        android:fontFamily="@font/nanumsquareotf_bold"
-                        />
+                        android:layout_below="@+id/main_page_fragment_recycler1_tv1">
+                        <TextView
+                            android:id="@+id/main_page_fragment_recycler1_tv2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="따끈따끈한 추천 PLACE"
+                            android:textSize="18dp"
+                            android:textColor="#414141"
+                            android:layout_marginLeft="33dp"
+                            android:fontFamily="@font/nanumsquareotf_bold"
+                            android:layout_centerVertical="true"
+                            />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/main_page_fragment_recycler1_tv2"
-                        android:layout_below="@+id/main_page_fragment_recycler1_tv1"
-                        android:src="@drawable/main_place_icon"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="3dp"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/main_page_fragment_recycler1_tv2"
+                            android:src="@drawable/main_place_icon"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
                     
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/main_page_fragment_rv1"
-                        android:layout_below="@+id/main_page_fragment_recycler1_tv2"
+                        android:layout_below="@+id/main_page_fragment_recycler1_recyclerview"
                         android:layout_marginTop="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="261dp">
@@ -163,42 +170,48 @@
                     android:layout_height="349dp"
                     android:layout_below="@+id/main_page_fragment_first_recycler_rl">
 
-                    <TextView
-                        android:id="@+id/main_page_fragment_recycler2_tv1"
+                    <RelativeLayout
+                        android:id="@+id/main_page_fragment_recycler2_recycler2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="인기 장소 "
-                        android:textSize="18dp"
-                        android:textColor="#414141"
                         android:layout_marginLeft="33dp"
-                        android:layout_marginTop="41dp"
-                        android:fontFamily="@font/nanumsquareotf_regular"
-                        />
+                        android:layout_marginTop="41dp">
 
-                    <TextView
-                        android:id="@+id/main_page_fragment_recycler2_tv2"
-                        android:layout_toRightOf="@+id/main_page_fragment_recycler2_tv1"
-                        android:layout_marginTop="41dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="BEST 10"
-                        android:textSize="18dp"
-                        android:textColor="#414141"
-                        android:fontFamily="@font/nanumsquareotf_bold"
-                        />
+                        <TextView
+                            android:id="@+id/main_page_fragment_recycler2_tv1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="인기 장소 "
+                            android:textSize="18dp"
+                            android:textColor="#414141"
+                            android:fontFamily="@font/nanumsquareotf_regular"
+                            />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/main_page_fragment_recycler2_tv2"
-                        android:layout_marginTop="46dp"
-                        android:src="@drawable/main_place_icon"
-                        android:layout_marginLeft="8dp"
-                        />
+                        <TextView
+                            android:id="@+id/main_page_fragment_recycler2_tv2"
+                            android:layout_toRightOf="@+id/main_page_fragment_recycler2_tv1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BEST 10"
+                            android:textSize="18dp"
+                            android:textColor="#414141"
+                            android:fontFamily="@font/nanumsquareotf_bold"
+                            />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/main_page_fragment_recycler2_tv2"
+                            android:src="@drawable/main_place_icon"
+                            android:layout_marginLeft="8dp"
+                            android:layout_centerVertical="true"
+                            />
+
+                    </RelativeLayout>
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/main_page_fragment_rv2"
-                        android:layout_below="@+id/main_page_fragment_recycler2_tv2"
+                        android:layout_below="@+id/main_page_fragment_recycler2_recycler2"
                         android:layout_marginTop="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="261dp">
@@ -213,7 +226,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="349dp"
                     android:layout_below="@+id/main_page_fragment_second_recycler_rl"
-                    android:layout_marginBottom="101dp">
+                    android:layout_marginBottom="102dp">
 
                     <TextView
                         android:id="@+id/main_page_fragment_recycler3_tv1"
@@ -233,7 +246,7 @@
                         android:layout_marginTop="41dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NEW EVENT"
+                        android:text="NEW EVENT 5"
                         android:textSize="18dp"
                         android:textColor="#414141"
                         android:fontFamily="@font/nanumsquareotf_bold"
