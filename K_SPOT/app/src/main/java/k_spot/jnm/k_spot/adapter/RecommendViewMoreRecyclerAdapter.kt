@@ -9,9 +9,6 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import k_spot.jnm.k_spot.Get.ThemeDetailThemeContentData
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
@@ -63,7 +60,7 @@ class RecommendViewMoreRecyclerAdapter(private var recommendViewMorePageItems: A
 
 
         holder.recommend_view_more_spot_view_more.setOnClickListener {
-            ctx.startActivity<SpotViewMoreActivity>("spot_id" to recommendViewMorePageItems[position].spot_id.toInt())
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to recommendViewMorePageItems[position].spot_id.toInt(), "event_flag" to 0)
         }
     }
 

@@ -55,10 +55,10 @@ class MainFragCardViewAdapter(val ctx: Context, val myDataset: ArrayList<Main>, 
 
         if (spotOrEventFlag == 0)
             holder.rl.setOnClickListener {
-                ctx.startActivity<SpotViewMoreActivity>("spot_id" to mDataset[position].spot_id.toInt())
+                ctx.startActivity<SpotViewMoreActivity>("spot_id" to mDataset[position].spot_id.toInt(),"event_flag" to 0)
             } else {
             holder.rl.setOnClickListener {
-                ctx.startActivity<SpotViewMoreActivity>("spot_id" to mDataset[position].spot_id.toInt())
+                ctx.startActivity<SpotViewMoreActivity>("spot_id" to mDataset[position].spot_id.toInt(),"event_flag" to 1)
             }
         }
     }

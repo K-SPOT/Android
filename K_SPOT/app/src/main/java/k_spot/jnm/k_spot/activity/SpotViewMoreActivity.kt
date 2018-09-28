@@ -61,7 +61,19 @@ class SpotViewMoreActivity : AppCompatActivity() {
         setContentView(R.layout.activity_spot_view_more)
 
         var spot_id = intent.getIntExtra("spot_id", 33)
+        var event_flag = intent.getIntExtra("event_flag", 100)
+
+        if (event_flag == 1) {
+            spot_view_more_act_open_close_tv.text = "기간"
+            spot_view_more_act_open_tv.text = "시작"
+            spot_view_more_act_close_tv.text = "종료"
+        }
+        if (event_flag == 100) {
+            Log.v("falut", "falut")
+        }
         Log.v("spot_id", spot_id.toString())
+        Log.v("event_flag", event_flag.toString())
+
 
         spotViewMoreData = ArrayList()
         reviewSpotViewMoreData = ArrayList()
@@ -77,6 +89,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
         setOnClickListener()
         getSpotViewMore(spot_id)
+        setInitView(event_flag)
     }
 
 
@@ -169,8 +182,8 @@ class SpotViewMoreActivity : AppCompatActivity() {
                                 spot_view_more_act_spot_station_number_round.setBackgroundResource(R.drawable.subway_line_name_long_shape)
                                 (spot_view_more_act_spot_station_number_round as RelativeLayout).layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT
 
-                                val layoutParams : RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-                                layoutParams.setMargins(dpToPx(5),0,dpToPx(5),0)
+                                val layoutParams: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
+                                layoutParams.setMargins(dpToPx(5), 0, dpToPx(5), 0)
                                 layoutParams.centerInParent()
                                 spot_view_more_act_spot_station_number_tv.layoutParams = layoutParams
 
@@ -446,6 +459,52 @@ class SpotViewMoreActivity : AppCompatActivity() {
         mRecyclerView.adapter = mAdapter
     }
 
+    private fun setInitView(event_flag: Int) {
+        //추후 구독 색상변경 바꾸기
+        if (SharedPreferenceController.getFlag(this) == "0") {
+            spot_view_more_act_relative_celev_info_tv.text = "관련 연예인/방송"
+            spot_view_more_act_relative_celev_num_tv.text = "${channelRecyclerViewData.size}개"
+            spot_view_more_act_review_info_tv.text = "리뷰"
+            if (spotViewMoreData.size > 0) {
+                spot_view_more_act_review_num_tv.text = "${spotViewMoreData[0].review_cnt}개"
+            }
+            spot_view_more_act_all_review_tv.text = "모두보기"
+            spot_view_more_act_review_no_result_tv.text = "작성된 리뷰가 없습니다. \n 첫 리뷰를 작성해주세요 :)"
+            spot_view_more_act_review_write_tv.text = "리뷰쓰기"
+            tv_spot_view_more_address_by_google_map.text = "구글맵으로 길찾기"
+            if (event_flag == 0) {
+                spot_view_more_act_open_close_tv.text = "오픈/마감 시간"
+                spot_view_more_act_open_tv.text = "오픈"
+                spot_view_more_act_close_tv.text = "마감"
+            } else {
+                spot_view_more_act_open_close_tv.text = "기간"
+                spot_view_more_act_open_tv.text = "시작"
+                spot_view_more_act_close_tv.text = "종료"
+            }
+        } else {
+            spot_view_more_act_relative_celev_info_tv.text = "related Celebrity/Broadcast"
+            spot_view_more_act_relative_celev_num_tv.text = "${channelRecyclerViewData.size}"
+            spot_view_more_act_review_info_tv.text = "Review"
+            if (spotViewMoreData.size > 0) {
+                spot_view_more_act_review_num_tv.text = "${spotViewMoreData[0].review_cnt}"
+            }
+            spot_view_more_act_all_review_tv.text = "view all"
+            spot_view_more_act_review_no_result_tv.text = "작성된 리뷰가 없습니다. \n 첫 리뷰를 작성해주세요 :)"
+            spot_view_more_act_review_write_tv.text = "Review write"
+            tv_spot_view_more_address_by_google_map.text = "Search with google map"
+            if (event_flag == 0) {
+                spot_view_more_act_open_close_tv.text = "open/close time"
+                spot_view_more_act_open_tv.text = "open"
+                spot_view_more_act_close_tv.text = "close"
+            } else {
+                spot_view_more_act_open_close_tv.text = "period"
+                spot_view_more_act_open_tv.text = "start"
+                spot_view_more_act_close_tv.text = "end"
+            }
+
+        }
+    }
+
     // 상태바 투명하게 하는 함수
     private fun setStatusBarTransparent() {
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
@@ -537,13 +596,13 @@ class SpotViewMoreActivity : AppCompatActivity() {
                 spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
                 requestSpotSubscription(spotViewMoreData[0].spot_id)
                 spotViewMoreData[0].is_scrap = 1
-                spotViewMoreData[0].scrap_cnt= spotViewMoreData[0].scrap_cnt + 1
+                spotViewMoreData[0].scrap_cnt = spotViewMoreData[0].scrap_cnt + 1
                 spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt).toString()
             } else {
                 spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
                 deleteSpotSubscription(spotViewMoreData[0].spot_id)
                 spotViewMoreData[0].is_scrap = 0
-                spotViewMoreData[0].scrap_cnt= spotViewMoreData[0].scrap_cnt - 1
+                spotViewMoreData[0].scrap_cnt = spotViewMoreData[0].scrap_cnt - 1
                 spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt).toString()
             }
 

@@ -42,7 +42,7 @@ class ViewMoreRecyclerViewAdapter(val ctx : Context, val moreDataList : ArrayLis
         holder.badgeList.adapter = badgeRecyclerViewAdapter
 
         holder.cardBtn.setOnClickListener {
-            ctx.startActivity<SpotViewMoreActivity>("spot_id" to moreDataList[position].spot_id)
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to moreDataList[position].spot_id, "event_flag" to 0)
         }
     }
 

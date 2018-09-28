@@ -33,7 +33,7 @@ class PlaceRecommendRecyclerViewAdapter(val ctx : Context, val dataList : ArrayL
                 .into(holder.image)
 
         holder.image.setOnClickListener {
-            ctx.startActivity<SpotViewMoreActivity>("spot_id" to dataList[position].spot_id)
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to dataList[position].spot_id, "event_flag" to 0)
         }
     }
 

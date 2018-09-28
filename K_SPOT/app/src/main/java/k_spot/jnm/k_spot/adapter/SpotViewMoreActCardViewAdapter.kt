@@ -54,7 +54,6 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
         // - replace the contents of the view with that element
         holder.title.setText(mDataset[position].channel_name)
         Glide.with(ctx).load(mDataset[position].thumbnail_img).into(holder.mImageView)
-
         var subFlag = mDataset[position].is_subscription
 
         // sub가 안됐을 때

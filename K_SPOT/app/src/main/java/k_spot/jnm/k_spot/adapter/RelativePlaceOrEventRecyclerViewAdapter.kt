@@ -1,7 +1,6 @@
 package k_spot.jnm.k_spot.adapter
 
 import android.content.Context
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +35,7 @@ class RelativePlaceOrEventRecyclerViewAdapter(val ctx : Context, val dataList : 
         Glide.with(ctx).load(dataList[position].img).apply(requestOptions).into(holder.img)
 
         holder.whole_btn.setOnClickListener {
-            ctx.startActivity<SpotViewMoreActivity>("spot_id" to dataList[position].spot_id)
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to dataList[position].spot_id, "event_flag" to 1)
         }
 
     }

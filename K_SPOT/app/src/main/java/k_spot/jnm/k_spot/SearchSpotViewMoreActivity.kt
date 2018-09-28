@@ -27,7 +27,7 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         val index: Int = search_spot_view_more_act_rv.getChildAdapterPosition(v)
         val spot_id = searchSpotItems[index].spot_id
-        startActivity<SpotViewMoreActivity>("spot_id" to spot_id)
+        startActivity<SpotViewMoreActivity>("spot_id" to spot_id, "event_flag" to 0)
         Log.v("spot_id", spot_id.toString())
 //        startActivity<ContentsDetail>("channel_id" to channel_id)
     }
@@ -46,6 +46,18 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         makeRecyclerView(searchSpotItems)
         setStatusBarTransparent()
         setOnClickListener(keyword)
+        setInitView(keyword)
+    }
+    private fun setInitView(keyword: String) {
+        //추후 구독 색상변경 바꾸기
+        if (SharedPreferenceController.getFlag(this) == "0"){
+            search_spot_view_more_act_result_tv.text = keyword + " " + "검색결과"
+            search_spot_view_more_act_tv.text = "장소"
+        } else {
+            search_spot_view_more_act_result_tv.text = keyword + " " + "search result"
+            search_spot_view_more_act_tv.text = "Spot"
+
+        }
     }
 
     fun getSearchResultFilter(keyword: String, order: Int, is_food : Int, is_cafe : Int, is_sight : Int, is_etc : Int) {

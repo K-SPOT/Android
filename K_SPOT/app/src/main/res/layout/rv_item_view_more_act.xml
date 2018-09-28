@@ -25,7 +25,10 @@
                 android:id="@+id/view_more_act_rv_item_broadcast_iv"
                 android:layout_width="53dp"
                 android:layout_height="53dp"
-                android:src="@drawable/category_list_blackpink_img"/>
+                android:src="@drawable/category_list_blackpink_img"
+                android:background="@drawable/view_more_act_rv_item_circle_shape"
+                android:elevation="1dp"
+                />
 
             <TextView
                 android:id="@+id/view_more_act_rv_item_broadcast_title_tv"
