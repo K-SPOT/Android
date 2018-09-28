@@ -73,7 +73,9 @@
                 android:layout_below="@+id/recommend_view_more_act_celeb_rl"
                 android:clipToPadding="false"
                 android:descendantFocusability="blocksDescendants"
-                android:nestedScrollingEnabled="true"></android.support.v7.widget.RecyclerView>
+                android:nestedScrollingEnabled="false">
+
+            </android.support.v7.widget.RecyclerView>
 
             <View
                 android:layout_width="match_parent"
