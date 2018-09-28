@@ -19,6 +19,7 @@ import k_spot.jnm.k_spot.activity.ViewMoreActivity
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -72,10 +73,10 @@ class SearchActivity : AppCompatActivity() {
         } else {
             search_act_what_search_tv.text = "What are you looking for?"
             search_act_search_edit_text.hint = "Please enter your key word."
-            search_act_search_recommend_celeb_tv.text = "celebrity"
-            search_act_search_broadcast_tv.text = "broadcast"
-            search_act_search_event_tv.text ="event"
-            search_act_search_tv.text = "search"
+            search_act_search_recommend_celeb_tv.text = "Celebrity"
+            search_act_search_broadcast_tv.text = "Broadcast"
+            search_act_search_event_tv.text ="Event"
+            search_act_search_tv.text = "Search"
         }
     }
 
@@ -143,8 +144,14 @@ class SearchActivity : AppCompatActivity() {
                 search_act_search_btn.setBackgroundColor(Color.parseColor("#C5C5C5"))
             }
             var keyword = search_act_search_edit_text.text.toString()
-            startActivity<SearchResultActivity>("keyword" to keyword)
-            false
+            if(keyword.length == 0){
+                toast("검색어를 입력해주세요!")
+                false
+            }else{
+                startActivity<SearchResultActivity>("keyword" to keyword)
+                false
+            }
+
         })
 
     }

@@ -12,11 +12,13 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.ChannelSearchResultData
+import k_spot.jnm.k_spot.LoginActivity
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.db.SharedPreferenceController
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,7 +49,7 @@ class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayLi
 
         holder.result_post_num.text = searchBroadItems[position]!!.spot_cnt.toString()
 
-        var flag: Int = searchBroadItems[position]!!.subscription
+
         if(searchBroadItems[position]!!.subscription == 0){
             holder.result_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
         }else{
@@ -57,16 +59,25 @@ class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayLi
         holder.result_sub_btn_btn.setOnClickListener {
 //            if 조건문으로 구독 안한 flag 일 경우
 //            subscription Flag 바꾸는 통신을 하고 한번 터치 시 tempFlag 값을 바꾸고
-            if(flag == 0){
-                holder.result_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
-                requestChannelSubscription(searchBroadItems[position].channel_id)
-                // 구독 신청 통신 필요
-                flag = 1
+            if(searchBroadItems[position]!!.subscription == 0){
+                if(SharedPreferenceController.getAuthorization(context).isNullOrBlank()){
+                    context.startActivity<LoginActivity>("need_login_flag" to 1)
+                }else{
+                    holder.result_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
+                    requestChannelSubscription(searchBroadItems[position].channel_id)
+                    // 구독 신청 통신 필요
+                    searchBroadItems[position]!!.subscription = 1
+                }
+
             }else {
-                holder.result_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
-                deleteChannelSubscription(searchBroadItems[position].channel_id)
-                // 플래그 바꾸는 통신 필요
-                flag = 0
+                if(SharedPreferenceController.getAuthorization(context).isNullOrBlank()){
+                    context.startActivity<LoginActivity>("need_login_flag" to 1)
+                }else{
+                    holder.result_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
+                    deleteChannelSubscription(searchBroadItems[position].channel_id)
+                    // 플래그 바꾸는 통신 필요
+                    searchBroadItems[position]!!.subscription = 0
+                }
             }
         }
     }

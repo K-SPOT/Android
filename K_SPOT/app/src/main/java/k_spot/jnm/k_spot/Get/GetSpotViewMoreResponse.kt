@@ -84,7 +84,7 @@ data class ChannelRecyclerViewData (
         val channel_id: String,
         val channel_name: String,
         val thumbnail_img: String,
-        val is_subscription: String
+        var is_subscription: String
 )
 
 

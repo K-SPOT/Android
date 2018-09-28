@@ -1,7 +1,6 @@
 package k_spot.jnm.k_spot.fragment
 
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.GridLayoutManager
@@ -25,7 +24,6 @@ import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_main_page.*
 import kotlinx.android.synthetic.main.fragment_main_page.view.*
 import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -256,6 +254,8 @@ class MainPageFragment : Fragment() {
                     mainFragBestPlaceItem = response!!.body()!!.data!!.main_best_place
                     mainFragEventItem = response!!.body()!!.data!!.main_best_event
 
+
+
                     // 첫 번째 CardView 생성 function
                     makeCardView(main_page_fragment_rv1, mainFragRecommendSpotRecyclerItem, 0)
 
@@ -267,7 +267,6 @@ class MainPageFragment : Fragment() {
                     MainFragViewPagerImageSliderAdapter!!.notifyDataSetChanged()
                     view!!.main_page_fragment_viewpager!!.setInterval(5000)
                     view!!.main_page_fragment_viewpager!!.startAutoScroll(1000)
-
                 }
             }
 

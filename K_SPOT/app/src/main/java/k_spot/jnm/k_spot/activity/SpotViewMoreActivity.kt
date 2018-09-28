@@ -21,6 +21,7 @@ import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.*
+import k_spot.jnm.k_spot.LoginActivity
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
@@ -489,7 +490,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
                 spot_view_more_act_review_num_tv.text = "${spotViewMoreData[0].review_cnt}"
             }
             spot_view_more_act_all_review_tv.text = "view all"
-            spot_view_more_act_review_no_result_tv.text = "작성된 리뷰가 없습니다. \n 첫 리뷰를 작성해주세요 :)"
+            spot_view_more_act_review_no_result_tv.text = "Please, Write first review :)"
             spot_view_more_act_review_write_tv.text = "Review write"
             tv_spot_view_more_address_by_google_map.text = "Search with google map"
             if (event_flag == 0) {
@@ -593,21 +594,27 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
             // 스크랩 안 됐을 시 하얀색으로
             if (spotViewMoreData[0].is_scrap == 0) {
-                spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
-                requestSpotSubscription(spotViewMoreData[0].spot_id)
-                spotViewMoreData[0].is_scrap = 1
-                spotViewMoreData[0].scrap_cnt = spotViewMoreData[0].scrap_cnt + 1
-                spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt).toString()
+                if(SharedPreferenceController.getAuthorization(applicationContext).isNullOrBlank()){
+                    startActivity<LoginActivity>("need_login_flag" to 1)
+                }else{
+                    spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
+                    requestSpotSubscription(spotViewMoreData[0].spot_id)
+                    spotViewMoreData[0].is_scrap = 1
+                    spotViewMoreData[0].scrap_cnt = spotViewMoreData[0].scrap_cnt + 1
+                    spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt).toString()
+                }
+
             } else {
-                spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
-                deleteSpotSubscription(spotViewMoreData[0].spot_id)
-                spotViewMoreData[0].is_scrap = 0
-                spotViewMoreData[0].scrap_cnt = spotViewMoreData[0].scrap_cnt - 1
-                spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt).toString()
+                if(SharedPreferenceController.getAuthorization(applicationContext).isNullOrBlank()){
+                    startActivity<LoginActivity>("need_login_flag" to 1)
+                }else{
+                    spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
+                    deleteSpotSubscription(spotViewMoreData[0].spot_id)
+                    spotViewMoreData[0].is_scrap = 0
+                    spotViewMoreData[0].scrap_cnt = spotViewMoreData[0].scrap_cnt - 1
+                    spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt).toString()
+                }
             }
-
-
-            //  ## 로그인이 되어있지 않은 경우 로그인 팝업이 뜬다.
         }
 
         spot_view_more_act_spot_address_rl.setOnClickListener {
@@ -630,7 +637,12 @@ class SpotViewMoreActivity : AppCompatActivity() {
         }
 
         spot_view_more_act_review_write_box_btn.setOnClickListener {
-            startActivity<ReviewWriteActivity>("spot_id" to spotViewMoreData[0].spot_id)
+            if(SharedPreferenceController.getAuthorization(applicationContext).isNullOrBlank()){
+                startActivity<LoginActivity>("need_login_flag" to 1)
+            }else{
+                startActivity<ReviewWriteActivity>("spot_id" to spotViewMoreData[0].spot_id)
+            }
+
         }
 
         spot_view_more_act_phone_num_btn.setOnClickListener {

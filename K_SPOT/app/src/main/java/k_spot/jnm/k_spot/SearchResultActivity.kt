@@ -57,6 +57,28 @@ class SearchResultActivity : AppCompatActivity(), View.OnClickListener {
         searchResultActSpotRecyclerAdapter = SearchResultActSpotRecyclerAdapter(searchSpotItems, applicationContext, 0, 0)
         setStatusBarTransparent()
         setOnClickListener(keyword)
+        setInitView(keyword)
+    }
+
+    private fun setInitView(keyword: String) {
+        //추후 구독 색상변경 바꾸기
+        if (SharedPreferenceController.getFlag(this) == "0"){
+            search_result_act_result_tv.text = keyword + " " + "검색결과"
+            search_result_act_celeb_borad_tv.text = "연예인 / 방송"
+            search_result_act_celeb_borad_see_more_tv.text = "더보기"
+            search_result_act_spot_tv.text = "장소"
+            search_result_act_spot_see_more_tv.text = "더보기"
+            search_result_act_event_tv.text = "이벤트"
+            search_result_act_event_see_more_tv.text = "더보기"
+        } else {
+            search_result_act_result_tv.text = keyword + " " + "search result"
+            search_result_act_celeb_borad_tv.text = "Celebrity / Broadcast"
+            search_result_act_celeb_borad_see_more_tv.text = "view more"
+            search_result_act_spot_tv.text = "Spot"
+            search_result_act_spot_see_more_tv.text = "view more"
+            search_result_act_event_tv.text = "Event"
+            search_result_act_event_see_more_tv.text = "view more"
+        }
     }
 
     private fun setOnClickListener(keyword : String) {
@@ -91,7 +113,6 @@ class SearchResultActivity : AppCompatActivity(), View.OnClickListener {
         getSearchResultResponse.enqueue(object : Callback<GetSearchResultResponse> {
             override fun onFailure(call: Call<GetSearchResultResponse>?, t: Throwable?) {
             }
-
             override fun onResponse(call: Call<GetSearchResultResponse>?, response: Response<GetSearchResultResponse>?) {
                 if (response!!.isSuccessful) {
 

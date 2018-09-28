@@ -16,6 +16,7 @@
         android:src="@drawable/login_img" />
 
     <TextView
+        android:id="@+id/login_act_hi_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -26,6 +27,7 @@
         android:textSize="25dp" />
 
     <TextView
+        android:id="@+id/login_act_plz_login_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -82,9 +84,10 @@
         android:layout_marginRight="8dp"
         >
         <TextView
+            android:id="@+id/temp_login_act_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="임시로그인"
+            android:text="임시로그인 >"
             android:textSize="18dp"
             android:fontFamily="@font/nanumsquareotf_bold"
             android:textColor="#40D39F"
@@ -100,9 +103,10 @@
         android:layout_marginTop="5dp">
 
         <TextView
+            android:id="@+id/login_act_freepass_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="건너뛰기>"
+            android:text="건너뛰기 >"
             android:textSize="18dp"
             android:fontFamily="@font/nanumsquareotf_bold"
             android:textColor="#40D39F"
