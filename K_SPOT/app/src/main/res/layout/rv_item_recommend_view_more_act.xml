@@ -53,7 +53,6 @@
             android:id="@+id/recommend_view_more_rv_item_contents_iv1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@color/colorPrimary"
             android:layout_weight="2"
             android:layout_marginRight="2dp"
             android:scaleType="fitXY"
@@ -84,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/recommend_view_more_rv_item_explain_first_circle"
             android:layout_marginLeft="6dp"
-            android:text="유정식당은 방탄 신인 시절 방송에서 추천한 맛집"
+            android:text="-"
             android:textColor="#414141"
             android:textSize="14dp"
             android:fontFamily="@font/nanumsquareotf_regular"/>
@@ -114,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/recommend_view_more_rv_item_explain_second_circle"
             android:layout_marginLeft="6dp"
-            android:text="토종 흑돼지 전문식당! 방탄소년단 멤버들이 주로 먹었던 흑돼지고추장 오겹살과 돌솥비빔밥이 인기메뉴"
+            android:text="-"
             android:textColor="#414141"
             android:textSize="14dp"
             android:fontFamily="@font/nanumsquareotf_regular"/>
@@ -144,7 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/recommend_view_more_rv_item_explain_third_circle"
             android:layout_marginLeft="6dp"
-            android:text="1인은 흑돼지돌솥비빔밥 2인은 쌈밥 추천!"
+            android:text="-"
             android:textColor="#414141"
             android:textSize="14dp"
             android:fontFamily="@font/nanumsquareotf_regular"/>
@@ -161,6 +160,7 @@
         android:layout_marginTop="19dp">
         
         <TextView
+            android:id="@+id/tv_recommend_spot_detail_spot_show_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="장소 상세 보기"

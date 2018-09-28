@@ -20,6 +20,7 @@ import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.activity.CategoryDetailActivity
+import k_spot.jnm.k_spot.activity.MainActivity
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -83,6 +84,9 @@ class CategoryPageFragRecyclerAdapter(private var categoryPageItems: ArrayList<C
                 }
                 requestChannelSubscription(categoryPageItems[position].channel_id)
                 categoryPageItems[position].subscription = 1
+
+                //갱신
+                (ctx as MainActivity).mainBottomTabAdapter.myPage.refleshDataSet()
             } else {
                 if (SharedPreferenceController.getFlag(ctx) == "0") {
                     holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn)
@@ -91,6 +95,9 @@ class CategoryPageFragRecyclerAdapter(private var categoryPageItems: ArrayList<C
                 }
                 deleteChannelSubscription(categoryPageItems[position].channel_id)
                 categoryPageItems[position].subscription = 0
+
+                (ctx as MainActivity).mainBottomTabAdapter.myPage.refleshDataSet()
+
             }
         }
 

@@ -503,7 +503,11 @@ class MapPageFragment : Fragment() {
 
         if (isGPSEnabled || isNetworkEnabled) {
             if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                toast("위치 탐색 중...")
+                if (SharedPreferenceController.getFlag(context!!) == "0") {
+                    toast("탐색 중..")
+                } else {
+                    toast("Searching..")
+                }
                 fusedLocationClientInfoStatus.lastLocation.addOnCompleteListener {
                     if (it.isSuccessful && it.result != null) {
                         filterOption.latitude = it.result.latitude
@@ -520,7 +524,11 @@ class MapPageFragment : Fragment() {
                 }
             }
         } else {
-            toast("GPS를 체크해주세요.")
+            if (SharedPreferenceController.getFlag(context!!) == "0") {
+                toast("GPS를 체크해주세요")
+            } else {
+                currentSpotName = "Please Check your GPS"
+            }
         }
     }
 
@@ -590,9 +598,9 @@ class MapPageFragment : Fragment() {
             cardview_map_page_no_data_message.visibility = View.VISIBLE
         }
         if (SharedPreferenceController.getFlag(context!!) == "0"){
-            tv_map_page_no_data_message.text = "데이터가 없습니다 ㅠㅠ"
+            tv_map_page_no_data_message.text = "주변에 K-spot이 없습니다 :("
         } else {
-            tv_map_page_no_data_message.text = "no data"
+            tv_map_page_no_data_message.text = "Around, there is no K-spot :("
         }
     }
 
@@ -626,7 +634,14 @@ class MapPageFragment : Fragment() {
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
             when {
                 (grantResults[0] == PackageManager.PERMISSION_GRANTED) -> getLastLocation()
-                else -> toast("권한 요청 실패")
+                else -> {
+                    if (SharedPreferenceController.getFlag(context!!) == "0") {
+                        toast("권한 요청 실패")
+                    } else {
+                        toast("Permission request failed")
+                    }
+
+                }
             }
         }
 

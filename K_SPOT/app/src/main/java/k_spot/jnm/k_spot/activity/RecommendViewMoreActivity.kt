@@ -135,7 +135,7 @@ class RecommendViewMoreActivity : AppCompatActivity() {
         // 통신
         networkService = ApplicationController.instance.networkService
         val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
-        val getThemeDetailResponse = networkService.getThemeDetail(0, authorization, theme_id)
+        val getThemeDetailResponse = networkService.getThemeDetail(SharedPreferenceController.getFlag(this).toInt(), authorization, theme_id)
         getThemeDetailResponse.enqueue(object : Callback<GetThemeDetailResponse> {
             override fun onFailure(call: Call<GetThemeDetailResponse>?, t: Throwable?) {
             }

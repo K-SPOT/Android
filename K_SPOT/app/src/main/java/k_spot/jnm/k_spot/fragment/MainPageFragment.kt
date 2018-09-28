@@ -96,17 +96,17 @@ class MainPageFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        val handler = Handler()
-        handler.postDelayed(Runnable {
-            // Auto Scroll
-            MainFragViewPagerImageSliderAdapter!!.notifyDataSetChanged()
-            view!!.main_page_fragment_viewpager!!.setInterval(5000)
-            view!!.main_page_fragment_viewpager!!.startAutoScroll(1000)
-        }, 3000)
-    }
+//    override fun onResume() {
+//        super.onResume()
+//
+//        val handler = Handler()
+//        handler.postDelayed(Runnable {
+//            // Auto Scroll
+//            MainFragViewPagerImageSliderAdapter!!.notifyDataSetChanged()
+//            view!!.main_page_fragment_viewpager!!.setInterval(5000)
+//            view!!.main_page_fragment_viewpager!!.startAutoScroll(1000)
+//        }, 3000)
+//    }
 
     override fun onPause() {
         super.onPause()
