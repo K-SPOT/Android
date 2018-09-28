@@ -53,6 +53,10 @@ class CategoryPageFragRecyclerAdapter(private var categoryPageItems: ArrayList<C
 
         holder.category_list_post_num.text = categoryPageItems[position].spot_cnt.toString()
 
+        if(position == categoryPageItems.size - 1){
+            holder.category_list_sub_bottom_line.visibility = View.GONE
+        }
+
         // 구독된 경우
         if (categoryPageItems[position].subscription == 0) {
             if (SharedPreferenceController.getFlag(ctx) == "0") {
@@ -122,6 +126,8 @@ class CategoryPageFragRecyclerAdapter(private var categoryPageItems: ArrayList<C
 
         val subscribe_cnt_text: TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_subscriber_tv) as TextView
         val board_cnt_text: TextView = itemView!!.findViewById(R.id.category_list_fragment_rv_item_post_tv) as TextView
+        var category_list_sub_bottom_line: View = itemView!!.findViewById(R.id.category_list_fragment_rv_item_bottom_line)
+
     }
 
     private fun requestChannelSubscription(channel_id: Int) {
