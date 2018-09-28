@@ -23,7 +23,7 @@ data class SpotViewMoreData (
         val open_time: String,
         val close_time: String,
         val contact: String,
-        val scrap_cnt: Int,
+        var scrap_cnt: Int,
         var is_scrap: Int,
         val channel: ChannelSpotViewMoreData,
         val reviews: ArrayList<ReviewSpotViewMoreData>

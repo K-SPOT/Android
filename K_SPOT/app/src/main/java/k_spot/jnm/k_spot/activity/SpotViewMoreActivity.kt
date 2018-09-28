@@ -18,7 +18,6 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.TextView
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.*
@@ -33,7 +32,6 @@ import k_spot.jnm.k_spot.adapter.SpotViewMoreActCardViewAdapter
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_spot_view_more.*
 import org.jetbrains.anko.centerInParent
-import org.jetbrains.anko.horizontalMargin
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -198,15 +196,11 @@ class SpotViewMoreActivity : AppCompatActivity() {
                         // 스크랩
                         spot_view_more_act_scrap_num_tv.text = spotViewMoreData[0].scrap_cnt.toString()
 
-                        var scrapFlag = spotViewMoreData[0].is_scrap
                         // 스크랩 안 됐을 시 하얀색으로
-                        if (scrapFlag == 0) {
-                            spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
-                            //## 스크랩 통신 필요
-                            scrapFlag = 1
-                        } else {
+                        if (spotViewMoreData[0].is_scrap == 0) {
                             spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
-                            scrapFlag = 0
+                        } else {
+                            spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
                         }
 
                     } else {
@@ -543,11 +537,13 @@ class SpotViewMoreActivity : AppCompatActivity() {
                 spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_scrap_btn)
                 requestSpotSubscription(spotViewMoreData[0].spot_id)
                 spotViewMoreData[0].is_scrap = 1
-                spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt + 1).toString()
+                spotViewMoreData[0].scrap_cnt= spotViewMoreData[0].scrap_cnt + 1
+                spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt).toString()
             } else {
                 spot_view_more_act_scrap_iv.setImageResource(R.drawable.category_unscrap_btn)
                 deleteSpotSubscription(spotViewMoreData[0].spot_id)
                 spotViewMoreData[0].is_scrap = 0
+                spotViewMoreData[0].scrap_cnt= spotViewMoreData[0].scrap_cnt - 1
                 spot_view_more_act_scrap_num_tv.text = (spotViewMoreData[0].scrap_cnt).toString()
             }
 
