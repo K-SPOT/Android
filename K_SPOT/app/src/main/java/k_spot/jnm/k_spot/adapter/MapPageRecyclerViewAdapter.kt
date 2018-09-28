@@ -37,7 +37,7 @@ class MapPageRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<Map
         holder.badgeList.adapter = badgeRecyclerViewAdapter
 
         holder.cardBtn.setOnClickListener {
-            ctx.startActivity<SpotViewMoreActivity>("spot_id" to dataList[position].spot_id)
+            ctx.startActivity<SpotViewMoreActivity>("spot_id" to dataList[position].spot_id, "event_flag" to 0)
         }
     }
 

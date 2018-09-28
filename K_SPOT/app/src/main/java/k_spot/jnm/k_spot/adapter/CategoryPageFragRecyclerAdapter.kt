@@ -73,10 +73,8 @@ class CategoryPageFragRecyclerAdapter(private var categoryPageItems: ArrayList<C
             }
         }
 
-        var subFlag = categoryPageItems[position].subscription
-
         holder.category_list_sub_btn.setOnClickListener {
-            if (subFlag == 0) {
+            if (categoryPageItems[position].subscription == 0) {
                 if (SharedPreferenceController.getFlag(ctx) == "0") {
                     holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
                 } else {

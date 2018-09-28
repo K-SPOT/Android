@@ -45,7 +45,7 @@ class SearchResultActSpotRecyclerAdapter(private var searchSpotItems: ArrayList<
             holder.btn.setOnClickListener {
                 val spot_id = searchSpotItems[position].spot_id
                 Log.v("spot_id", spot_id.toString())
-                context.startActivity<SpotViewMoreActivity>("spot_id" to spot_id)
+                context.startActivity<SpotViewMoreActivity>("spot_id" to spot_id, "event_flag" to 0)
             }
         } else {
             holder.btn.setOnClickListener {

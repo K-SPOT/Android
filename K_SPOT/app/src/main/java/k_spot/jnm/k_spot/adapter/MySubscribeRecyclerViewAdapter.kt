@@ -14,6 +14,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import k_spot.jnm.k_spot.Get.ChannelMyPageData
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.CategoryDetailActivity
+import org.jetbrains.anko.startActivity
 
 
 class MySubscribeRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList<ChannelMyPageData>) : RecyclerView.Adapter<MySubscribeRecyclerViewAdapter.Holder>(){
@@ -32,16 +34,23 @@ class MySubscribeRecyclerViewAdapter(val ctx : Context, val dataList : ArrayList
             rootLayoutParams.rightMargin = (16*dp).toInt()
         }
 
-        val requestOptions = RequestOptions().transforms(CenterCrop(), RoundedCorners(30))
+        val requestOptions = RequestOptions().transforms(CenterCrop(), RoundedCorners(dpToPx(15)))
         Glide.with(ctx).load(dataList[position].background_img).apply(requestOptions).into(holder.img_btn)
 
         holder.img_btn.setOnClickListener {
-            //            ## celeb보기로 이동!
+            ctx.startActivity<CategoryDetailActivity>("channel_id" to dataList[position].channel_id.toString())
         }
 
         holder.engTitle.text = dataList[position].eng_name
 
         holder.korTitle.text = dataList[position].kor_name
+    }
+
+    fun dpToPx(dp: Int): Int {
+        val density = ctx.resources
+                .displayMetrics
+                .density
+        return Math.round(dp.toFloat() * density)
     }
 
     inner class Holder(itemView : View) : RecyclerView.ViewHolder(itemView){

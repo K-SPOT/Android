@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".activity.SpotViewMoreActivity"
     android:id="@+id/ddfld"
+    android:background="#FFFFFF"
     >
 
     <ScrollView
@@ -412,6 +413,7 @@
                             android:layout_marginRight="8dp">
 
                             <TextView
+                                android:id="@+id/spot_view_more_act_all_review_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="8dp"
@@ -476,7 +478,7 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="38dp"
                         android:background="@drawable/spot_view_more_act_review_box_shape"
-                        android:elevation="4dp"
+                        android:elevation="2dp"
                         >
 
                         <RelativeLayout
@@ -558,11 +560,13 @@
                             android:visibility="visible">
 
                             <TextView
+                                android:id="@+id/spot_view_more_act_review_no_result_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:text="작성된 리뷰가 없습니다. \n 첫 리뷰를 작성해주세요 :)"
-                                android:textSize="20dp"
+                                android:lineSpacingExtra="7dp"
+                                android:textSize="15dp"
                                 android:gravity="center"
                                 android:textColor="#C0C0C0"
                                 android:fontFamily="@font/nanumsquareotf_bold"/>
@@ -596,6 +600,7 @@
                                 android:src="@drawable/category_review_write_icon" />
 
                             <TextView
+                                android:id="@+id/spot_view_more_act_review_write_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
@@ -658,6 +663,7 @@
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/tv_spot_view_more_address_by_google_map"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/spot_view_more_google_map_box"

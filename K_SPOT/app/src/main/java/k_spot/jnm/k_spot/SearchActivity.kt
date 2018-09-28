@@ -39,6 +39,7 @@ class SearchActivity : AppCompatActivity() {
         celebrity = ArrayList()
         broadcast = ArrayList()
         event = ArrayList()
+        setInitView()
 
 //        val celebRecyclerView : RecyclerView = findViewById(R.id.search_act_search_recommend_celeb_rv)
 //        makeRecommededHashTag(celebRecyclerView)
@@ -57,6 +58,25 @@ class SearchActivity : AppCompatActivity() {
         setOnClickListener()
 
 
+    }
+
+    private fun setInitView() {
+        //추후 구독 색상변경 바꾸기
+        if (SharedPreferenceController.getFlag(this) == "0"){
+            search_act_what_search_tv.text = "무엇을 찾으시나요?"
+            search_act_search_edit_text.hint = "검색어를 입력해주세요."
+            search_act_search_recommend_celeb_tv.text = "연예인"
+            search_act_search_broadcast_tv.text = "방송"
+            search_act_search_event_tv.text ="이벤트"
+            search_act_search_tv.text = "검색하기"
+        } else {
+            search_act_what_search_tv.text = "What are you looking for?"
+            search_act_search_edit_text.hint = "Please enter your key word."
+            search_act_search_recommend_celeb_tv.text = "celebrity"
+            search_act_search_broadcast_tv.text = "broadcast"
+            search_act_search_event_tv.text ="event"
+            search_act_search_tv.text = "search"
+        }
     }
 
     fun setOnClickListener() {
@@ -104,14 +124,14 @@ class SearchActivity : AppCompatActivity() {
         search_act_search_recommend_event_rl.setOnClickListener {
             if(event.size >= 1){
                 var spot_id = event[0].spot_id
-                startActivity<SpotViewMoreActivity>("spot_id" to spot_id)
+                startActivity<SpotViewMoreActivity>("spot_id" to spot_id, "eventFlag" to 1)
             }
         }
 
         search_act_search_recommend_event_rl2.setOnClickListener {
             if(event.size >= 2){
                 var spot_id = event[1].spot_id
-                startActivity<ViewMoreActivity>("spot_id" to spot_id)
+                startActivity<ViewMoreActivity>("spot_id" to spot_id, "eventFlag" to 1)
             }
         }
 

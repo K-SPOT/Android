@@ -19,6 +19,7 @@ import com.kakao.util.exception.KakaoException
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostKakaoResponse
+import k_spot.jnm.k_spot.Post.PostTempLoginResponse
 import k_spot.jnm.k_spot.activity.MainActivity
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import k_spot.jnm.k_spot.kakao.KakaoSDKAdapter
@@ -63,6 +64,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity<MainActivity>()
             finish()
         }
+        temp_login_act_btn.setOnClickListener {
+            SharedPreferenceController.clearSPC(context = applicationContext)
+            requestLoginToServer()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -91,6 +96,31 @@ class LoginActivity : AppCompatActivity() {
             Log.v("access_token",access_token)
             requestLoginToServer(access_token)
         }
+    }
+
+    private fun requestLoginToServer() {
+        networkService = ApplicationController.instance.networkService
+        var postKakaoLoginResponse: Call<PostTempLoginResponse>
+        postKakaoLoginResponse = networkService.postTempLogin(SharedPreferenceController.getFlag(this).toInt(),
+                null, "2163555827048248")
+        postKakaoLoginResponse.enqueue(object : Callback<PostTempLoginResponse> {
+            override fun onFailure(call: Call<PostTempLoginResponse>?, t: Throwable?) {
+                Log.e("로긴 통신 실패", t.toString())
+            }
+
+            override fun onResponse(call: Call<PostTempLoginResponse>?, response: Response<PostTempLoginResponse>?) {
+                if (response!!.isSuccessful) {
+
+                    val tempid: String = response.body()!!.data.id
+                    val id = tempid.toLong()
+                    val auth: String = response.body()!!.data.authorization
+                    SharedPreferenceController.setAuthorization(context = applicationContext, authorization = auth)
+                    SharedPreferenceController.setMyId(context = applicationContext, id = id.toInt())
+                    startActivity<MainActivity>()
+                    finish()
+                }
+            }
+        })
     }
 
     private fun requestLoginToServer(access_token: String) {

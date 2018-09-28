@@ -2,10 +2,7 @@ package k_spot.jnm.k_spot.Network
 
 import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.*
-import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
-import k_spot.jnm.k_spot.Post.PostKakaoResponse
-import k_spot.jnm.k_spot.Post.PostSpotReviewWriteResponse
-import k_spot.jnm.k_spot.Post.PostUserInfoResponse
+import k_spot.jnm.k_spot.Post.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -207,6 +204,15 @@ interface NetworkService {
             @Header("flag") flag : Int?,
             @Header("authorization") tokenValue : String?
     ) : Call<GetUserScapListResponse>
+
+    // 임시 로그인 통신
+    @FormUrlEncoded
+    @POST("user/temp/signin")
+    fun postTempLogin(
+            @Header("flag") flag: Int?,
+            @Header("authorization") tokenValue: String?,
+            @Field("user_id") user_id: String
+    ): Call<PostTempLoginResponse>
 
 
 }

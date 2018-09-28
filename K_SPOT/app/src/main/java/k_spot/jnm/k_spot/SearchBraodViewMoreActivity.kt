@@ -11,6 +11,7 @@ import android.view.View
 import android.view.WindowManager
 import k_spot.jnm.k_spot.Get.ChannelSearchResultData
 import k_spot.jnm.k_spot.adapter.SearchResultActBroadRecyclerAdapter
+import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_search_braod_view_more.*
 
 class SearchBraodViewMoreActivity : AppCompatActivity(), View.OnClickListener {
@@ -34,6 +35,18 @@ class SearchBraodViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         makeRecyclerView(searchBroadItems)
         setStatusBarTransparent()
         setOnClickListener()
+        setInitView(keyword)
+    }
+
+    private fun setInitView(keyword: String) {
+        //추후 구독 색상변경 바꾸기
+        if (SharedPreferenceController.getFlag(this) == "0"){
+            search_broad_view_more_act_result_tv.text = keyword + " " + "검색결과"
+            search_broad_view_more_act_tv.text = "연예인 / 방송"
+        } else {
+            search_broad_view_more_act_result_tv.text = keyword + " " + "search result"
+            search_broad_view_more_act_tv.text = "Celebrity / BroadCast"
+        }
     }
 
     private fun setOnClickListener() {
