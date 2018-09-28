@@ -12,6 +12,7 @@ import k_spot.jnm.k_spot.Get.ChannelInfoData
 import k_spot.jnm.k_spot.Get.GetCategoryDetailResponse
 import k_spot.jnm.k_spot.Get.PlaceOrEventRelativeData
 import k_spot.jnm.k_spot.Get.PlaceRecommendData
+import k_spot.jnm.k_spot.LoginActivity
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
@@ -225,9 +226,17 @@ class CategoryDetailActivity : AppCompatActivity() {
     //데이터 전송 후 부터 사용
     private fun setSubscriptionBtnClickListener(){
         if (channelInfoData.subscription == 0) {
-            requestChannelSubscription(channel_id)
+            if(SharedPreferenceController.getAuthorization(applicationContext).isNullOrBlank()){
+                startActivity<LoginActivity>("need_login_flag" to 1)
+            }else{
+                requestChannelSubscription(channel_id)
+            }
         } else {
-            deleteChannelSubscription(channel_id)
+            if(SharedPreferenceController.getAuthorization(applicationContext).isNullOrBlank()){
+                startActivity<LoginActivity>("need_login_flag" to 1)
+            }else{
+                deleteChannelSubscription(channel_id)
+            }
         }
     }
 

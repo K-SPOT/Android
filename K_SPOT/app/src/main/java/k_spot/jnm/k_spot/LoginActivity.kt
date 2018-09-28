@@ -41,6 +41,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         setStatusBarTransparent()
+        var need_login_flag : Int = intent.getIntExtra("need_login_flag", 0)
+        if(need_login_flag == 1){
+            login_act_hi_tv.text = "로그인이 필요한 서비스입니다."
+        }
         if (KakaoSDK.getAdapter() == null) {
             KakaoSDK.init(KakaoSDKAdapter(ctx = this))
         }
@@ -49,9 +53,32 @@ class LoginActivity : AppCompatActivity() {
         Session.getCurrentSession().checkAndImplicitOpen()
 
         setClickListener()
+        setInitView()
 
         Log.e("hashkey", getHashKey(applicationContext))
 
+    }
+
+    private fun setInitView() {
+        //추후 구독 색상변경 바꾸기
+        if (SharedPreferenceController.getFlag(this) == "0"){
+            login_act_hi_tv.text = "안녕하세요!"
+            login_act_plz_login_tv.text = "로그인을 해주세요 :)"
+            temp_login_act_tv.text = "임시로그인 >"
+            login_act_freepass_tv.text = "건너뛰기 >"
+            kakao_custom_login_btn.setImageResource(R.drawable.kakao_login_btn)
+            login_act_facebook_btn.setImageResource(R.drawable.facebook_login_btn)
+            login_act_google_btn.setImageResource(R.drawable.google_login_btn)
+        } else if(SharedPreferenceController.getFlag(this) == "1") {
+            login_act_hi_tv.text = "Hello!"
+            login_act_plz_login_tv.text = "Please login:)"
+            temp_login_act_tv.text = "Temporary login"
+            login_act_freepass_tv.text = "Skip login"
+            // ## 여기 영어로 안바뀜!
+            kakao_custom_login_btn.setImageResource(R.drawable.kakao_login_btn)
+            login_act_facebook_btn.setImageResource(R.drawable.facebook_login_btn)
+            login_act_google_btn.setImageResource(R.drawable.google_login_btn)
+        }
     }
 
     private fun setClickListener() {

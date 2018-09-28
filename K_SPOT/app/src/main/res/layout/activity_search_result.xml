@@ -33,6 +33,7 @@
                     android:layout_marginTop="16dp">
 
                     <TextView
+                        android:id="@+id/search_result_act_celeb_borad_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -52,6 +53,7 @@
                         android:layout_marginRight="12dp">
 
                         <TextView
+                            android:id="@+id/search_result_act_celeb_borad_see_more_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
@@ -95,6 +97,7 @@
                     android:layout_marginTop="8dp">
 
                     <TextView
+                        android:id="@+id/search_result_act_spot_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -114,6 +117,7 @@
                         android:layout_marginRight="12dp">
 
                         <TextView
+                            android:id="@+id/search_result_act_spot_see_more_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
@@ -155,6 +159,7 @@
                     android:layout_marginTop="8dp">
 
                     <TextView
+                        android:id="@+id/search_result_act_event_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -174,6 +179,7 @@
                         android:layout_marginRight="12dp">
 
                         <TextView
+                            android:id="@+id/search_result_act_event_see_more_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
@@ -251,7 +257,9 @@
                 android:id="@+id/search_result_act_result_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/search_icon" />
+                android:src="@drawable/search_page_search_icon"
+                android:tint="#5E5E5E"
+                />
             <!--검색 결과 text-->
             <TextView
                 android:id="@+id/search_result_act_result_tv"

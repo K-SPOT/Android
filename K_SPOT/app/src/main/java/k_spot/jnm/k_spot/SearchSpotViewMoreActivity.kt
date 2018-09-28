@@ -56,7 +56,6 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         } else {
             search_spot_view_more_act_result_tv.text = keyword + " " + "search result"
             search_spot_view_more_act_tv.text = "Spot"
-
         }
     }
 

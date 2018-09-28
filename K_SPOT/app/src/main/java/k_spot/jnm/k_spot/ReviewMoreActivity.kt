@@ -94,7 +94,11 @@ class ReviewMoreActivity : AppCompatActivity() {
         }
 
         review_more_act_review_write_btn.setOnClickListener {
-            startActivity<ReviewWriteActivity>("spot_id" to spot_id)
+            if(SharedPreferenceController.getAuthorization(applicationContext).isNullOrBlank()){
+                startActivity<LoginActivity>("need_login_flag" to 1)
+            }else{
+                startActivity<ReviewWriteActivity>("spot_id" to spot_id)
+            }
         }
     }
 

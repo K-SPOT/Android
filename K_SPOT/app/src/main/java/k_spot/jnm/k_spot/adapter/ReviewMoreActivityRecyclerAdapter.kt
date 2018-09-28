@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.*
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Get.ReviewMoreData
+import k_spot.jnm.k_spot.LoginActivity
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.db.SharedPreferenceController
+import org.jetbrains.anko.startActivity
 
 class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterData : ArrayList<ReviewMoreData>, private var ctx: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
@@ -44,7 +47,11 @@ class ReviewMoreActivityRecyclerAdapter (private var reviewMoreRecyclerAdpaterDa
 
         // 신고하기 버튼 클릭 시
         holder.review_more_btn.setOnClickListener {
-            holder.review_more_report_rl.visibility = View.VISIBLE
+            if(SharedPreferenceController.getAuthorization(ctx).isNullOrBlank()){
+                ctx.startActivity<LoginActivity>("need_login_flag" to 1)
+            }else{
+                holder.review_more_report_rl.visibility = View.VISIBLE
+            }
         }
         // 음란물 신고 논리 처리
         holder.review_more_first_report_btn.setOnClickListener {

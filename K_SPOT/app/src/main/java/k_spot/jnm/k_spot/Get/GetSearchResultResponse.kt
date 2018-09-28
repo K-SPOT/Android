@@ -19,7 +19,7 @@ data class ChannelSearchResultData (
         val subscription_cnt: Int,
         val spot_cnt: Int,
         val thumbnail_img: String,
-        val subscription: Int
+        var subscription: Int
 ) :Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),

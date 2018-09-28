@@ -15,6 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import k_spot.jnm.k_spot.Delete.DeleteChannelScripteResponse
 import k_spot.jnm.k_spot.Get.ChannelListData
+import k_spot.jnm.k_spot.LoginActivity
 import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
@@ -80,9 +81,13 @@ class CategoryPageFragRecyclerAdapter(private var categoryPageItems: ArrayList<C
                 } else {
                     holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn_en)
                 }
-                requestChannelSubscription(categoryPageItems[position].channel_id)
-                categoryPageItems[position].subscription = 1
-
+                // 건너뛰기 로그인
+                if(SharedPreferenceController.getAuthorization(ctx).isNullOrBlank()){
+                    ctx.startActivity<LoginActivity>("need_login_flag" to 1)
+                }else{
+                    requestChannelSubscription(categoryPageItems[position].channel_id)
+                    categoryPageItems[position].subscription = 1
+                }
                 //갱신
                 (ctx as MainActivity).mainBottomTabAdapter.myPage.refleshDataSet()
             } else {
@@ -91,9 +96,13 @@ class CategoryPageFragRecyclerAdapter(private var categoryPageItems: ArrayList<C
                 } else {
                     holder.category_list_sub_btn_image.setImageResource(R.drawable.category_list_unsub_btn_en)
                 }
-                deleteChannelSubscription(categoryPageItems[position].channel_id)
-                categoryPageItems[position].subscription = 0
-
+                // 건너뛰기 로그인
+                if(SharedPreferenceController.getAuthorization(ctx).isNullOrBlank()){
+                    ctx.startActivity<LoginActivity>("need_login_flag" to 1)
+                }else{
+                    deleteChannelSubscription(categoryPageItems[position].channel_id)
+                    categoryPageItems[position].subscription = 0
+                }
                 (ctx as MainActivity).mainBottomTabAdapter.myPage.refleshDataSet()
 
             }
