@@ -47,6 +47,20 @@ class SubscribeActivity : AppCompatActivity() {
         subscribeActRecyclerViewAdapter = SubscribeActRecyclerViewAdapter(subscribeActCelebTabItems, applicationContext)
         getSubscribeCeleb()
         setOnClickListener()
+
+        setInitLanguage()
+    }
+
+    private fun setInitLanguage(){
+        if (SharedPreferenceController.getFlag(this) == "0"){
+            tv_subscripe_title.text = "구독"
+            subscribe_act_celeb_tv.text = "연예인"
+            subscribe_act_broadcast_tv.text = "방송"
+        } else {
+            tv_subscripe_title.text = "Subscribe"
+            subscribe_act_celeb_tv.text = "Celebrity"
+            subscribe_act_broadcast_tv.text = "Broadcast "
+        }
     }
 
     fun setOnClickListener() {
@@ -114,7 +128,7 @@ class SubscribeActivity : AppCompatActivity() {
     private fun getSubscribeCeleb() {
         val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
         networkService = ApplicationController.instance.networkService
-        val getUserSubscribeResponse = networkService.getUserSubscribe(0, authorization)
+        val getUserSubscribeResponse = networkService.getUserSubscribe(SharedPreferenceController.getFlag(this).toInt(), authorization)
         getUserSubscribeResponse.enqueue(object : Callback<GetUserSubscribeResponse> {
             override fun onFailure(call: Call<GetUserSubscribeResponse>?, t: Throwable?) {
             }

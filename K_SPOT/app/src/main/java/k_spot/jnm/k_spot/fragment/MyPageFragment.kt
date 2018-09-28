@@ -62,6 +62,10 @@ class MyPageFragment : Fragment() {
 
     fun translateMyPageLanguage(){
         changeMyPageLanguage()
+        //getMyPage()
+    }
+    fun refleshDataSet(){
+        getMyPage()
     }
 
     private fun changeMyPageLanguage(){

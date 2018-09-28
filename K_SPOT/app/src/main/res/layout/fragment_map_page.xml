@@ -457,7 +457,7 @@
                             <TextView
                                 android:id="@+id/tv_map_page_no_data_message"
                                 android:layout_centerInParent="true"
-                                android:text="K-spot이 없습니다 :("
+                                android:text="내 주변에 k-spot이 없습니다 :("
                                 android:textColor="#707070"
                                 android:textSize="13dp"
                                 android:fontFamily="@font/nanumsquareotf_regular"

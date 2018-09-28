@@ -18,9 +18,9 @@ import java.util.*
 
 class MainFragViewPagerImageSliderAdapter(context: Context, mResources: ArrayList<Theme>) : PagerAdapter() {
 
-    var mContext : Context = context
-    var mLayoutInflater : LayoutInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    var mResources : ArrayList<Theme> = mResources
+    var mContext: Context = context
+    var mLayoutInflater: LayoutInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    var mResources: ArrayList<Theme> = mResources
 
     override fun getItemPosition(`object`: Any): Int {
         return PagerAdapter.POSITION_NONE
