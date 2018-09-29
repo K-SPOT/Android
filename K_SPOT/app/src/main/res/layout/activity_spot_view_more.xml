@@ -133,6 +133,7 @@
 
                     <!--장소명 밑 간단 설명-->
                     <TextView
+                        android:layout_marginHorizontal="16dp"
                         android:id="@+id/spot_view_more_act_spot_semi_info_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -140,7 +141,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/nanumsquareotf_regular"
-                        android:text="서울의 야경을 한 번에 볼 수 있는 랜드마크"
+                        android:text="-"
+                        android:gravity="center_horizontal"
                         android:textSize="11dp" />
 
                     <!--주소아이콘과 주소-->
@@ -150,7 +152,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/spot_view_more_act_spot_semi_info_tv"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="16dp">
+                        android:layout_marginTop="16dp"
+                        android:layout_marginHorizontal="16dp">
 
                         <ImageView
                             android:id="@+id/spot_view_more_act_spot_address_icon_iv"
@@ -167,9 +170,10 @@
                             android:layout_marginLeft="6dp"
                             android:layout_toRightOf="@+id/spot_view_more_act_spot_address_icon_iv"
                             android:fontFamily="@font/nanumsquareotf_bold"
-                            android:text="용산구 남산공원길 105"
+                            android:text="-"
                             android:textColor="#707070"
-                            android:textSize="11dp" />
+                            android:textSize="11dp"
+                            android:gravity="center_horizontal"/>
                     </RelativeLayout>
 
                     <!--지하철 설명-->

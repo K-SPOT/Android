@@ -271,7 +271,12 @@ class SpotViewMoreActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PostChannelSubscripeResponse>?, response: Response<PostChannelSubscripeResponse>?) {
                 response?.let {
                     if (response.isSuccessful) {
-                        toast("스크랩 완료")
+                        if (SharedPreferenceController.getFlag(this@SpotViewMoreActivity) == "0"){
+                            toast("스크랩 완료")
+                        } else {
+                            toast("Scrap Complete")
+                        }
+
                     }
                 }
             }
@@ -289,8 +294,11 @@ class SpotViewMoreActivity : AppCompatActivity() {
             override fun onResponse(call: Call<DeleteChannelScripteResponse>?, response: Response<DeleteChannelScripteResponse>?) {
                 response?.let {
                     if (response.isSuccessful) {
-                        toast("스크랩 취소")
-                    }
+                        if (SharedPreferenceController.getFlag(this@SpotViewMoreActivity) == "0"){
+                            toast("스크랩 취소")
+                        } else {
+                            toast("Scrap Cancel")
+                        }                    }
                 }
             }
         })
