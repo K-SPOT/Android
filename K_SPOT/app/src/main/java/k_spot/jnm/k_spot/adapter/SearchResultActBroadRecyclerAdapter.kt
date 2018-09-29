@@ -58,7 +58,7 @@ class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayLi
         }
 
         holder.btn.setOnClickListener {
-            context.startActivity<CategoryDetailActivity>("channel_id" to searchBroadItems[position].channel_id)
+            context.startActivity<CategoryDetailActivity>("channel_id" to searchBroadItems[position].channel_id.toString())
         }
 
         holder.result_sub_btn_btn.setOnClickListener {

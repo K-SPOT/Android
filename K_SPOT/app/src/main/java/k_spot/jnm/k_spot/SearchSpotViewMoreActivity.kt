@@ -111,13 +111,16 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
 //            search_spot_view_more_act_filter_on_rl.visibility = View.VISIBLE
         }
         search_spot_view_more_act_filter_cancle_btn.setOnClickListener {
+            clickFilterDownAnimation()
             search_spot_view_more_act_filter_on_rl.visibility = View.GONE
         }
         search_spot_view_more_act_filter_x_btn.setOnClickListener {
+            clickFilterDownAnimation()
             search_spot_view_more_act_filter_on_rl.visibility = View.GONE
         }
 //##        // 검색 통신 필요 ##
         search_spot_view_more_act_filter_enter_btn.setOnClickListener {
+            clickFilterDownAnimation()
             getSearchResultFilter(keyword, order, is_food, is_cafe, is_sight, is_etc)
             search_spot_view_more_act_filter_on_rl.visibility = View.GONE
         }
@@ -186,7 +189,15 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
                         R.anim.search_spot_view_more_act_anim)
         search_spot_view_more_act_filter_on_rl.visibility = View.VISIBLE
         search_spot_view_more_act_filter_on_rl.startAnimation(anim)
+    }
 
+    // 탭바를 오른쪽 방송 탭 밑으로 이동!
+    private fun clickFilterDownAnimation(){
+        val anim = AnimationUtils
+                .loadAnimation(applicationContext,
+                        R.anim.search_spot_view_more_act_down_anim)
+        search_spot_view_more_act_filter_on_rl.visibility = View.GONE
+        search_spot_view_more_act_filter_on_rl.startAnimation(anim)
     }
 
     private fun makeRecyclerView(searchSpotItems: ArrayList<PlaceSearchResultData>) {

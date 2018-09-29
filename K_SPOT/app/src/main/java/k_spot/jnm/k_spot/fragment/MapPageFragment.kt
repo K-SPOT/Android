@@ -16,6 +16,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import k_spot.jnm.k_spot.Get.GetMapPageSpotDataResponse
@@ -458,8 +459,7 @@ class MapPageFragment : Fragment() {
             } else {
                 toast("filter is applied.\nplease choose a spot")
             }
-
-
+            mapSpotFilterDownAnimation()
         }
 
         btn_map_page_close_filtering.setOnClickListener {
@@ -480,19 +480,35 @@ class MapPageFragment : Fragment() {
             }
 
             setFilterOption()
-            rl_map_page_open_filtering_backgound.visibility = View.GONE
+            mapSpotFilterDownAnimation()
             (activity as MainActivity).showBottomPageTab()
-            ll_map_page_filtering.visibility = View.GONE
-            btn_map_page_close_filtering.visibility = View.GONE
         }
 
         btn_map_page_open_filtering.setOnClickListener {
             (activity as MainActivity).hideBottomPageTab()
-            rl_map_page_open_filtering_backgound.visibility = View.VISIBLE
-            ll_map_page_filtering.visibility = View.VISIBLE
-            btn_map_page_close_filtering.visibility = View.VISIBLE
+            mapSpotFilterUpAnimation()
+//            rl_map_page_open_filtering_backgound.visibility = View.VISIBLE
+//            ll_map_page_filtering.visibility = View.VISIBLE
+//            btn_map_page_close_filtering.visibility = View.VISIBLE
         }
 
+    }
+
+    // 탭바를 오른쪽 방송 탭 밑으로 이동!
+    private fun mapSpotFilterDownAnimation(){
+        val anim = AnimationUtils
+                .loadAnimation(context,
+                        R.anim.search_spot_view_more_act_down_anim)
+        rl_map_page_open_filtering_rl.visibility = View.GONE
+        rl_map_page_open_filtering_rl.startAnimation(anim)
+    }
+
+    private fun mapSpotFilterUpAnimation(){
+        val anim = AnimationUtils
+                .loadAnimation(context,
+                        R.anim.search_spot_view_more_act_anim)
+        rl_map_page_open_filtering_rl.visibility = View.VISIBLE
+        rl_map_page_open_filtering_rl.startAnimation(anim)
     }
 
 
