@@ -58,9 +58,17 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
 
         // sub가 안됐을 때
         if(mDataset[position].is_subscription == "0"){
-            holder.subscribeBtn.setImageResource(R.drawable.category_list_unsub_btn)
+            if (SharedPreferenceController.getFlag(ctx) == "0"){
+                holder.subscribeBtn.setImageResource(R.drawable.category_list_unsub_btn)
+            } else {
+                holder.subscribeBtn.setImageResource(R.drawable.category_list_unsub_btn_en)
+            }
         }else{
-            holder.subscribeBtn.setImageResource(R.drawable.category_list_sub_btn)
+            if (SharedPreferenceController.getFlag(ctx) == "0"){
+                holder.subscribeBtn.setImageResource(R.drawable.category_list_sub_btn)
+            } else {
+                holder.subscribeBtn.setImageResource(R.drawable.category_list_sub_btn_en)
+            }
         }
 
         holder.subscribeBtn.setOnClickListener {
@@ -69,7 +77,11 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
                 if(SharedPreferenceController.getAuthorization(ctx).isNullOrBlank()){
                     ctx.startActivity<LoginActivity>("need_login_flag" to 1)
                 }else{
-                    holder.subscribeBtn.setImageResource(R.drawable.category_list_sub_btn)
+                    if (SharedPreferenceController.getFlag(ctx) == "0"){
+                        holder.subscribeBtn.setImageResource(R.drawable.category_list_sub_btn)
+                    } else {
+                        holder.subscribeBtn.setImageResource(R.drawable.category_list_sub_btn_en)
+                    }
                     mDataset[position].is_subscription = "1"
                     requestChannelSubscription(mDataset[position].channel_id.toInt())
                 }
@@ -77,7 +89,11 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
                 if(SharedPreferenceController.getAuthorization(ctx).isNullOrBlank()){
                     ctx.startActivity<LoginActivity>("need_login_flag" to 1)
                 }else{
-                    holder.subscribeBtn.setImageResource(R.drawable.category_list_unsub_btn)
+                    if (SharedPreferenceController.getFlag(ctx) == "0"){
+                        holder.subscribeBtn.setImageResource(R.drawable.category_list_unsub_btn)
+                    } else {
+                        holder.subscribeBtn.setImageResource(R.drawable.category_list_unsub_btn_en)
+                    }
                     mDataset[position].is_subscription = "0"
                     deleteChannelSubscription(mDataset[position].channel_id.toInt())
                 }
@@ -87,7 +103,11 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
         holder.rl.setOnClickListener {
             ctx.startActivity<CategoryDetailActivity>("channel_id" to mDataset[position].channel_id)
         }
+        if (SharedPreferenceController.getFlag(ctx) == "0"){
 
+        } else {
+
+        }
     }
 
     private fun requestChannelSubscription(channel_id : Int){
@@ -100,7 +120,6 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
             override fun onResponse(call: Call<PostChannelSubscripeResponse>?, response: Response<PostChannelSubscripeResponse>?) {
                 response?.let {
                     if (response.isSuccessful){
-                        ctx.toast("구독")
                     }
                 }
             }
@@ -118,7 +137,6 @@ class SpotViewMoreActCardViewAdapter(val ctx : Context, val myDataset : ArrayLis
             override fun onResponse(call: Call<DeleteChannelScripteResponse>?, response: Response<DeleteChannelScripteResponse>?) {
                 response?.let {
                     if (response.isSuccessful){
-                        ctx.toast("구독 취소")
                     }
                 }
             }
