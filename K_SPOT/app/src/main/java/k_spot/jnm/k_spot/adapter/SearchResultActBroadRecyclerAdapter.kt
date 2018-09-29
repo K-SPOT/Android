@@ -17,6 +17,7 @@ import k_spot.jnm.k_spot.Network.ApplicationController
 import k_spot.jnm.k_spot.Network.NetworkService
 import k_spot.jnm.k_spot.Post.PostChannelSubscripeResponse
 import k_spot.jnm.k_spot.R
+import k_spot.jnm.k_spot.activity.CategoryDetailActivity
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -56,6 +57,10 @@ class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayLi
             holder.result_sub_btn_image.setImageResource(R.drawable.category_list_sub_btn)
         }
 
+        holder.btn.setOnClickListener {
+            context.startActivity<CategoryDetailActivity>("channel_id" to searchBroadItems[position].channel_id)
+        }
+
         holder.result_sub_btn_btn.setOnClickListener {
 //            if 조건문으로 구독 안한 flag 일 경우
 //            subscription Flag 바꾸는 통신을 하고 한번 터치 시 tempFlag 값을 바꾸고
@@ -90,11 +95,13 @@ class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayLi
         var result_post_num : TextView = itemView!!.findViewById(R.id.search_result_act_rv_item_post_num_tv)
         var result_sub_btn_image : ImageView = itemView!!.findViewById(R.id.search_result_act_rv_item_subscribe_iv)
         var result_sub_btn_btn : RelativeLayout = itemView!!.findViewById(R.id.search_result_act_rv_item_subscribe_btn)
+        var btn : RelativeLayout = itemView!!.findViewById(R.id.search_result_act_rv_item_btn)
+
     }
 
     private fun requestChannelSubscription(channel_id : Int){
         val networkService : NetworkService = ApplicationController.instance.networkService
-        val postChannelSubscripeResponse = networkService.postChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(context), channel_id)
+        val postChannelSubscripeResponse = networkService.postChannelSubscripeResponse(SharedPreferenceController.getFlag(context).toInt(), SharedPreferenceController.getAuthorization(context), channel_id)
         postChannelSubscripeResponse.enqueue(object : Callback<PostChannelSubscripeResponse> {
             override fun onFailure(call: Call<PostChannelSubscripeResponse>?, t: Throwable?) {
                 Log.e("구독하기 실패", t.toString())
@@ -111,7 +118,7 @@ class SearchResultActBroadRecyclerAdapter(private var searchBroadItems : ArrayLi
 
     private fun deleteChannelSubscription(channel_id : Int){
         val networkService : NetworkService = ApplicationController.instance.networkService
-        val deleteChannelScripteResponse = networkService.deleteChannelSubscripeResponse(0, SharedPreferenceController.getAuthorization(context), channel_id)
+        val deleteChannelScripteResponse = networkService.deleteChannelSubscripeResponse(SharedPreferenceController.getFlag(context).toInt(), SharedPreferenceController.getAuthorization(context), channel_id)
         deleteChannelScripteResponse.enqueue(object : Callback<DeleteChannelScripteResponse> {
             override fun onFailure(call: Call<DeleteChannelScripteResponse>?, t: Throwable?) {
                 Log.e("구독 취소 하기 실패", t.toString())
