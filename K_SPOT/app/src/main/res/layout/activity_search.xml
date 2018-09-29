@@ -97,6 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:scrollbars="none"
         android:layout_below="@+id/search_act_search_recommend_celeb_tv">
 
         <LinearLayout
@@ -175,6 +176,7 @@
         android:id="@+id/search_act_search_recommend_broadcast_horizontalScroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
         android:layout_below="@+id/search_act_search_broadcast_tv"
         android:layout_marginTop="16dp"
         >
@@ -276,6 +278,7 @@
         android:layout_marginTop="29dp"/>
 
     <HorizontalScrollView
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

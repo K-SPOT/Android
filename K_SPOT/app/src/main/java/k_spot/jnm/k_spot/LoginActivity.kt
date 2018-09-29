@@ -25,6 +25,7 @@ import k_spot.jnm.k_spot.db.SharedPreferenceController
 import k_spot.jnm.k_spot.kakao.KakaoSDKAdapter
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -164,6 +165,7 @@ class LoginActivity : AppCompatActivity() {
         postKakaoLoginResponse.enqueue(object : Callback<PostKakaoResponse> {
             override fun onFailure(call: Call<PostKakaoResponse>?, t: Throwable?) {
                 Log.e("로긴 통신 실패", t.toString())
+                toast("플레이 스토어 등록 후 사용 가능합니다.")
             }
             override fun onResponse(call: Call<PostKakaoResponse>?, response: Response<PostKakaoResponse>?) {
                 if (response!!.isSuccessful){

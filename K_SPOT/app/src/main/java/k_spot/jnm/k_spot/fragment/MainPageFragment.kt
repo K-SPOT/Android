@@ -79,7 +79,7 @@ class MainPageFragment : Fragment() {
             main_page_fragment_recycler1_tv1.text = "This week,"
             main_page_fragment_recycler1_tv2.text = "we recommend this PLACE"
             main_page_fragment_recycler2_tv1.text = "Hot place "
-            main_page_fragment_recycler3_tv1.text = "NEW EVENT "
+            main_page_fragment_recycler3_tv1.text = ""
         }
     }
 
@@ -87,10 +87,6 @@ class MainPageFragment : Fragment() {
     fun setOnClickListener(view : View) {
         view.main_page_fragment_search_btn.setOnClickListener {
             startActivity<SearchActivity>()
-        }
-        // ## 번뎍 붙여야됨
-        view.main_page_fragment_translation_btn.setOnClickListener {
-
         }
     }
 

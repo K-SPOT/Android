@@ -45,7 +45,8 @@ class UserScrapListActivity : AppCompatActivity() {
 
     private fun requestUserScapData(){
         val networkService = ApplicationController.instance.networkService
-        val getUserScapListResponse = networkService.getUserScapListResponse(0,SharedPreferenceController.getAuthorization(this))
+        val getUserScapListResponse = networkService.getUserScapListResponse(SharedPreferenceController.getFlag(this).toInt(),
+                SharedPreferenceController.getAuthorization(this))
         getUserScapListResponse.enqueue(object : Callback<GetUserScapListResponse>{
             override fun onFailure(call: Call<GetUserScapListResponse>?, t: Throwable?) {
                 Log.e("유저 스크랩 리스트 요청 실패", t.toString())
@@ -71,7 +72,14 @@ class UserScrapListActivity : AppCompatActivity() {
     }
 
     private fun setViewAndClickListener(){
-        tv_user_scrap_list_act_title.text = "스크랩"
+
+        if (SharedPreferenceController.getFlag(this) == "0"){
+            tv_user_scrap_list_act_title.text = "스크랩"
+        }else{
+            tv_user_scrap_list_act_title.text = "Scrap"
+        }
+
+
         btn_user_scrap_list_act_back.setOnClickListener {
             finish()
         }
