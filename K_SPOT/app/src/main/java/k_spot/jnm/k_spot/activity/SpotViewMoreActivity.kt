@@ -98,7 +98,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
         networkService = ApplicationController.instance.networkService
         val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
-        val getSpotViewMoreResponse = networkService.getSpotViewMore(0, authorization, spot_id)
+        val getSpotViewMoreResponse = networkService.getSpotViewMore(SharedPreferenceController.getFlag(this).toInt(), authorization, spot_id)
         getSpotViewMoreResponse.enqueue(object : Callback<GetSpotViewMoreResponse> {
             override fun onFailure(call: Call<GetSpotViewMoreResponse>?, t: Throwable?) {
             }
