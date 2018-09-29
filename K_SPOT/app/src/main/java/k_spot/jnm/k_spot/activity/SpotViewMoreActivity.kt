@@ -261,7 +261,8 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
     private fun requestSpotSubscription(spot_id: Int) {
         val networkService: NetworkService = ApplicationController.instance.networkService
-        val postSpotSubscripeResponse = networkService.postSpotSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), spot_id)
+        val postSpotSubscripeResponse = networkService.postSpotSubscripeResponse(
+                SharedPreferenceController.getFlag(this).toInt(), SharedPreferenceController.getAuthorization(this), spot_id)
         postSpotSubscripeResponse.enqueue(object : Callback<PostChannelSubscripeResponse> {
             override fun onFailure(call: Call<PostChannelSubscripeResponse>?, t: Throwable?) {
                 Log.e("스크랩 실패", t.toString())
@@ -279,7 +280,7 @@ class SpotViewMoreActivity : AppCompatActivity() {
 
     private fun deleteSpotSubscription(spot_id: Int) {
         val networkService: NetworkService = ApplicationController.instance.networkService
-        val deleteSpotSubscripeResponse = networkService.deleteSpotSubscripeResponse(0, SharedPreferenceController.getAuthorization(this), spot_id)
+        val deleteSpotSubscripeResponse = networkService.deleteSpotSubscripeResponse(SharedPreferenceController.getFlag(this).toInt(), SharedPreferenceController.getAuthorization(this), spot_id)
         deleteSpotSubscripeResponse.enqueue(object : Callback<DeleteChannelScripteResponse> {
             override fun onFailure(call: Call<DeleteChannelScripteResponse>?, t: Throwable?) {
                 Log.e("스크랩 취소 실패", t.toString())
