@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import k_spot.jnm.k_spot.Get.BroadcastSearchViewData
@@ -18,12 +17,12 @@ import k_spot.jnm.k_spot.activity.SpotViewMoreActivity
 import k_spot.jnm.k_spot.activity.ViewMoreActivity
 import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_search.*
+import org.jetbrains.anko.sdk25.coroutines.textChangedListener
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 
 class SearchActivity : AppCompatActivity() {
@@ -57,25 +56,23 @@ class SearchActivity : AppCompatActivity() {
         getSearchView()
 
         setOnClickListener()
-
-
     }
 
     private fun setInitView() {
         //추후 구독 색상변경 바꾸기
-        if (SharedPreferenceController.getFlag(this) == "0"){
+        if (SharedPreferenceController.getFlag(this) == "0") {
             search_act_what_search_tv.text = "무엇을 찾으시나요?"
             search_act_search_edit_text.hint = "검색어를 입력해주세요."
             search_act_search_recommend_celeb_tv.text = "연예인"
             search_act_search_broadcast_tv.text = "방송"
-            search_act_search_event_tv.text ="이벤트"
+            search_act_search_event_tv.text = "이벤트"
             search_act_search_tv.text = "검색하기"
         } else {
             search_act_what_search_tv.text = "What are you looking for?"
             search_act_search_edit_text.hint = "Please enter your key word."
             search_act_search_recommend_celeb_tv.text = "Celebrity"
             search_act_search_broadcast_tv.text = "Broadcast"
-            search_act_search_event_tv.text ="Event"
+            search_act_search_event_tv.text = "Event"
             search_act_search_tv.text = "Search"
         }
     }
@@ -87,28 +84,28 @@ class SearchActivity : AppCompatActivity() {
 
 
         search_act_search_recommend_celeb_rl.setOnClickListener {
-            if(celebrity.size >= 1){
+            if (celebrity.size >= 1) {
                 var channel_id = celebrity[0].channel_id
                 startActivity<CategoryDetailActivity>("channel_id" to channel_id.toString())
             }
         }
 
         search_act_search_recommend_celeb_rl2.setOnClickListener {
-            if(celebrity.size >= 2){
+            if (celebrity.size >= 2) {
                 var channel_id = celebrity[1].channel_id
                 startActivity<CategoryDetailActivity>("channel_id" to channel_id.toString())
             }
         }
 
         search_act_search_recommend_broadcast_rl.setOnClickListener {
-            if(broadcast.size >= 1){
+            if (broadcast.size >= 1) {
                 var channel_id = broadcast[0].channel_id
                 startActivity<CategoryDetailActivity>("channel_id" to channel_id.toString())
             }
         }
 
         search_act_search_recommend_broadcast_rl2.setOnClickListener {
-            if(broadcast.size >= 2){
+            if (broadcast.size >= 2) {
                 var channel_id = broadcast[1].channel_id
                 startActivity<CategoryDetailActivity>("channel_id" to channel_id.toString())
 
@@ -116,45 +113,49 @@ class SearchActivity : AppCompatActivity() {
         }
 
         search_act_search_recommend_broadcast_rl3.setOnClickListener {
-            if(broadcast.size >= 3){
+            if (broadcast.size >= 3) {
                 var channel_id = broadcast[2].channel_id
                 startActivity<CategoryDetailActivity>("channel_id" to channel_id.toString())
             }
         }
 
         search_act_search_recommend_event_rl.setOnClickListener {
-            if(event.size >= 1){
+            if (event.size >= 1) {
                 var spot_id = event[0].spot_id
                 startActivity<SpotViewMoreActivity>("spot_id" to spot_id, "eventFlag" to 1)
             }
         }
 
         search_act_search_recommend_event_rl2.setOnClickListener {
-            if(event.size >= 2){
+            if (event.size >= 2) {
                 var spot_id = event[1].spot_id
                 startActivity<ViewMoreActivity>("spot_id" to spot_id, "eventFlag" to 1)
             }
         }
 
-        search_act_search_btn.setOnTouchListener(View.OnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                search_act_search_btn.setBackgroundColor(Color.parseColor("#40D39F"))
-                return@OnTouchListener true
-            } else {
-                search_act_search_btn.setBackgroundColor(Color.parseColor("#C5C5C5"))
+        search_act_search_edit_text.textChangedListener {
+            afterTextChanged {
+                if (search_act_search_edit_text.text.toString().length > 0) {
+                    search_act_search_btn.setBackgroundColor(Color.parseColor("#40D39F"))
+                } else {
+                    search_act_search_btn.setBackgroundColor(Color.parseColor("#C5C5C5"))
+                }
             }
+        }
+
+        search_act_search_btn.setOnClickListener {
+
             var keyword = search_act_search_edit_text.text.toString()
-            if(keyword.length == 0){
+            if (keyword.length == 0) {
                 toast("검색어를 입력해주세요!")
-                false
-            }else{
+            } else {
                 startActivity<SearchResultActivity>("keyword" to keyword)
                 false
             }
-
-        })
+        }
 
     }
+
     // 상태바 투명하게 하는 함수
     private fun setStatusBarTransparent() {
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
@@ -235,12 +236,13 @@ class SearchActivity : AppCompatActivity() {
     private fun getSearchView() {
         networkService = ApplicationController.instance.networkService
         val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
-        val getSearchViewResponse = networkService.getSearchView(0,authorization)
+        val getSearchViewResponse = networkService.getSearchView(SharedPreferenceController.getFlag(this).toInt(), authorization)
         getSearchViewResponse.enqueue(object : Callback<GetSearchViewResponse> {
             override fun onFailure(call: Call<GetSearchViewResponse>?, t: Throwable?) {
             }
+
             override fun onResponse(call: Call<GetSearchViewResponse>?, response: Response<GetSearchViewResponse>?) {
-                if(response!!.isSuccessful){
+                if (response!!.isSuccessful) {
 
 
                     broadcast = response!!.body()!!.data!!.broadcast
@@ -299,7 +301,7 @@ class SearchActivity : AppCompatActivity() {
                             search_act_search_recommend_event_tv2.visibility = View.GONE
                         }
 
-                        2-> {
+                        2 -> {
                             search_act_search_recommend_event_tv1.text = event[0].name
                             search_act_search_recommend_event_tv2.text = event[1].name
                         }

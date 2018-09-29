@@ -91,55 +91,64 @@
         android:layout_below="@+id/search_act_search_edit_text_rl"
         android:layout_marginTop="45dp"
         android:layout_marginLeft="16dp"/>
-    
-    <RelativeLayout
-        android:id="@+id/search_act_search_recommend_celeb_rl"
-        android:layout_width="wrap_content"
-        android:layout_height="26dp"
-        android:layout_below="@+id/search_act_search_recommend_celeb_tv"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
-        >
 
-        <TextView
-            android:id="@+id/search_act_search_recommend_celeb_tv1"
+    <HorizontalScrollView
+        android:id="@+id/search_act_search_recommend_celeb_horizontalScroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/search_act_search_recommend_celeb_tv">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="# 시우민 ㅌ방"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
-            android:textColor="#757575"
-            android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular"/>
-    </RelativeLayout>
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/search_act_search_recommend_celeb_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
+                >
 
-    <RelativeLayout
-        android:id="@+id/search_act_search_recommend_celeb_rl2"
-        android:layout_width="wrap_content"
-        android:layout_height="27dp"
-        android:layout_below="@+id/search_act_search_recommend_celeb_tv"
-        android:layout_toRightOf="@+id/search_act_search_recommend_celeb_rl"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="11dp"
-        android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
-        >
+                <TextView
+                    android:id="@+id/search_act_search_recommend_celeb_tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:textColor="#757575"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/nanumsquareotf_regular"/>
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/search_act_search_recommend_celeb_tv2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="#"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
-            android:textColor="#757575"
-            android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular"
-            />
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/search_act_search_recommend_celeb_rl2"
+                android:layout_width="wrap_content"
+                android:layout_height="27dp"
+                android:layout_toRightOf="@+id/search_act_search_recommend_celeb_rl"
+                android:layout_marginLeft="11dp"
+                android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
+                >
 
+                <TextView
+                    android:id="@+id/search_act_search_recommend_celeb_tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:textColor="#757575"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/nanumsquareotf_regular"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </HorizontalScrollView>
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/search_act_search_recommend_celeb_rv"-->
         <!--android:layout_width="match_parent"-->
@@ -158,83 +167,91 @@
         android:textColor="#5E5E5E"
         android:textSize="14dp"
         android:fontFamily="@font/nanumsquareotf_bold"
-        android:layout_below="@+id/search_act_search_recommend_celeb_rl"
+        android:layout_below="@+id/search_act_search_recommend_celeb_horizontalScroll"
         android:layout_marginTop="29dp"
         android:layout_marginLeft="16dp"/>
 
-    <RelativeLayout
-        android:id="@+id/search_act_search_recommend_broadcast_rl"
+    <HorizontalScrollView
+        android:id="@+id/search_act_search_recommend_broadcast_horizontalScroll"
         android:layout_width="wrap_content"
-        android:layout_height="26dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/search_act_search_broadcast_tv"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
         >
-
-        <TextView
-            android:id="@+id/search_act_search_recommend_broadcast_tv1"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="# 시우민 ㅌ방"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
-            android:textColor="#757575"
-            android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular"/>
-    </RelativeLayout>
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/search_act_search_recommend_broadcast_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginLeft="16dp"
+                android:layout_below="@+id/search_act_search_broadcast_tv"
+                android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
+                >
 
-    <RelativeLayout
-        android:id="@+id/search_act_search_recommend_broadcast_rl2"
-        android:layout_width="wrap_content"
-        android:layout_height="27dp"
-        android:layout_below="@+id/search_act_search_broadcast_tv"
-        android:layout_toRightOf="@+id/search_act_search_recommend_broadcast_rl"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="11dp"
-        android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
-        >
+                <TextView
+                    android:id="@+id/search_act_search_recommend_broadcast_tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:textColor="#757575"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/nanumsquareotf_regular"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/search_act_search_recommend_broadcast_rl2"
+                android:layout_width="wrap_content"
+                android:layout_height="27dp"
+                android:layout_below="@+id/search_act_search_broadcast_tv"
+                android:layout_toRightOf="@+id/search_act_search_recommend_broadcast_rl"
+                android:layout_marginLeft="11dp"
+                android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
+                >
 
-        <TextView
-            android:id="@+id/search_act_search_recommend_broadcast_tv2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="#"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
-            android:textColor="#757575"
-            android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular"
-            />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/search_act_search_recommend_broadcast_tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:textColor="#757575"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/nanumsquareotf_regular"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/search_act_search_recommend_broadcast_rl3"
+                android:layout_width="wrap_content"
+                android:layout_height="27dp"
+                android:layout_below="@+id/search_act_search_broadcast_tv"
+                android:layout_toRightOf="@+id/search_act_search_recommend_broadcast_rl2"
+                android:layout_marginLeft="11dp"
+                android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
+                >
 
-    <RelativeLayout
-        android:id="@+id/search_act_search_recommend_broadcast_rl3"
-        android:layout_width="wrap_content"
-        android:layout_height="27dp"
-        android:layout_below="@+id/search_act_search_broadcast_tv"
-        android:layout_toRightOf="@+id/search_act_search_recommend_broadcast_rl2"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="11dp"
-        android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
-        >
+                <TextView
+                    android:id="@+id/search_act_search_recommend_broadcast_tv3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:textColor="#757575"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/nanumsquareotf_regular"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/search_act_search_recommend_broadcast_tv3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="#"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
-            android:textColor="#757575"
-            android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular"
-            />
-    </RelativeLayout>
-
+    </HorizontalScrollView>
 
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/search_act_search_recommend_broadcast_rv"-->
@@ -255,57 +272,69 @@
         android:textSize="14dp"
         android:layout_marginLeft="16dp"
         android:fontFamily="@font/nanumsquareotf_bold"
-        android:layout_below="@+id/search_act_search_recommend_broadcast_rl"
+        android:layout_below="@+id/search_act_search_recommend_broadcast_horizontalScroll"
         android:layout_marginTop="29dp"/>
 
-    <RelativeLayout
-        android:id="@+id/search_act_search_recommend_event_rl"
-        android:layout_width="wrap_content"
-        android:layout_height="26dp"
-        android:layout_below="@+id/search_act_search_event_tv"
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
-        >
+        android:layout_below="@+id/search_act_search_event_tv">
 
-        <TextView
-            android:id="@+id/search_act_search_recommend_event_tv1"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="# 시우민 ㅌ방"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
-            android:textColor="#757575"
-            android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular"/>
-    </RelativeLayout>
+            android:orientation="horizontal">
 
-    <RelativeLayout
-        android:id="@+id/search_act_search_recommend_event_rl2"
-        android:layout_width="wrap_content"
-        android:layout_height="27dp"
-        android:layout_below="@+id/search_act_search_event_tv"
-        android:layout_toRightOf="@+id/search_act_search_recommend_event_rl"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="11dp"
-        android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
-        >
+            <RelativeLayout
+                android:id="@+id/search_act_search_recommend_event_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_below="@+id/search_act_search_event_tv"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
+                >
+
+                <TextView
+                    android:id="@+id/search_act_search_recommend_event_tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:textColor="#757575"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/nanumsquareotf_regular"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/search_act_search_recommend_event_rl2"
+                android:layout_width="wrap_content"
+                android:layout_height="27dp"
+                android:layout_below="@+id/search_act_search_event_tv"
+                android:layout_toRightOf="@+id/search_act_search_recommend_event_rl"
+                android:layout_marginLeft="11dp"
+                android:background="@drawable/rv_item_search_act_hash_tag_box_shape"
+                >
 
 
-        <TextView
-            android:id="@+id/search_act_search_recommend_event_tv2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="#"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
-            android:textColor="#757575"
-            android:textSize="12dp"
-            android:fontFamily="@font/nanumsquareotf_regular"
-            />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/search_act_search_recommend_event_tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:textColor="#757575"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/nanumsquareotf_regular"
+                    />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/search_act_search_recommend_event_rv"-->
@@ -323,7 +352,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:background="#C5C5C5">
+        android:background="@drawable/serach_btn">
 
         <TextView
             android:id="@+id/search_act_search_tv"

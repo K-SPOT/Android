@@ -247,7 +247,7 @@ class MainPageFragment : Fragment() {
 
             override fun onResponse(call: Call<GetMainFragResponse>?, response: Response<GetMainFragResponse>?) {
                 if (response!!.isSuccessful) {
-
+                    main_page_fragment_viewpager_count_dot_ll!!.removeAllViews()
                     mainFragViewPagerItem = response!!.body()!!.data!!.theme
 
                     mainFragRecommendSpotRecyclerItem = response!!.body()!!.data!!.main_recommand_spot
