@@ -73,7 +73,7 @@ class MapDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         if (SharedPreferenceController.getFlag(this) == "0"){
             tv_map_act_title.text = "이 위치로 장소 설정"
         } else {
-            tv_map_act_title.text = "Setting this spot"
+            tv_map_act_title.text = "Set this spot"
         }
 
 
