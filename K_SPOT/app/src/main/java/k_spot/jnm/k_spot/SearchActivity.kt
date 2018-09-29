@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import k_spot.jnm.k_spot.Get.BroadcastSearchViewData
@@ -56,6 +57,8 @@ class SearchActivity : AppCompatActivity() {
         getSearchView()
 
         setOnClickListener()
+
+        setOnEnterListener()
     }
 
     private fun setInitView() {
@@ -155,6 +158,39 @@ class SearchActivity : AppCompatActivity() {
         }
 
     }
+
+    fun setOnEnterListener() {
+        search_act_search_edit_text.setOnKeyListener { v, keyCode, event ->
+            if((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                var keyword = search_act_search_edit_text.text.toString()
+                if (keyword.length == 0) {
+                    toast("검색어를 입력해주세요!")
+                } else {
+                    startActivity<SearchResultActivity>("keyword" to keyword)
+                    false
+                }
+
+                true
+            }
+            false
+        }
+    }
+
+
+
+//    edittext.setOnKeyListener(new View.OnKeyListener() {
+//        @Override
+//        public boolean onKey(View v, int keyCode, KeyEvent event) {
+//            //Enter key Action
+//            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+//                //Enter키눌렀을떄 처리
+//                return true;
+//            }
+//            return false;
+//        }
+//    });
+
 
     // 상태바 투명하게 하는 함수
     private fun setStatusBarTransparent() {
