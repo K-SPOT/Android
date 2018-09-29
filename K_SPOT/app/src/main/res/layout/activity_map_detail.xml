@@ -62,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="69dp">
         <TextView
+            android:id="@+id/tv_map_act_title"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:fontFamily="@font/nanumsquareotf_regular"

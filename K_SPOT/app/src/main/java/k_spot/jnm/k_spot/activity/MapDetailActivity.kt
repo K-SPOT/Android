@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import k_spot.jnm.k_spot.R
 import k_spot.jnm.k_spot.adapter.InfoWindowAdapter
+import k_spot.jnm.k_spot.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_map_detail.*
 import org.jetbrains.anko.locationManager
 import org.jetbrains.anko.toast
@@ -68,6 +69,12 @@ class MapDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         setStatusBarColor()
         setSearchBar()
         //placeAutoComlete()
+
+        if (SharedPreferenceController.getFlag(this) == "0"){
+            tv_map_act_title.text = "이 위치로 장소 설정"
+        } else {
+            tv_map_act_title.text = "Setting this spot"
+        }
 
 
         //gps 안 잡히면 초기 강남
@@ -174,7 +181,6 @@ class MapDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         if (isGPSEnabled || isNetworkEnabled) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                toast("위치 탐색 중...")
                 fusedLocationClientInfoStatus.lastLocation.addOnCompleteListener {
                     if (it.isSuccessful && it.result != null) {
                         currentLatitude = it.result.latitude
@@ -185,7 +191,12 @@ class MapDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         } else {
-            toast("GPS를 체크해주세요.")
+            if (SharedPreferenceController.getFlag(this) == "0"){
+                toast("GPS를 체크해주세요.")
+            } else {
+                toast("please Check your GPS")
+            }
+
         }
     }
 
