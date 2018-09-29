@@ -1,49 +1,5 @@
 <resources>
-    <string name="app_name">K_SPOT</string>
+    <string name="app_name">K-SPOT</string>
 
-    <string name="main_ko">메인</string>
-    <string name="main_en">MAIN</string>
-
-    <string name="category_ko">카테고리</string>
-    <string name="category_en">CATEGORY</string>
-
-    <string name="spot_ko">장소</string>
-    <string name="spot_en">SPOT</string>
-
-    <string name="mypage_ko">마이페이지</string>
-    <string name="mypage_en">MYPAGE</string>
-
-    <string name="kakao_login_ko">Kakao 로그인</string>
-    <string name="kakao_login_en"> Kakao Login </string>
-
-    <string name="main_hello_ko">안녕! 오늘은 어디를 가볼까?</string>
-    <string name="main_hello_ko_en">Hi! Where do you want to go?</string>
-
-    <string name="main_come_on_ko">어서와~ 서울은 처음이지?</string>
-    <string name="main_come_on_en">Welcome for your first visit to Seoul! </string>
-
-    <string name="today_hot_spot_ko">이번주 올라온 \n 따끈따끈한 추천 PLACE</string>
-    <string name="today_hot_spot_en"> This week, \n we recommend this PLACE</string>
-
-    <string name="best10_spot_ko">인기 장소 BEST 10</string>
-    <string name="best10_spot_en">Hot place BEST 10</string>
-
-    <string name="week_new_event_ko">이번주 NEW EVENT 5</string>
-    <string name="week_new_event_en">NEW EVENT 5</string>
-
-    <string name="more_ko">더보기</string>
-    <string name="more_en">MORE</string>
-
-    <string name="celebrity_ko">연예인</string>
-    <string name="celebrity_en">Celebrity</string>
-
-    <string name="broadcast_ko">방송</string>
-    <string name="broadcast_en">Broadcast</string>
-
-    <string name="subscribe_ko">구독</string>
-    <string name="subscribe_en">subscribe</string>
-
-    <string name="subscriber_ko">구독자</string>
-    <string name="subscriber_en">subscriber</string>
 
 </resources>
