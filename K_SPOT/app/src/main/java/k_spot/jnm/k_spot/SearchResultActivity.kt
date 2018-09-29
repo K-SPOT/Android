@@ -70,6 +70,7 @@ class SearchResultActivity : AppCompatActivity(), View.OnClickListener {
             search_result_act_spot_see_more_tv.text = "더보기"
             search_result_act_event_tv.text = "이벤트"
             search_result_act_event_see_more_tv.text = "더보기"
+            search_result_act_no_search_result_tv.text = "검색 결과 없음"
         } else {
             search_result_act_result_tv.text = keyword + " " + "search result"
             search_result_act_celeb_borad_tv.text = "Celebrity / Broadcast"
@@ -78,6 +79,7 @@ class SearchResultActivity : AppCompatActivity(), View.OnClickListener {
             search_result_act_spot_see_more_tv.text = "view more"
             search_result_act_event_tv.text = "Event"
             search_result_act_event_see_more_tv.text = "view more"
+            search_result_act_no_search_result_tv.text = "There is no search result"
         }
     }
 
@@ -109,9 +111,10 @@ class SearchResultActivity : AppCompatActivity(), View.OnClickListener {
         var keyword: String = keyword
         networkService = ApplicationController.instance.networkService
         val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
-        val getSearchResultResponse = networkService.getSearchResult(1, authorization, keyword)
+        val getSearchResultResponse = networkService.getSearchResult(SharedPreferenceController.getFlag(this).toInt(), authorization, keyword)
         getSearchResultResponse.enqueue(object : Callback<GetSearchResultResponse> {
             override fun onFailure(call: Call<GetSearchResultResponse>?, t: Throwable?) {
+                Log.v("39393939393", "검색 실패")
             }
             override fun onResponse(call: Call<GetSearchResultResponse>?, response: Response<GetSearchResultResponse>?) {
                 if (response!!.isSuccessful) {
@@ -125,6 +128,84 @@ class SearchResultActivity : AppCompatActivity(), View.OnClickListener {
                         search_result_act_no_search_result_rl.visibility = View.VISIBLE
                         search_result_act_result_iv.visibility = View.GONE
                     }
+                    Log.v("39393939393", searchBroadItems.size.toString() + searchSpotItems.size.toString() + searchEventItems.size.toString())
+
+                    if (searchBroadItems.size != 0) {
+                        // 첫 번째 CardView 생성 function
+                        if (searchBroadItems.size == 1) {
+                            makeRecyclerView(searchBroadItems, 1)
+                        } else if (searchBroadItems.size >= 2) {
+                            makeRecyclerView(searchBroadItems, 2)
+                        }
+
+                        if (searchSpotItems.size == 0 && searchEventItems.size == 0) {
+                            search_result_act_celeb_borad_under_bar.visibility = View.GONE
+                        }
+
+                    } else {
+                        search_result_act_celeb_borad_all_rl.visibility = View.GONE
+                    }
+                    if (searchSpotItems.size != 0) {
+                        if (searchSpotItems.size == 1) {
+                            // 첫 번째 CardView 생성 function
+                            makeRecyclerView1(searchSpotItems, 1)
+                        } else if (searchSpotItems.size == 2) {
+                            makeRecyclerView1(searchSpotItems, 2)
+                        } else if (searchSpotItems.size == 3) {
+                            makeRecyclerView1(searchSpotItems, 3)
+                        } else if (searchSpotItems.size >= 4) {
+                            makeRecyclerView1(searchSpotItems, 4)
+                        }
+
+                        if (searchEventItems.size == 0) {
+                            search_result_act_spot_under_bar.visibility = View.GONE
+                        }
+
+                    } else {
+                        search_result_act_spot_all_rl.visibility = View.GONE
+                    }
+                    if (searchEventItems.size != 0) {
+                        if (searchEventItems.size == 1) {
+                            // 첫 번째 CardView 생성 function
+                            makeRecyclerView2(searchEventItems, 1)
+                        } else if (searchEventItems.size == 2) {
+                            makeRecyclerView2(searchEventItems, 2)
+                        } else if (searchEventItems.size == 3) {
+                            makeRecyclerView2(searchEventItems, 3)
+                        } else if (searchEventItems.size >= 4) {
+                            makeRecyclerView2(searchEventItems, 4)
+                        }
+                    } else {
+                        search_result_act_event_all_rl.visibility = View.GONE
+                    }
+                }
+            }
+
+        })
+    }
+
+    fun requestSearchResult(keyword: String) {
+        var keyword: String = keyword
+        networkService = ApplicationController.instance.networkService
+        val authorization: String = SharedPreferenceController.getAuthorization(context = applicationContext)
+        val getSearchResultResponse = networkService.getSearchResult(0, authorization, keyword)
+        getSearchResultResponse.enqueue(object : Callback<GetSearchResultResponse> {
+            override fun onFailure(call: Call<GetSearchResultResponse>?, t: Throwable?) {
+                Log.v("39393939393", "검색 실패")
+            }
+            override fun onResponse(call: Call<GetSearchResultResponse>?, response: Response<GetSearchResultResponse>?) {
+                if (response!!.isSuccessful) {
+
+                    searchBroadItems = response!!.body()!!.data!!.channel
+                    searchSpotItems = response!!.body()!!.data!!.place
+                    searchEventItems = response!!.body()!!.data!!.event
+
+                    if(searchBroadItems.size == 0 && searchSpotItems.size == 0 && searchEventItems.size == 0){
+                        search_result_act_all_scroll_view.visibility = View.GONE
+                        search_result_act_no_search_result_rl.visibility = View.VISIBLE
+                        search_result_act_result_iv.visibility = View.GONE
+                    }
+                    Log.v("39393939393", searchBroadItems.size.toString() + searchSpotItems.size.toString() + searchEventItems.size.toString())
 
                     if (searchBroadItems.size != 0) {
                         // 첫 번째 CardView 생성 function

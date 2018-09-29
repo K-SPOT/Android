@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.bumptech.glide.Glide
 import k_spot.jnm.k_spot.Get.Theme
 import k_spot.jnm.k_spot.R
@@ -37,8 +36,8 @@ class MainFragViewPagerImageSliderAdapter(context: Context, mResources: ArrayLis
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val itemView = mLayoutInflater.inflate(R.layout.rv_item_main_frag_view_pager, container, false)
         val realPos = position % mResources.size
-        val textView = itemView.findViewById(R.id.main_frag_rv_item_tv1) as TextView
-        val textView2 = itemView.findViewById(R.id.main_frag_rv_item_tv2) as TextView
+//        val textView = itemView.findViewById(R.id.main_frag_rv_item_tv1) as TextView
+//        val textView2 = itemView.findViewById(R.id.main_frag_rv_item_tv2) as TextView
         val imageView = itemView.findViewById(R.id.main_frag_rv_item_iv) as ImageView
         // str은 DB에서 받아온 String 값
 //        val str : String = mResources[realPos].main_frag_view_pager_text
@@ -53,15 +52,17 @@ class MainFragViewPagerImageSliderAdapter(context: Context, mResources: ArrayLis
 //        val token3 : String = tokens.nextToken("\n")
 
         // text1 = "안녕! \n 오늘은"
-//        val text1 : String = mResources[realPos].title
+//        val text1 : String = mResources[realPos].titleㅇㅇ
         itemView.setOnClickListener {
             mContext.startActivity<RecommendViewMoreActivity>("theme_id" to mResources[realPos].theme_id.toInt())
         }
 
-        textView.text = mResources[realPos].title
-        textView2.text = mResources[realPos].subtitle
+//        textView.text = mResources[realPos].title
+//        textView2.text = mResources[realPos].subtitle
+        imageView.scaleType = ImageView.ScaleType.FIT_XY
 
         Glide.with(mContext).load(mResources[realPos].main_img).into(imageView)
+
 
         container.addView(itemView, 0)
 
