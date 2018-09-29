@@ -41,7 +41,7 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_search_spot_view_more)
         searchSpotItems = intent.getParcelableArrayListExtra<PlaceSearchResultData>("searchSpotItems")
         var keyword = intent.getStringExtra("keyword")
-        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchSpotItems, applicationContext, this)
+        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchSpotItems, applicationContext, this, 0)
         search_spot_view_more_act_result_tv.text = keyword + " " + "검색결과"
         makeRecyclerView(searchSpotItems)
         setStatusBarTransparent()
@@ -53,9 +53,25 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         if (SharedPreferenceController.getFlag(this) == "0"){
             search_spot_view_more_act_result_tv.text = keyword + " " + "검색결과"
             search_spot_view_more_act_tv.text = "장소"
+            search_spot_view_more_act_filter.setImageResource(R.drawable.filter_floating_btn)
+            search_spot_view_more_act_filter_popularity_tv.text = "인기순"
+            search_spot_view_more_act_filter_new_tv.text = "최신순"
+            search_spot_view_more_act_filter_enter_tv.text = "검색"
+            search_spot_view_more_act_filter_restaurant_btn.setImageResource(R.drawable.filter_restaurant_btn_gray)
+            search_spot_view_more_act_filter_cafe_btn.setImageResource(R.drawable.filter_cafe_btn_gray)
+            search_spot_view_more_act_filter_hotplace_btn.setImageResource(R.drawable.filter_hotplace_btn_gray)
+            search_spot_view_more_act_filter_etc_btn.setImageResource(R.drawable.filter_etc_btn_gray)
         } else {
             search_spot_view_more_act_result_tv.text = keyword + " " + "search result"
             search_spot_view_more_act_tv.text = "Spot"
+            search_spot_view_more_act_filter.setImageResource(R.drawable.filter_floating_btn_en)
+            search_spot_view_more_act_filter_popularity_tv.text = "Popularity"
+            search_spot_view_more_act_filter_new_tv.text = "Recent"
+            search_spot_view_more_act_filter_enter_tv.text = "Search"
+            search_spot_view_more_act_filter_restaurant_btn.setImageResource(R.drawable.filter_food_icon_en)
+            search_spot_view_more_act_filter_cafe_btn.setImageResource(R.drawable.filter_cafe_icon_en)
+            search_spot_view_more_act_filter_hotplace_btn.setImageResource(R.drawable.filter_hotsight_icon_en)
+            search_spot_view_more_act_filter_etc_btn.setImageResource(R.drawable.filter_etc_icon_en)
         }
     }
 
@@ -174,7 +190,7 @@ class SearchSpotViewMoreActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun makeRecyclerView(searchSpotItems: ArrayList<PlaceSearchResultData>) {
-        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchSpotItems, applicationContext, this)
+        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchSpotItems, applicationContext, this, 0)
         search_spot_view_more_act_rv.layoutManager = LinearLayoutManager(applicationContext)
         search_spot_view_more_act_rv.adapter = searchSpotViewMoreActRecyclerAdapter
     }

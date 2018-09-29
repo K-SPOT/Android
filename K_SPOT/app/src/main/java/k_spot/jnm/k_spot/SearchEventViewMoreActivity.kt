@@ -28,7 +28,7 @@ class SearchEventViewMoreActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_search_event_view_more)
 
         searchEventItems = intent.getParcelableArrayListExtra<PlaceSearchResultData>("searchEventItems")
-        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchEventItems, applicationContext, this)
+        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchEventItems, applicationContext, this, 1)
         var keyword = intent.getStringExtra("keyword")
         search_event_view_more_act_result_tv.text = keyword + " " + "검색결과"
 
@@ -56,7 +56,7 @@ class SearchEventViewMoreActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun makeRecyclerView(searchEventItems: ArrayList<PlaceSearchResultData>) {
-        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchEventItems, applicationContext, this)
+        searchSpotViewMoreActRecyclerAdapter = SearchSpotViewMoreActRecyclerAdapter(searchEventItems, applicationContext, this, 1)
         search_event_view_more_act_rv.layoutManager = LinearLayoutManager(applicationContext)
         search_event_view_more_act_rv.adapter = searchSpotViewMoreActRecyclerAdapter
     }

@@ -249,6 +249,7 @@
                 android:background="#40D39F">
 
                 <TextView
+                    android:id="@+id/search_spot_view_more_act_filter_enter_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="확인"
