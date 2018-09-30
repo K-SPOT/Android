@@ -45,7 +45,7 @@ class RecommendViewMoreRecyclerAdapter(private var recommendViewMorePageItems: A
         } else if (recommendViewMorePageItems[position].description.size == 3) {
             holder.recommend_view_more_text1.text = recommendViewMorePageItems[position].description[0]
             holder.recommend_view_more_text2.text = recommendViewMorePageItems[position].description[1]
-            holder.recommend_view_more_text1.text = recommendViewMorePageItems[position].description[2]
+            holder.recommend_view_more_text3.text = recommendViewMorePageItems[position].description[2]
         }
 
         if (recommendViewMorePageItems[position].img.length > 0) {

@@ -26,8 +26,7 @@
                     android:id="@+id/recommend_view_more_act_celeb_iv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@color/colorPrimary"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="centerCrop"/>
 
                 <!--글씨 가운데 정렬 하기위해 넓이 fix-->
                 <TextView
