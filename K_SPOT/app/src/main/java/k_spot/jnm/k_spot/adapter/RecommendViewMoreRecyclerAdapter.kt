@@ -34,19 +34,9 @@ class RecommendViewMoreRecyclerAdapter(private var recommendViewMorePageItems: A
             holder.recommend_view_more_title.text = recommendViewMorePageItems[position].title
         }
 
-        if (recommendViewMorePageItems[position].description.size == 1) {
-            holder.recommend_view_more_text1.text = recommendViewMorePageItems[position].description[0]
-            holder.recommend_view_more_text2.visibility = View.GONE
-            holder.recommend_view_more_text3.visibility = View.GONE
-        } else if (recommendViewMorePageItems[position].description.size == 2) {
-            holder.recommend_view_more_text1.text = recommendViewMorePageItems[position].description[0]
-            holder.recommend_view_more_text2.text = recommendViewMorePageItems[position].description[1]
-            holder.recommend_view_more_text3.visibility = View.GONE
-        } else if (recommendViewMorePageItems[position].description.size == 3) {
-            holder.recommend_view_more_text1.text = recommendViewMorePageItems[position].description[0]
-            holder.recommend_view_more_text2.text = recommendViewMorePageItems[position].description[1]
-            holder.recommend_view_more_text3.text = recommendViewMorePageItems[position].description[2]
-        }
+        holder.recommend_view_more_text1.text = recommendViewMorePageItems[position].description[0]
+        holder.recommend_view_more_text2.text = recommendViewMorePageItems[position].description[1]
+        holder.recommend_view_more_text3.text = recommendViewMorePageItems[position].description[2]
 
         if (recommendViewMorePageItems[position].img.length > 0) {
 //            val requestOption = RequestOptions().transforms(CenterCrop(), RoundedCorners(dpToPx(12)))
