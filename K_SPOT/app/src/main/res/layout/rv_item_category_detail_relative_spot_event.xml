@@ -3,6 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent" android:layout_height="100dp"
     android:layout_marginBottom="16dp"
+    android:foreground="?android:selectableItemBackground"
     android:id="@+id/rv_item_categoty_detail_relative_spot_whole_btn">
     <ImageView
         android:id="@+id/rv_item_categoty_detail_relative_spot_img"

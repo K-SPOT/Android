@@ -14,26 +14,31 @@
             android:layout_height="56dp">
             <ImageView
                 android:id="@+id/btn_map_page_translation"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="6dp"
                 android:src="@drawable/main_translation_icon"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="10dp"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/kspot_logo"
                 android:layout_centerInParent="true"/>
             <ImageView
+                android:background="?android:selectableItemBackground"
                 android:id="@+id/btn_map_page_search"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginRight="8dp"
+                android:padding="8dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/search_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <ImageView
+                android:background="?android:selectableItemBackground"
                 android:id="@+id/btn_map_page_my_spot"
+                android:padding="8dp"
                 android:layout_toLeftOf="@+id/btn_map_page_search"
                 android:src="@drawable/map_page_spot_icon"
                 android:layout_centerVertical="true"
@@ -478,17 +483,19 @@
         android:layout_height="wrap_content" />
 
     <RelativeLayout
+        android:id="@+id/rl_map_page_open_filtering_backgound"
+        android:visibility="gone"
+        android:clickable="true"
+        android:background="#77000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/rl_map_page_open_filtering_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
-        <RelativeLayout
-            android:id="@+id/rl_map_page_open_filtering_backgound"
-            android:clickable="true"
-            android:background="#77000000"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </RelativeLayout>
+
         <ImageView
             android:id="@+id/btn_map_page_close_filtering"
             android:layout_centerHorizontal="true"
@@ -518,6 +525,7 @@
                     android:layout_height="78dp"
                     android:gravity="center">
                     <RelativeLayout
+                        android:background="?android:selectableItemBackground"
                         android:id="@+id/btn_map_page_filter_is_popular"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
@@ -537,6 +545,7 @@
                         android:layout_height="20dp"
                         android:background="#C0C0C0" />
                     <RelativeLayout
+                        android:background="?android:selectableItemBackground"
                         android:id="@+id/btn_map_page_filter_is_new"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
@@ -570,6 +579,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <ImageView
+                        android:foreground="?android:selectableItemBackground"
                         android:paddingRight="16dp"
                         android:paddingVertical="8dp"
                         android:id="@+id/btn_map_page_filter_distance_left"
@@ -580,6 +590,7 @@
                         android:layout_height="wrap_content"
                         />
                     <ImageView
+                        android:foreground="?android:selectableItemBackground"
                         android:paddingLeft="16dp"
                         android:paddingVertical="8dp"
                         android:id="@+id/btn_map_page_filter_distance_right"
@@ -637,6 +648,8 @@
             </LinearLayout>
 
             <RelativeLayout
+
+                android:foreground="?android:selectableItemBackground"
                 android:id="@+id/btn_map_page_filter_apply_btn"
                 android:background="#40D39F"
                 android:layout_width="match_parent"

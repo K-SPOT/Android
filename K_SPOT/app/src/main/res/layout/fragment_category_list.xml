@@ -13,6 +13,7 @@
         android:layout_height="56dp">
 
         <RelativeLayout
+            android:background="?android:selectableItemBackground"
             android:id="@+id/category_list_fragment_translation_btn"
             android:layout_width="46dp"
             android:layout_height="wrap_content"
@@ -40,6 +41,7 @@
 
 
         <RelativeLayout
+            android:background="?android:selectableItemBackground"
             android:id="@+id/category_list_fragment_search_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

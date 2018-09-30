@@ -486,8 +486,8 @@ class MapPageFragment : Fragment() {
 
         btn_map_page_open_filtering.setOnClickListener {
             (activity as MainActivity).hideBottomPageTab()
+
             mapSpotFilterUpAnimation()
-//            rl_map_page_open_filtering_backgound.visibility = View.VISIBLE
 //            ll_map_page_filtering.visibility = View.VISIBLE
 //            btn_map_page_close_filtering.visibility = View.VISIBLE
         }
@@ -500,6 +500,7 @@ class MapPageFragment : Fragment() {
                 .loadAnimation(context,
                         R.anim.search_spot_view_more_act_down_anim)
         rl_map_page_open_filtering_rl.visibility = View.GONE
+        rl_map_page_open_filtering_backgound.visibility = View.GONE
         rl_map_page_open_filtering_rl.startAnimation(anim)
     }
 
@@ -508,6 +509,7 @@ class MapPageFragment : Fragment() {
                 .loadAnimation(context,
                         R.anim.search_spot_view_more_act_anim)
         rl_map_page_open_filtering_rl.visibility = View.VISIBLE
+        rl_map_page_open_filtering_backgound.visibility = View.VISIBLE
         rl_map_page_open_filtering_rl.startAnimation(anim)
     }
 
