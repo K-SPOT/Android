@@ -9,16 +9,13 @@
 # Library
 * **Http REST API to web server** :com.squareup.retrofit2:retrofit 
 * **Json -> Object** : com.squareup.retrofit2:converter-gson
-
 * **Kotlin Domain-Specific Language** : org.jetbrains.anko:anko
-
 * **Kakao auth** - com.kakao.sdk:usermgmt
-
 * **Play services places** - com.google.android.gms:play-services-places
 * **Play services location** - com.google.android.gms:play-services-location
 * **Play services maps** - com.google.android.gms:play-services-maps
-
-* **Cardview** - com.android.support:cardview-v7:
+* **Cardview** - com.android.support:cardview-v7
+* **Auto scroll viewpager** - cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager
 * **Recyclerview** - com.android.support:recyclerview-v7
 * **Material design** : com.android.support:design
 * **Circle imageview** : de.hdodenhof:circleimageview
