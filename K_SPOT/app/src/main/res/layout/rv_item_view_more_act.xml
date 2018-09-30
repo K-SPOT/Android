@@ -12,6 +12,7 @@
         android:layout_height="130dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:foreground="?android:selectableItemBackground"
         android:background="@drawable/rv_item_spot_view_more_act_box_shape"
         >
 

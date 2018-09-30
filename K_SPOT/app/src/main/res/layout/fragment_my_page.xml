@@ -12,6 +12,7 @@
 
         <!--번역 버튼-->
         <RelativeLayout
+            android:background="?android:selectableItemBackground"
             android:id="@+id/my_page_frag_translate_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -177,6 +178,7 @@
 
     <!--스크랩-->
     <RelativeLayout
+        android:background="?android:selectableItemBackground"
         android:id="@+id/my_page_frag_scrab_bar_btn"
         android:layout_width="match_parent"
         android:layout_height="51dp"
@@ -211,6 +213,7 @@
 
     <!--회원 정보 수정-->
     <RelativeLayout
+        android:background="?android:selectableItemBackground"
         android:id="@+id/my_page_frag_change_my_info_bar_btn"
         android:layout_width="match_parent"
         android:layout_height="51dp"
